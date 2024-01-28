@@ -1,0 +1,15 @@
+Beans are java classes annotated with:
+@Component:
+  @Service
+  @Repository
+  @Controller
+
+Beans are managed by the Spring IoC (Inversion of Control) container.
+
+class ThisIsABean {
+
+}
+
+Inside a spring ioc it's save as: thisIsABean
+
+We can create custom beans (set of methods annotated with the @Bean annotation) and manage them in a class annotated with @Configuration (a bean)
