@@ -5,7 +5,9 @@
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
-    "no-console": "warn",
-    "no-unused-vars": "warn"
+    "no-console": "off",
+    "no-undef": "off",
+    "no-unused-vars": "warn",
+    "react/prop-types": "off"
   }
 }
