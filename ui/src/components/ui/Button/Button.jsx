@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 const Button = ({ clicked, onClickHandler, ...props }) => {
 
@@ -32,11 +32,11 @@ const Button = ({ clicked, onClickHandler, ...props }) => {
   );
 }
 
-Button.propTypes = {
-  onClickHandler: PropTypes.func,
-  color: PropTypes.string,
-  content: PropTypes.string,
-  clicked: PropTypes.bool
-}
+// Button.propTypes = {
+//   onClickHandler: PropTypes.func,
+//   color: PropTypes.string,
+//   content: PropTypes.string,
+//   clicked: PropTypes.bool
+// }
 
 export default Button;
