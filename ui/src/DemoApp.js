@@ -31,11 +31,11 @@ function App() {
     const name = event.target.name; // Gets the name of the field
     const value = event.target.value; // Gets the value of the field
 
-    setInputs(values => { 
+    setInputs(values => {
       return {
         ...values, // Flushes the old name = value pairs existing in the input state
-        [name] : value // Dynamically sets the value to the field name
-      } 
+        [name]: value // Dynamically sets the value to the field name
+      }
     });
   }
 
