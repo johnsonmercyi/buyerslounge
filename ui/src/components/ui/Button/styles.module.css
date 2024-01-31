@@ -1,0 +1,7 @@
+/*Mobile First Style*/
+.button {}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

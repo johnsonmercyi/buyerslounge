@@ -1,10 +1,6 @@
 /*Mobile First Style*/
 .main {}
 
-.textField {
-  
-}
-
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
 
