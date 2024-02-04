@@ -3,6 +3,7 @@ import { Form, Input } from "semantic-ui-react";
 import styles from './styles.module.css';
 
 const UIInput = ({
+  type,
   label,
   inputLabel,
   labelPosition,
@@ -18,6 +19,7 @@ const UIInput = ({
       <label>{label}</label>
       <Input
         className={styles.input}
+        type={type || "text"}
         label={inputLabel}
         labelPosition={labelPosition}
         value={value}

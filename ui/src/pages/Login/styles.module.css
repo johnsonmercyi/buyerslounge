@@ -1,6 +1,15 @@
 /*Mobile First Style*/
+.container {
+
+  height: 100vh;
+
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
 .main {
-  width: 20rem;
+  width: 100%;
   height: auto;
 
   display: flex;
@@ -9,10 +18,14 @@
   align-items: center;
 
   padding: 1rem;
+  border-radius: 0.4rem;
 
 }
 
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
-
+  .main {
+    width: 30rem;
+    border: 1px solid #e0e0e0;
+  }
 }

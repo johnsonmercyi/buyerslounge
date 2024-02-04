@@ -4,6 +4,8 @@ import styles from './styles.module.css';
 
 const UIButton = ({
   content,
+  type,
+  size,
   onClickHandler,
   icon,
   labelPosition,
@@ -15,6 +17,8 @@ const UIButton = ({
     <Button
       className={styles.button}
       content={content || ""}
+      type={type || "button"}
+      size={size || "medium"}
       icon={icon}
       labelPosition={labelPosition}
       loading={loading}
