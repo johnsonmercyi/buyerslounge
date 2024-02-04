@@ -1,21 +1,27 @@
-import React, { memo, useEffect } from 'react';
+import React from "react";
+import { Button } from 'semantic-ui-react';
 import styles from './styles.module.css';
 
-const Button = ({ content, onClickHandler, ...props }) => {
-
-  useEffect(()=>{
-    console.log("Button mounted!");
-  }, []);
-
-  // Equivalent of render
+const UIButton = ({
+  content,
+  onClickHandler,
+  icon,
+  labelPosition,
+  loading = false,
+  disabled = false,
+  ...props
+}) => {
   return (
-    <button
+    <Button
       className={styles.button}
-      onClick={onClickHandler}>
-        {console.log("Button re-rendered!")}
-        {content}
-    </button>
+      content={content || ""}
+      icon={icon}
+      labelPosition={labelPosition}
+      loading={loading}
+      disabled={disabled}
+      onClick={onClickHandler}
+      {...props} />
   );
 }
 
-export default memo(Button);
+export default UIButton;

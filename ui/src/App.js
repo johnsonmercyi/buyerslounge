@@ -1,24 +1,27 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './pages/Layout/Layout';
+import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
-import Contact from './pages/Contact/Contact';
-import AboutUs from './pages/AboutUs/AboutUs';
 import NoPage from './pages/NoPage/NoPage';
-import Complaints from './pages/Complaints/Complaints';
+import Login from './pages/Login/Login';
+import ProtectedRoute from './util/ProtectedRoute';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={ <Layout /> }>
-          <Route index element={<Home />} />
-          <Route path='contact' element={<Contact />} />
-          <Route path='about' element={<AboutUs />} />
-          <Route path='complaints' element={<Complaints />} />
-          <Route path='*' element={<NoPage />} />
+        <Route path='/login' element={<Login />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path='*' element={<NoPage />} />
+          </Route>
         </Route>
+
+        {/* Handle 404 */}
+        <Route path='*' element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );

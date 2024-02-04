@@ -1,0 +1,18 @@
+/*Mobile First Style*/
+.main {
+  width: 20rem;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem;
+
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}
