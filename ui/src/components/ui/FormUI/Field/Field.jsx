@@ -3,6 +3,7 @@ import { Form, Input } from "semantic-ui-react";
 import styles from './styles.module.css';
 
 const UIInput = ({
+  error,
   type,
   label,
   inputLabel,
@@ -15,7 +16,7 @@ const UIInput = ({
 }) => {
   const { Field } = Form;
   return (
-    <Field className={styles.main}>
+    <Field error={error}  className={styles.main}>
       <label>{label}</label>
       <Input
         className={styles.input}
