@@ -12,6 +12,11 @@ const SignUp = ({ props }) => {
     { key: "f", value: "female", text: "Female" },
   ];
 
+  const nationalityOptions = [
+    { key: "nigerian", value: "nigerian", text: "Nigerian" },
+    { key: "other", value: "other", text: "Other" },
+  ];
+
   return (
     <Container className={`${styles.container}`}>
       <div className={styles.main}>
@@ -69,7 +74,12 @@ const SignUp = ({ props }) => {
               </Column>
 
               <Column mobile={16} tablet={8} computer={8}>
-                Dob select
+                <UIInput
+                  type={"date"}
+                  name="dob"
+                  label={"Date of Birth"}
+                  placeholder={"Date of Birth"}
+                  value="" />
               </Column>
 
               <Column mobile={16} tablet={8} computer={8}>
@@ -81,7 +91,10 @@ const SignUp = ({ props }) => {
               </Column>
 
               <Column mobile={16} tablet={8} computer={8}>
-                Nationality select
+                <UISelect
+                  label={"Nationality"}
+                  placeholder={"Nationality"}
+                  options={nationalityOptions} />
               </Column>
 
             </Row>

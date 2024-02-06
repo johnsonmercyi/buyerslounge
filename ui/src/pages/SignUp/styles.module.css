@@ -1,9 +1,10 @@
 /*Mobile First Style*/
 .container {
-  height         : 100vh;
+  height         : fit-content !important;
   display        : flex !important;
   justify-content: center !important;
   align-items    : center !important;
+  margin         : 1rem auto;
 }
 
 .main {
@@ -14,8 +15,12 @@
 
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
+  .container {
+    height: 100vh !important;
+  }
+
   .main {
-    width  : 50rem;
+    width: 50rem;
   }
 
 }

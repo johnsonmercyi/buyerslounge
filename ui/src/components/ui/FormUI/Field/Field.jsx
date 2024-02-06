@@ -15,7 +15,7 @@ const UIInput = ({
 }) => {
   const { Field } = Form;
   return (
-    <Field>
+    <Field className={styles.main}>
       <label>{label}</label>
       <Input
         className={styles.input}

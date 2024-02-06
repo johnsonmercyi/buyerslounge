@@ -1,6 +1,7 @@
 /*Mobile First Style*/
 .main {
   width: 100%;
+  margin-bottom: 0.2rem;
 }
 
 .main label {
@@ -10,6 +11,7 @@
 }
 
 .select {
+  margin-top: 0.2rem !important;
   width: 100% !important;
 }
 

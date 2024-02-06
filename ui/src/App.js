@@ -6,12 +6,14 @@ import Home from './pages/Home/Home';
 import NoPage from './pages/NoPage/NoPage';
 import Login from './pages/Login/Login';
 import ProtectedRoute from './util/ProtectedRoute';
+import SignUp from './pages/SignUp/SignUp';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<SignUp />} />
 
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Layout />}>
