@@ -1,11 +1,23 @@
 /*Mobile First Style*/
-.button {
+.main {
+  width: 100%;
+}
+
+.main label {
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 550;
+}
+
+.select {
   width: 100% !important;
 }
 
+
+
+
+
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
-  .button {
-    width: initial !important;
-  }
+
 }

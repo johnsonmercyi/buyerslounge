@@ -1,0 +1,21 @@
+/*Mobile First Style*/
+.container {
+  height         : 100vh;
+  display        : flex !important;
+  justify-content: center !important;
+  align-items    : center !important;
+}
+
+.main {
+  width  : 100%;
+  height : auto;
+  padding: 1rem 2rem;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+  .main {
+    width  : 50rem;
+  }
+
+}

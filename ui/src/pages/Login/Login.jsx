@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import UIButton from "../../components/ui/Button/Button";
 import UIInput from "../../components/ui/FormUI/Field/Field";
@@ -11,61 +12,74 @@ const Login = ({ props }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [inputs, setInputs] = useState({});
+  const navigate = useNavigate();
 
-const onSubmitHandler = async (event) => {
-  event.preventDefault();
-  setLoading(true);
+  const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
 
-  //validate user's input
-  fieldValidation();
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
 
-  try {
-    // ⚠️Handling login...
-    if (!isError) {
-      const loginPayload = {
-        usernameOrEmail: inputs.username,
-        password: inputs.password
-      };
-      const res = await axios.post("api/login", loginPayload);
-      console.log(res.data);
-      if (res.status === 200) {
-        //If the user is logged in successfully
-        alert(`You're successfully logged in ${inputs.username}!`);
-        
-        localStorage.setItem('isLoggedIn', true);  
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    //validate user's input
+    if (validate()) {
+      setLoading(true);
+      try {
+        // ⚠️Handling login...
+        const loginPayload = {
+          usernameOrEmail: inputs.username,
+          password: inputs.password
+        };
+
+        const res = await axios.post("api/login", loginPayload);
+        console.log(res.data);
+
+        if (res.status === 200) {
+          //If the user is logged in successfully
+          localStorage.setItem('isLoggedIn', true);
+          setLoading(false);
+          setIsError(false);
+          setIsSuccess(true);
+
+          // Navigate to dashboard or home...
+          navigate("/");
+        }
+      } catch (err) {
+        console.log(err.message);
+        setMessage("Invalid credentials");
         setLoading(false);
-        setIsError(false);
-        //props.history.push('/home');
-        setTimeout(() => {
-          setMessage(`You're successfully logged in ${inputs.username}!`);
-        }, 5000);
       }
-    }
-  } catch (err) {
-    console.log(err.message);
-    setMessage("Invalid credentials");
-    setLoading(false);
-  }
-}
 
-const fieldValidation = () => {
-  //Validating user's input
-  for(const i in inputs){
-    if(!isError && i === "username" && inputs[i].length === 0){
-      setIsError(true);
-      setMessage("Username cannot be empty");
-      setLoading(false);
-      return;
     }
-  if(!isError && i === "password" && inputs[i].length !== 8){
+
+  }
+
+  const validate = () => {
+    const { username, password } = inputs;
+
+    if (username && password) {
+      if (password.length < 8) {
+        setIsError(true);
+        setMessage("Password must be minimum of 8 characters.");
+        setLoading(false);
+        return false;
+      } else {
+        setIsError(false);
+        return true;
+      }
+    } else {
       setIsError(true);
-      setMessage("Password must be 8 characters long");
+      setMessage("Username and Password are required.");
       setLoading(false);
-      return;
+      return false;
     }
   }
-}
 
   const onChangeHandler = (event) => {
     const name = event.target.name; // Gets the name of the field
@@ -104,18 +118,26 @@ const fieldValidation = () => {
 
           {/* error Message box */}
           {
-            isError ? (<UIMessage
+            (isError || isSuccess) ? (<UIMessage
               type={isError ? "error" : "success"}
               content={message} />) : null
           }
 
-          <UIButton
-            type={"submit"}
-            content="Login"
-            icon={"sign-in"}
-            labelPosition={"right"}
-            loading={loading}
-            disabled={loading} />
+          <div className={styles.buttonWrapper}>
+            <UIButton
+              type={"submit"}
+              content="Login"
+              icon={"sign-in"}
+              labelPosition={"right"}
+              loading={loading}
+              disabled={loading} />
+
+            <div className={styles.signup}>
+              Not a user?
+              <Link to={{pathname: "/signup"}}> Sign up!</Link>
+            </div>
+
+          </div>
         </UIForm>
       </div>
     </Container>
