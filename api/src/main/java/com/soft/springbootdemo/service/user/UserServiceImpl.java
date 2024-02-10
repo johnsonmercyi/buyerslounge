@@ -61,6 +61,8 @@ public class UserServiceImpl implements UserService {
   public User saveUserWithRoles(User user, List<String> roles) {
     if (userRepo.findByEmail(user.getEmail()) != null) {
       throw new DataIntegrityViolationException("User already exists with this email address!");
+    } else if (userRepo.findByUsername(user.getUsername()) != null) {
+      throw new DataIntegrityViolationException("Username already taken!");
     } else {
       User savedUser = userRepo.save(user);// save user first
       // Saves the user roles in the user_roles table

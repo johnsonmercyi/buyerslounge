@@ -14,7 +14,8 @@
   background-color: transparent;
 }
 
-.signupButtonWrapper {
+.signupButtonWrapper,
+.roleWrapper {
   width  : 100%;
   padding: 1rem 0;
 
@@ -22,6 +23,12 @@
   flex-direction : column;
   justify-content: center;
   align-items    : center;
+}
+
+.roleWrapper {
+  flex-direction : row;
+  align-items    : flex-start;
+  justify-content: flex-start;
 }
 
 .signupButtonWrapper .loginButtonWrapper {
@@ -46,7 +53,13 @@
 
   .signupButtonWrapper {
     flex-direction : row;
-    align-items: center;
+    align-items    : center;
+    justify-content: flex-start;
+  }
+
+  .roleWrapper {
+    flex-direction : column;
+    align-items    : flex-start;
     justify-content: flex-start;
   }
 
@@ -54,7 +67,7 @@
     width     : auto;
     padding   : 0.5rem 0;
     text-align: left;
-    margin: 0 0.5rem;
+    margin    : 0 0.5rem;
   }
 
 }

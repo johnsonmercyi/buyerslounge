@@ -8,8 +8,9 @@ import UIButton from "../../components/ui/Button/Button";
 import { Link } from "react-router-dom";
 import UIMessage from "../../components/ui/UIMessage/UIMessage";
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import UIRadioGroupBtn from "../../components/ui/RadioBtn/RadioGroupBtn";
+import axios from 'axios';
+import { HTTPMethods, makeRequest } from "../../util/utils";
 
 const SignUp = ({ props }) => {
   const { Row, Column } = Grid;
@@ -22,11 +23,11 @@ const SignUp = ({ props }) => {
     { key: "nigerian", value: "nigerian", text: "Nigerian" },
     { key: "other", value: "other", text: "Other" },
   ];
-  
-  const radioRole ={
-    role1: "customer",
-    role2: "seller"
-  }
+
+  const roleRadios = [
+    { label: "I'm a customer", value: "customers" },
+    { label: "I'm a seller", value: "sellers" }
+  ];
 
   const [inputs, setInputs] = useState({});
   const [errorInputs, setErrorInputs] = useState({});
@@ -34,11 +35,11 @@ const SignUp = ({ props }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   //const [isSuccess, setIsSuccess] = useState(false);
-  const [role, setRole] = useState(radioRole.role1);
+  const [role, setRole] = useState(roleRadios[0].value);
   const [roleError, setRoleError] = useState(false);
   const navigate = useNavigate();
 
-  
+
 
   const onChangeHandler = (event, { name, value }) => {
     setErrorInputs(values => ({ ...values, [name]: value.length ? false : true }));
@@ -50,51 +51,50 @@ const SignUp = ({ props }) => {
     });
   }
 
-  const radioChangeHandler = (event) => {
-    //console.log(event.target);
-    const selectedRole = event.target.value;
-   // console.log(selectedRole);
-   setRole(selectedRole);
-   console.log("ROLE: ", role);  
+  const radioChangeHandler = (event, { value }) => {
+    console.log("Value: ", value);
+    const selectedRole = value;
+    setRole(selectedRole);
   }
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     if (validate()) {
       setIsError(false);
       setLoading(true);
       setRoleError(false);
-      try{
+      try {
         const signupPayload = {
           firstname: inputs.firstname,
           lastname: inputs.lastname,
           username: inputs.username,
           password: inputs.password,
           gender: inputs.gender,
-          email: inputs.email, 
+          email: inputs.email,
           dob: inputs.dob,
           address: inputs.address,
           nationality: inputs.nationality
         };
 
-        const res = axios.post("api/signup", signupPayload);
-        console.log(res.data);
-        
-        if(res.status === 200){
+        const data = await makeRequest(`api/${role}`, HTTPMethods.POST, signupPayload)
+
+        if (data.error) {
+          console.log("RESPONSE: ", data);
           setLoading(false);
-          setIsError(false);
-          //setIsSuccess(true);
-          //setMessage(res.data.message);
+          setIsError(true);
+          setMessage(data.message);
+        } else {
+          setLoading(false);
 
           //navigate to login
-          navigate("/login");
-        }else{
-          setIsError(true);
-          setLoading(false);
-          setMessage(res.data.message);
+          navigate("/login", {
+            state: {
+              username: signupPayload.username
+            }
+          });
         }
-      }catch(err){
+      } catch (err) {
         console.log(err.message);
         setLoading(false);
       }
@@ -162,7 +162,7 @@ const SignUp = ({ props }) => {
       setErrorInputs(values => ({ ...values, nationality: true }));
     }
 
-    if(!role){
+    if (!role) {
       setRoleError(true);
     }
 
@@ -281,13 +281,13 @@ const SignUp = ({ props }) => {
                   value={inputs.nationality || ""}
                   onChangeHandler={onChangeHandler} />
               </Column>
-             
+
               <Column mobile={16} tablet={16} computer={16}>
-                <div className={styles.signupButtonWrapper}>
+                <div className={styles.roleWrapper}>
                   <UIRadioGroupBtn
-                    name= "role"
-                    labels={[radioRole.role1, radioRole.role2]}
-                    checked={role}
+                    name="role"
+                    selectedValue={role} // Initial value = customer
+                    radios={roleRadios}
                     onChange={radioChangeHandler}
                   />
                 </div>
@@ -317,7 +317,7 @@ const SignUp = ({ props }) => {
                     <Link to={{ pathname: "/login" }}> Login!</Link>
                   </div>
                 </div>
-              </Column>     
+              </Column>
 
             </Row>
           </Grid>

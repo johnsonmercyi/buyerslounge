@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import UIButton from "../../components/ui/Button/Button";
 import UIInput from "../../components/ui/FormUI/Field/Field";
@@ -15,12 +15,21 @@ const Login = ({ props }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [inputs, setInputs] = useState({});
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const username = location.state?.username;
+
+  console.log(username);
 
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
 
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/");
+    }
+
+    if (username) {
+      setInputs({ username: username })
     }
   }, []);
 
