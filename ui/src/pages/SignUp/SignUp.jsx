@@ -7,6 +7,9 @@ import UISelect from "../../components/ui/FormUI/Select/Select";
 import UIButton from "../../components/ui/Button/Button";
 import { Link } from "react-router-dom";
 import UIMessage from "../../components/ui/UIMessage/UIMessage";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import UIRadioGroupBtn from "../../components/ui/RadioBtn/RadioGroupBtn";
 
 const SignUp = ({ props }) => {
   const { Row, Column } = Grid;
@@ -19,12 +22,23 @@ const SignUp = ({ props }) => {
     { key: "nigerian", value: "nigerian", text: "Nigerian" },
     { key: "other", value: "other", text: "Other" },
   ];
+  
+  const radioRole ={
+    role1: "customer",
+    role2: "seller"
+  }
 
   const [inputs, setInputs] = useState({});
   const [errorInputs, setErrorInputs] = useState({});
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  //const [isSuccess, setIsSuccess] = useState(false);
+  const [role, setRole] = useState(radioRole.role1);
+  const [roleError, setRoleError] = useState(false);
+  const navigate = useNavigate();
+
+  
 
   const onChangeHandler = (event, { name, value }) => {
     setErrorInputs(values => ({ ...values, [name]: value.length ? false : true }));
@@ -36,12 +50,54 @@ const SignUp = ({ props }) => {
     });
   }
 
+  const radioChangeHandler = (event) => {
+    //console.log(event.target);
+    const selectedRole = event.target.value;
+   // console.log(selectedRole);
+   setRole(selectedRole);
+   console.log("ROLE: ", role);  
+  }
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
     if (validate()) {
       setIsError(false);
       setLoading(true);
+      setRoleError(false);
+      try{
+        const signupPayload = {
+          firstname: inputs.firstname,
+          lastname: inputs.lastname,
+          username: inputs.username,
+          password: inputs.password,
+          gender: inputs.gender,
+          email: inputs.email, 
+          dob: inputs.dob,
+          address: inputs.address,
+          nationality: inputs.nationality
+        };
+
+        const res = axios.post("api/signup", signupPayload);
+        console.log(res.data);
+        
+        if(res.status === 200){
+          setLoading(false);
+          setIsError(false);
+          //setIsSuccess(true);
+          //setMessage(res.data.message);
+
+          //navigate to login
+          navigate("/login");
+        }else{
+          setIsError(true);
+          setLoading(false);
+          setMessage(res.data.message);
+        }
+      }catch(err){
+        console.log(err.message);
+        setLoading(false);
+      }
     }
   }
 
@@ -59,6 +115,7 @@ const SignUp = ({ props }) => {
       nationality
     } = inputs;
 
+    let pCheck = true;
     if (!firstname) {
       setErrorInputs(values => ({ ...values, firstname: true }));
     }
@@ -71,14 +128,20 @@ const SignUp = ({ props }) => {
       setErrorInputs(values => ({ ...values, username: true }));
     }
 
-    if (!password) {
+    if (!password || password.length < 8) {
       setErrorInputs(values => ({ ...values, password: true }));
+      setIsError(true);
+      setMessage("Password must be minimum of 8 characters.");
+      setLoading(false);
+      pCheck = false;
     }
-
-    if (!confirmPassword) {
+    if (!confirmPassword || password !== confirmPassword) {
       setErrorInputs(values => ({ ...values, confirmPassword: true }));
+      setIsError(true);
+      setMessage("Passwords do not match.");
+      setLoading(false);
+      pCheck = false;
     }
-
     if (!email) {
       setErrorInputs(values => ({ ...values, email: true }));
     }
@@ -99,7 +162,11 @@ const SignUp = ({ props }) => {
       setErrorInputs(values => ({ ...values, nationality: true }));
     }
 
-    return firstname && lastname && username && password && confirmPassword && email && gender && dob && address && nationality;
+    if(!role){
+      setRoleError(true);
+    }
+
+    return firstname && lastname && username && password && confirmPassword && email && gender && dob && address && nationality && role && pCheck;
   }
 
   return (
@@ -214,6 +281,17 @@ const SignUp = ({ props }) => {
                   value={inputs.nationality || ""}
                   onChangeHandler={onChangeHandler} />
               </Column>
+             
+              <Column mobile={16} tablet={16} computer={16}>
+                <div className={styles.signupButtonWrapper}>
+                  <UIRadioGroupBtn
+                    name= "role"
+                    labels={[radioRole.role1, radioRole.role2]}
+                    checked={role}
+                    onChange={radioChangeHandler}
+                  />
+                </div>
+              </Column>
 
               {
                 isError ?
@@ -239,7 +317,7 @@ const SignUp = ({ props }) => {
                     <Link to={{ pathname: "/login" }}> Login!</Link>
                   </div>
                 </div>
-              </Column>
+              </Column>     
 
             </Row>
           </Grid>
