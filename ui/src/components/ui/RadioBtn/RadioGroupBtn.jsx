@@ -13,12 +13,11 @@ const UIRadioGroupBtn = ({ name, selectedValue, radios, onChange, ...props }) =>
           <Radio
             name={name}
             label={radio.label}
-            checked={selectedValue === radio.value}
+            checked={selectedValue === radio.value} // accepts boolean
             value={radio.value}
             onChange={onChange}
             {...props}
           />
-          {/* <label className={styles.radioBtnLabel}>{label}</label> */}
         </FormField>
       ))}
     </>

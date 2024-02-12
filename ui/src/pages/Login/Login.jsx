@@ -27,7 +27,7 @@ const Login = ({ props }) => {
     if (isLoggedIn) {
       navigate("/");
     }
-
+    //username from signup
     if (username) {
       setInputs({ username: username })
     }
