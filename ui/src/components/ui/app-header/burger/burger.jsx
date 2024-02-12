@@ -1,9 +1,11 @@
 import React from "react";
 import styles from './styles.module.css';
 
-const UIHamburger = ({ ...props }) => {
+const UIHamburger = ({ onClickHandler, ...props }) => {
   return (
-    <div className={styles.main}>
+    <div
+      className={styles.main}
+      onClick={onClickHandler}>
       <div></div>
       <div></div>
       <div></div>

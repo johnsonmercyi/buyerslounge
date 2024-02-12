@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 import { Button} from 'semantic-ui-react';
 
-const UISideBar = ({ onClickHandler, ...props }) => {
+const UISideBar = ({ show, onClickHandler, ...props }) => {
   return (
     <div className={styles.dimarea}>
       <div className={styles.sidebar}>
