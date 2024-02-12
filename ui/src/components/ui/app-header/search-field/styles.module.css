@@ -1,0 +1,20 @@
+/*Mobile First Style*/
+.main {
+  width: 50%;
+  height: 100%;
+
+  margin: 0 0.15rem;
+}
+
+.select {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.field {
+  border-top-left-radius   : 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

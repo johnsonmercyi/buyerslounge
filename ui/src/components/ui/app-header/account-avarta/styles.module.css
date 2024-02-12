@@ -1,0 +1,10 @@
+/*Mobile First Style*/
+.label {
+  width : 8rem !important;
+  margin: 0 0.15rem !important;
+
+  /* font-size: 1.1rem !important; */
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

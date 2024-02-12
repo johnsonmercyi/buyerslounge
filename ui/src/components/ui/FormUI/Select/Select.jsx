@@ -2,11 +2,12 @@ import React from "react";
 import { Select } from "semantic-ui-react";
 import styles from './styles.module.css';
 
-const UISelect = ({ error = false, name, label, options, placeholder, onChangeHandler, ...props }) => {
+const UISelect = ({ defaultValue, error = false, name, label, options, placeholder, onChangeHandler, ...props }) => {
   return (
     <div className={styles.main}>
       <label style={{ color: error ? "#9f3a38" : "initial" }}>{label}</label>
       <Select
+        defaultValue={defaultValue || ''}
         error={error}
         name={name}
         className={styles.select}

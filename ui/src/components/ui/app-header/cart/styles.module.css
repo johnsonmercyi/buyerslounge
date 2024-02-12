@@ -1,0 +1,13 @@
+/*Mobile First Style*/
+.cart {
+  width : 5rem !important;
+  height: 100% !important;
+
+  font-size: 1.3rem !important;
+  margin: 0 0.15rem !important;
+
+  background-color: transparent !important;;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}
