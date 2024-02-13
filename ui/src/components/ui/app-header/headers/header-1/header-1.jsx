@@ -1,19 +1,25 @@
-import React from "react";
-import styles from './styles.module.css';
-import UISearchField from "../../search-field/search-field";
-import UILogo from "../../logo/logo";
-import UICart from "../../cart/cart";
+import React, { useEffect } from "react";
 import UIAccountAvatar from "../../account-avarta/account-avarta";
+import UICart from "../../cart/cart";
+import UILogo from "../../logo/logo";
+import UISearchField from "../../search-field/search-field";
+import styles from './styles.module.css';
+
+const searchOptions = [
+  { key: 'all', text: 'All', value: 'all' },
+  { key: 'articles', text: 'Articles', value: 'articles' },
+  { key: 'products', text: 'Products', value: 'products' },
+];
 
 const Header1 = ({ props }) => {
-  const searchOptions = [
-    { key: 'all', text: 'All', value: 'all' },
-    { key: 'articles', text: 'Articles', value: 'articles' },
-    { key: 'products', text: 'Products', value: 'products' },
-  ];
+  
+  useEffect(()=> {
+  }, []);
+
   return (
     <div className={styles.header1}>
       <UILogo />
+
       <div className={styles.right}>
         <UISearchField
           options={searchOptions} />

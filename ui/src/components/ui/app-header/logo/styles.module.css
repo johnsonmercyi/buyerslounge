@@ -13,10 +13,11 @@
 }
 
 .label {
-  font-size: 3rem !important;
+  width: 2rem !important;
+  font-size: 2rem !important;
   background-color: transparent !important;
-  padding: 0 !important;
-
+  padding: 0rem !important;
+  margin-left: 1rem !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
