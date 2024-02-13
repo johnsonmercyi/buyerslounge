@@ -8,8 +8,12 @@
   align-items: center;
 }
 
+.logo span {
+  width: 9rem;
+}
+
 .label {
-  font-size: 2rem !important;
+  font-size: 3rem !important;
   background-color: transparent !important;
   padding: 0 !important;
 

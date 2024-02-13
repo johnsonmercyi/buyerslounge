@@ -19,7 +19,6 @@ const UIAccountAvatar = ({
   return (<Label
     className={styles.label}
     as='a'
-    icon={!imageSrc ? "user" : ""}
     content={content || ''}
     image={imageProps}
     {...props} />);

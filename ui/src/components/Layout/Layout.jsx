@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from './styles.module.css';
 import { Link, Outlet } from "react-router-dom";
 import UIButton from "../ui/Button/Button";
@@ -10,17 +10,15 @@ const Layout = ({ props }) => {
 
   const [showSideBar, setShowSideBar] = useState(false);
 
-  useEffect(() => {
-
-  });
-
   const showSideBarHandler = () => {
     setShowSideBar(true);
   }
 
   return (
     <SidebarContext.Provider value={{ 
-      showSideBar, setShowSideBar, showSideBarHandler 
+      showSideBar, 
+      setShowSideBar, 
+      showSideBarHandler
     }}>
       <div className={styles.main}>
 
@@ -30,6 +28,7 @@ const Layout = ({ props }) => {
 
           {/* Side/Menu Bar */}
           <UISideBar />
+          
         </header>
 
         <main className="container">

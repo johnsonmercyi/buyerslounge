@@ -34,9 +34,9 @@ export const animate = (
 
   let animation = new Animation(keyframes, document.timeline);
   animation.play();
-
+ 
   if (onFinish) {
-    if (onFinishDelay) {
+    if (onFinishDelay || onFinishDelay === 0) {
       setTimeout(() => {
         onFinish();
       }, delay + onFinishDelay);
