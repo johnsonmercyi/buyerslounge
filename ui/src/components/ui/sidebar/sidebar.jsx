@@ -31,30 +31,49 @@ const UISideBar = ({ ...props }) => {
     }, 0);
   }
 
+  // const closeSideBarAnimation = () => {
+  //   animate(sideBarDimRef.current, 0, 300, 1, "ease-in-out", [
+  //     { opacity: "1" },
+  //     { opacity: "0" },
+  //   ], () => {
+  //     animate(sideBarRef.current, 0, 300, 1, "ease-in-out", [
+  //       { left: "0" },
+  //       { left: "-25rem" },
+  //     ], ()=> {
+  //       sideBarDimRef.current.style.display = "none";
+  //     });
+  //   }, 0);
+  // }
   const closeSideBarAnimation = () => {
+    animate(sideBarRef.current, 0, 300, 1, "ease-in-out", [
+      { left: "0" },
+      { left: "-25rem" },
+    ], ()=> {
+      sideBarDimRef.current.style.display = "none";
+    });
     animate(sideBarDimRef.current, 0, 300, 1, "ease-in-out", [
       { opacity: "1" },
       { opacity: "0" },
     ], () => {
-      animate(sideBarRef.current, 0, 300, 1, "ease-in-out", [
-        { left: "0" },
-        { left: "-25rem" },
-      ], ()=> {
-        sideBarDimRef.current.style.display = "none";
-      });
+      // Callback function for after the dimming animation
+      //sideBarDimRef.current.style.display = "none";
     }, 0);
   }
 
 
   return (
-    <div className={styles.dimarea} ref={sideBarDimRef}>
+<div className={styles.dimarea} ref={sideBarDimRef} onClick={() => setShowSideBar(false)}>
       <div className={styles.sidebar} ref={sideBarRef}>
         <div className={styles.header}>
           <Button
             icon={"close"}
             onClick={() => setShowSideBar(false)} />
         </div>
-        This is the sidebar
+        <div onClick={(e) => e.stopPropagation()}>
+          This is the sidebar body
+          {/* make length fit to content */}
+        </div>
+        
       </div>
     </div>
   )
