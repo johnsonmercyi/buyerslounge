@@ -19,7 +19,7 @@ const Login = ({ props }) => {
 
   const username = location.state?.username;
 
-  console.log(username);
+  // console.log(username);
 
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
 
@@ -47,11 +47,16 @@ const Login = ({ props }) => {
         };
 
         const res = await axios.post("api/login", loginPayload);
-        console.log(res.data);
+        const userData = res.data;
+        // console.log(userData);
 
         if (res.status === 200) {
           //If the user is logged in successfully
           localStorage.setItem('isLoggedIn', true);
+          localStorage.setItem('userData', JSON.stringify({
+            username: userData.username,
+            role: userData.userRoles[0].name
+          }));
           setLoading(false);
           setIsError(false);
           setIsSuccess(true);
@@ -64,9 +69,7 @@ const Login = ({ props }) => {
         setMessage("Invalid credentials");
         setLoading(false);
       }
-
     }
-
   }
 
   const validate = () => {

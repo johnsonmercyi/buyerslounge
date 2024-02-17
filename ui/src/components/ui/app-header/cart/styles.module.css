@@ -13,6 +13,8 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
+
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /*Devices larger than mobile phone*/

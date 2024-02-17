@@ -1,15 +1,11 @@
 /*Mobile First Style*/
-.header2 {
+.navigation {
   width: 100%;
-  height: 3rem;
-
-  background-color: #303f53;
 
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-
-  padding: 0.25rem;
 }
 
 /*Devices larger than mobile phone*/

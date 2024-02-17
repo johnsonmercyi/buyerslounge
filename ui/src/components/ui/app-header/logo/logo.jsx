@@ -5,10 +5,10 @@ import { Label } from "semantic-ui-react";
 const UILogo = ({ ...props }) => {
   return (
     <div className={styles.logo}>
-      <Label 
-      className={styles.label} 
-      icon={"btc"} 
-      size="massive"/>
+      <Label
+        className={styles.label}
+        icon={"btc"}
+        size="massive" />
 
       <span>Buyers Lounge</span>
     </div>

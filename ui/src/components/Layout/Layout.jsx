@@ -6,6 +6,7 @@ import AppHeader from "../ui/app-header/app-header";
 import UISideBar from "../ui/sidebar/sidebar";
 import { SidebarContext } from "../../util/context/SidebarContext";
 import { BrowserContext } from "../../util/context/BrowserContext";
+import { UserProvider } from "../../util/providers/UserProvider";
 
 const Layout = ({ props }) => {
 
@@ -23,30 +24,32 @@ const Layout = ({ props }) => {
   }
 
   return (
-    <BrowserContext.Provider value={{ browserWidth }}>
-      <SidebarContext.Provider value={{ 
-        showSideBar, 
-        setShowSideBar, 
-        showSideBarHandler,
-        browserWidth
-      }}>
-        <div className={styles.main}>
+    <UserProvider>
+      <BrowserContext.Provider value={{ browserWidth }}>
+        <SidebarContext.Provider value={{ 
+          showSideBar, 
+          setShowSideBar, 
+          showSideBarHandler,
+          browserWidth
+        }}>
+          <div className={styles.main}>
 
-          <header>
-            {/* App Header*/}
-            <AppHeader />
+            <header>
+              {/* App Header*/}
+              <AppHeader />
 
-            {/* Side/Menu Bar */}
-            <UISideBar />
-            
-          </header>
+              {/* Side/Menu Bar */}
+              <UISideBar />
+              
+            </header>
 
-          <main className="container">
-            <Outlet />
-          </main>
-        </div>
-      </SidebarContext.Provider>
-    </BrowserContext.Provider>
+            <main className="container">
+              <Outlet />
+            </main>
+          </div>
+        </SidebarContext.Provider>
+      </BrowserContext.Provider>
+    </UserProvider>
   );
 }
 

@@ -9,6 +9,8 @@
   justify-content : center !important;
   align-items     : center !important;
   background-color: transparent !important;
+
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 /*Devices larger than mobile phone*/

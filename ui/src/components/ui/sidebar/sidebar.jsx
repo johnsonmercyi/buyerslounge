@@ -3,12 +3,32 @@ import styles from './styles.module.css';
 import { Button } from 'semantic-ui-react';
 import { SidebarContext } from '../../../util/context/SidebarContext';
 import { animate } from '../../../util/utils';
+import Navigation from './navigation/Navigation';
+import { useUser } from '../../../util/providers/UserProvider';
+
+const adminItems = [
+  { text: "Category", icon: "category", to: "" },
+  { text: "Product", icon: "product", to: "" },
+];
+
+const sellerItems = [
+  { text: "Inventory", icon: "inventory", to: "" },
+];
+
+const customerItems = [
+  { text: "Product", icon: "product", to: "" },
+  { text: "Cart", icon: "cart", to: "" },
+  { text: "Market", icon: "shop", to: "" },
+];
 
 const UISideBar = ({ ...props }) => {
   const { showSideBar, setShowSideBar } = useContext(SidebarContext);
+  const { username, role } = useUser();
 
   const sideBarRef = useRef(null);
   const sideBarDimRef = useRef(null);
+
+
 
   useEffect(() => {
     if (showSideBar) {
@@ -31,49 +51,37 @@ const UISideBar = ({ ...props }) => {
     }, 0);
   }
 
-  // const closeSideBarAnimation = () => {
-  //   animate(sideBarDimRef.current, 0, 300, 1, "ease-in-out", [
-  //     { opacity: "1" },
-  //     { opacity: "0" },
-  //   ], () => {
-  //     animate(sideBarRef.current, 0, 300, 1, "ease-in-out", [
-  //       { left: "0" },
-  //       { left: "-25rem" },
-  //     ], ()=> {
-  //       sideBarDimRef.current.style.display = "none";
-  //     });
-  //   }, 0);
-  // }
   const closeSideBarAnimation = () => {
     animate(sideBarRef.current, 0, 300, 1, "ease-in-out", [
       { left: "0" },
       { left: "-25rem" },
-    ], ()=> {
-      sideBarDimRef.current.style.display = "none";
-    });
-    animate(sideBarDimRef.current, 0, 300, 1, "ease-in-out", [
-      { opacity: "1" },
-      { opacity: "0" },
     ], () => {
-      // Callback function for after the dimming animation
-      //sideBarDimRef.current.style.display = "none";
-    }, 0);
+      animate(sideBarDimRef.current, 0, 300, 1, "ease-in-out", [
+        { opacity: "1" },
+        { opacity: "0" },
+      ], () => {
+        sideBarDimRef.current.style.display = "none";
+      });
+    });
+
   }
 
 
   return (
-<div className={styles.dimarea} ref={sideBarDimRef} onClick={() => setShowSideBar(false)}>
+    <div className={styles.dimarea} ref={sideBarDimRef} onClick={() => setShowSideBar(false)}>
       <div className={styles.sidebar} ref={sideBarRef}>
         <div className={styles.header}>
           <Button
             icon={"close"}
             onClick={() => setShowSideBar(false)} />
         </div>
-        <div onClick={(e) => e.stopPropagation()}>
-          This is the sidebar body
-          {/* make length fit to content */}
-        </div>
-        
+        {/* <div onClick={(e) => e.stopPropagation()}> */}
+        {/* This is the sidebar body */}
+        {/* make length fit to content */}
+        {/* </div> */}
+
+        <Navigation listItems={role === "admin" ? adminItems : role === "seller" ? sellerItems : customerItems} />
+
       </div>
     </div>
   )

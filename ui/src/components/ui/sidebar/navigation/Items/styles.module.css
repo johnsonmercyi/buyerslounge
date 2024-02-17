@@ -1,0 +1,48 @@
+/*Mobile First Style*/
+.item {
+  width: 100%;
+  height: 3rem;
+
+  /* border-bottom: 1px solid #ccc; */
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding: 0 1rem;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon {
+  width: 3rem;
+  height: 100%;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* background-color: aquamarine; */
+}
+
+.text {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  color: white;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}
