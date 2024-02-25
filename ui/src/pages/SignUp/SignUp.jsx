@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from './styles.module.css';
 import { Container, Grid } from "semantic-ui-react";
-import UIForm from "../../components/ui/FormUI/Form/Form";
+import UIForm from "../../components/ui/FormUI/Form";
 import UIInput from "../../components/ui/FormUI/Field/Field";
 import UISelect from "../../components/ui/FormUI/Select/Select";
 import UIButton from "../../components/ui/Button/Button";

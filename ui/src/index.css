@@ -14,8 +14,8 @@ body {
   -webkit-font-smoothing : antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #1E2A3F !important;
-  /* color        : rgba(255, 255, 255, 0.5) !important; */
+  /* background-color: #0f172a !important;
+  color        : #D2D8E2 !important; */
 }
 
 code {

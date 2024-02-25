@@ -1,35 +1,28 @@
 import React from "react";
-import { Form, Input } from "semantic-ui-react";
 import styles from './styles.module.css';
 
-const UIInput = ({
+const Input = ({
   error,
   type,
   label,
   inputLabel,
-  labelPosition,
   value = "",
   placeholder,
-  icon,
   onChangeHandler,
-  ...props
-}) => {
-  const { Field } = Form;
+  ...props }) => {
   return (
-    <Field error={error} className={styles.main}>
-      <label>{label}</label>
-      <Input
+    <div className={styles.main}>
+      <label htmlFor="">{label}</label>
+      <input
         className={styles.input}
         type={type || "text"}
-        label={inputLabel}
-        labelPosition={labelPosition}
+        aria-label={inputLabel}
         value={value}
         placeholder={placeholder}
-        icon={icon}
         onChange={onChangeHandler}
         {...props} />
-    </Field>
+    </div>
   );
 }
 
-export default UIInput;
+export default Input;

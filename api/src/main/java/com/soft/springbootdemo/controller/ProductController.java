@@ -62,9 +62,6 @@ public class ProductController {
       Product product = new Product();
       product.setCategory(category);
       product.setName(productDTO.getName());
-      product.setPrice(productDTO.getPrice());
-      product.setCost(productDTO.getCost());
-      product.setDescription(productDTO.getDescription());
 
       return ResponseEntity.ok(productService.save(product));
     }

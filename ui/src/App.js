@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './global.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
@@ -7,6 +8,10 @@ import NoPage from './pages/NoPage/NoPage';
 import Login from './pages/Login/Login';
 import ProtectedRoute from './util/ProtectedRoute';
 import SignUp from './pages/SignUp/SignUp';
+import AdminCategory from './pages/admin/category/Category';
+import AdminDashboard from './pages/admin/dashboard';
+import SellerDashboard from './pages/seller/dashboard';
+import Category from './pages/admin/category/Category';
 
 function App() {
   return (
@@ -18,6 +23,12 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path='/admin/dashboard' element={<AdminDashboard />}>
+              <Route path='/admin/dashboard/category' element={<Category />} />
+            </Route>
+            <Route path='/seller/dashboard' element={<SellerDashboard />}>
+              <Route path='/seller/dashboard/category' element={<Category />} />
+            </Route>
             <Route path='*' element={<NoPage />} />
           </Route>
         </Route>

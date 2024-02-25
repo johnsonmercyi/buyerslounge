@@ -28,17 +28,6 @@ public class Product {
   @Column(nullable = false)
   private String name; 
 
-  private String description;
-
-  @Column(nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
-  private double cost;
-
-  @Column(nullable = false, columnDefinition = "DOUBLE DEFAULT 0.0")
-  private double price;
-
-  @Column(name = "ref_no", nullable = false, unique = false)
-  private UUID refNo;
-
   @CreationTimestamp
   @Column(nullable = false)
   private LocalDateTime created;
@@ -46,6 +35,6 @@ public class Product {
   private LocalDateTime updated;
 
   public Product() {
-    this(UUID.randomUUID(), null, null, null, 0d, 0d, UUID.randomUUID(), null, null);
+    this(UUID.randomUUID(), null, null, null, null);
   }
 }

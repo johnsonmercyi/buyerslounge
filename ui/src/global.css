@@ -1,0 +1,6 @@
+@import url(./theme/theme.css);
+
+body {
+  background-color: var(--primary-bg-color);
+  color: var(--default-color)
+}

@@ -27,9 +27,6 @@ public class SaleItemResponseDTO {
     private UUID id;
     private CategoryResponseDTO category;
     private String name;
-    private double cost;
-    private double price;
-    private UUID refNo;
   }
 
   @Data

@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 import com.soft.springbootdemo.dto.requestdto.ReturnSaleRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.ReturnSaleResponseDTO;
 import com.soft.springbootdemo.model.Product;
-import com.soft.springbootdemo.model.ProductInventory;
+import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.model.ReturnSale;
 import com.soft.springbootdemo.model.Sale;
-import com.soft.springbootdemo.repo.ProductInventoryRepo;
+import com.soft.springbootdemo.repo.SellerProductsRepo;
 import com.soft.springbootdemo.repo.ReturnSaleRepo;
 import com.soft.springbootdemo.repo.SaleRepo;
-import com.soft.springbootdemo.service.ProductInventory.ProductInventoryService;
+import com.soft.springbootdemo.service.SellerProducts.SellerProductsService;
 import com.soft.springbootdemo.util.Util;
 
 import jakarta.transaction.Transactional;
@@ -30,8 +30,8 @@ public class ReturnSaleServiceImpl implements ReturnSaleService {
 
   private final ReturnSaleRepo returnSaleRepo;
   private final SaleRepo saleRepo;
-  private final ProductInventoryRepo productInventoryRepo;
-  private final ProductInventoryService pis;
+  private final SellerProductsRepo sellerProductsRepo;
+  private final SellerProductsService pis;
   @Override
   public ReturnSaleResponseDTO save(ReturnSaleRequestDTO returnSaleRequestDTO) {
     Optional<Sale> sale = saleRepo.findById(returnSaleRequestDTO.getSaleId());

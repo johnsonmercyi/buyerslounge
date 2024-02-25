@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './styles.module.css';
 import UIButton from "../../components/ui/Button/Button";
 import UIInput from "../../components/ui/FormUI/Field/Field";
-import UIForm from "../../components/ui/FormUI/Form/Form";
+import UIForm from "../../components/ui/FormUI/Form";
 import { Container } from "semantic-ui-react";
 import UIMessage from "../../components/ui/UIMessage/UIMessage";
 import axios from "axios";

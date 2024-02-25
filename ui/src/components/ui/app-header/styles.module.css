@@ -10,7 +10,7 @@
 
   padding: 0;
 
-  background-color: #232f44;
+  background-color: var(--secondary-bg-color);
 }
 
 /*Devices larger than mobile phone*/

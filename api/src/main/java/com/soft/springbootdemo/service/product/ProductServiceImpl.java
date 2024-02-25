@@ -59,19 +59,11 @@ public class ProductServiceImpl implements ProductService {
       }
 
       oldProduct.setName(productDTO.getName());
-      oldProduct.setDescription(productDTO.getDescription());
-      oldProduct.setCost(productDTO.getCost());
-      oldProduct.setPrice(productDTO.getPrice());
 
       return productRepo.save(oldProduct);
     }
 
     return null;
-  }
-
-  @Override
-  public Product findByRefNo(UUID refNo) {
-    return productRepo.findByRefNo(refNo);
   }
 
   @Override

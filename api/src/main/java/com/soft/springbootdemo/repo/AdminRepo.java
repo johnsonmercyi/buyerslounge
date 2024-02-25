@@ -4,7 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.soft.springbootdemo.model.Product;
+import com.soft.springbootdemo.model.Admin;
 
-public interface ProductRepo extends JpaRepository<Product, UUID> {
+public interface AdminRepo extends JpaRepository<Admin, UUID>{
+  
 }
