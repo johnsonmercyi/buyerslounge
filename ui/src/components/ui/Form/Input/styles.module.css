@@ -23,8 +23,11 @@
   background-color: var(--secondary-bg-color);
   padding: 0 0.7rem;
   color: var(--default-color);
+  transition: 0.3s ease-in-out;
+}
 
-  transition: all 0.3s ease-in-out;
+.main input:hover {
+  border: 1px solid var(--hover-border-color);
 }
 
 .main input:focus {

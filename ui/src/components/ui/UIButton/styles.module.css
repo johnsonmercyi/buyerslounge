@@ -1,14 +1,25 @@
 /*Mobile First Style*/
 .main {
-  width: var(--full-width);
-  height: var(--he)
+  width  : var(--full-width);
+  height : var(--auto-height);
+  padding: 0.5rem 0;
 }
 
 .button {
+  width           : var(--button-width);
+  height          : var(--ui-size-normal);
+  padding         : var(--button-padding);
+  background-color: var(--tetiary-bg-color);
+  border          : 1px solid var(--default-border-color);
+  border-radius   : 0.2rem;
+  color           : var(--default-color);
+  transition: 0.3s ease-in-out;
+}
 
+.button:hover {
+  background-color: var(--hover-bg-color);
+  border-color: var(--hover-border-color);
 }
 
 /*Devices larger than mobile phone*/
-@media (min-width: 576px) {
-
-}
+@media (min-width: 576px) {}

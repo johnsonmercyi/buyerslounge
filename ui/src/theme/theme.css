@@ -16,6 +16,7 @@
 
   --default-border-color: #1e293b;
   --hover-border-color  : #475569;
+  --hover-bg-color: var(--secondary-bg-color);
 
   --display-flex: flex;
 
@@ -77,10 +78,14 @@
   --text-large  : 1.7rem;
   --text-x-large: 2rem;
 
+  --button-padding: 0 1rem;
+  --button-width: var(--full-width); 
+
 }
 
 @media (min-width: 576px) {
   :root {
     --form-container-width: 40rem;
+    --button-width: fit-content;
   }
 }
