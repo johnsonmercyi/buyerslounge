@@ -17,10 +17,11 @@ import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.model.Sale;
 import com.soft.springbootdemo.model.SaleItem;
 import com.soft.springbootdemo.model.Seller;
+import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.repo.CustomerRepo;
-import com.soft.springbootdemo.repo.ProductRepo;
 import com.soft.springbootdemo.repo.SaleItemRepo;
 import com.soft.springbootdemo.repo.SaleRepo;
+import com.soft.springbootdemo.repo.SellerProductsRepo;
 import com.soft.springbootdemo.repo.SellerRepo;
 import com.soft.springbootdemo.util.Util;
 
@@ -35,7 +36,7 @@ public class SaleItemServiceImpl implements SaleItemService {
   private final SaleItemRepo saleItemRepo;
   private final SaleRepo saleRepo;
   private final CustomerRepo customerRepo;
-  private final ProductRepo productRepo;
+  private final SellerProductsRepo sellerProductsRepo;
   private final SellerRepo sellerRepo;
 
   @Override
@@ -59,7 +60,7 @@ public class SaleItemServiceImpl implements SaleItemService {
       List<SaleItemRequestDTO.SaleItems> saleItemsList = saleItemRequestDTO.getSaleItems();
       for (SaleItems saleItems : saleItemsList) {
         SaleItem saleItem = new SaleItem();
-        Optional<Product> product = productRepo.findById(saleItems.getProductId());
+        Optional<SellerProducts> product = sellerProductsRepo.findById(saleItems.getProductId());
         Optional<Seller> seller = sellerRepo.findById(saleItems.getSellerId());
         if (product.isPresent() && seller.isPresent()) {
           saleItem.setSale(savedSale);

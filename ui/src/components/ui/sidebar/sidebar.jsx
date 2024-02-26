@@ -7,8 +7,8 @@ import Navigation from './navigation/Navigation';
 import { useUser } from '../../../util/providers/UserProvider';
 
 const adminItems = [
-  { text: "Category", icon: "category", to: "" },
-  { text: "Product", icon: "product", to: "" },
+  { text: "Category", icon: "category", to: "/admin/dashboard/categories" },
+  { text: "Product", icon: "product", to: "/admin/dashboard/products" },
 ];
 
 const sellerItems = [

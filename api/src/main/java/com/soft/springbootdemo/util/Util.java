@@ -82,13 +82,13 @@ public class Util {
   public static SaleItemResponseDTO convertSaleItemToResponseDTO(SaleItem saleItem) {
 
     CustomProduct cstProduct = new SaleItemResponseDTO.CustomProduct();
-    Product mainProduct = saleItem.getProduct();
+    SellerProducts mainProduct = saleItem.getProduct();
     cstProduct.setId(mainProduct.getId());
-    cstProduct.setName(mainProduct.getName());
+    cstProduct.setName(mainProduct.getProduct().getName());
     cstProduct.setCategory(
         new CategoryResponseDTO(
-            mainProduct.getCategory().getId(),
-            mainProduct.getCategory().getName()));
+            mainProduct.getProduct().getCategory().getId(),
+            mainProduct.getProduct().getCategory().getName()));
 
     Seller mainSeller = saleItem.getSeller();
     String sellerName = String.format(
@@ -134,12 +134,12 @@ public class Util {
             SaleItemResponseDTO saleItemDTO = new SaleItemResponseDTO();
             saleItemDTO.setId(saleItem.getId());
 
-            Product product = saleItem.getProduct();
+            SellerProducts sellerProduct = saleItem.getProduct();
             
             saleItemDTO.setProduct(new CustomProduct(
-                product.getId(),
-                new CategoryResponseDTO(product.getCategory().getId(), product.getCategory().getName()),
-                product.getName()));
+                sellerProduct.getId(),
+                new CategoryResponseDTO(sellerProduct.getProduct().getCategory().getId(), sellerProduct.getProduct().getCategory().getName()),
+                sellerProduct.getProduct().getName()));
 
             saleItemDTO.setQuantity(saleItem.getQuantity());
             saleItemDTO.setTotal(saleItem.getTotal());

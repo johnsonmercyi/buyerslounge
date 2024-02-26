@@ -1,0 +1,38 @@
+/*Mobile First Style*/
+.main {
+  width: var(--form-input-width);
+  display: var(--display-flex);
+  flex-direction: var(--flex-direction-column);
+  justify-content: var(--justify-content-flex-start);
+  align-items: var(--align-items-flex-start);
+}
+
+.main label {
+  width: 100%;
+  height: auto;
+  padding: 0.25rem 0.15rem;
+  font-size: var(--text-normal);
+}
+
+.main input {
+  width: var(--form-input-width);
+  height: var(--ui-size-normal);
+
+  border: 1px solid var(--default-border-color);
+  border-radius: 0.2rem;
+  background-color: var(--secondary-bg-color);
+  padding: 0 0.7rem;
+  color: var(--default-color);
+
+  transition: all 0.3s ease-in-out;
+}
+
+.main input:focus {
+  outline: none;
+  border: 1px solid var(--hover-border-color);
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

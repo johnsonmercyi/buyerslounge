@@ -26,7 +26,7 @@ public class SaleItem {
 
   @ManyToOne
   @JoinColumn(name = "product_id", referencedColumnName = "id", nullable = false)
-  private Product product;
+  private SellerProducts product;
 
   @ManyToOne
   @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false)

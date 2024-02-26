@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import './global.css';
+// import './global.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
@@ -24,10 +24,11 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
             <Route path='/admin/dashboard' element={<AdminDashboard />}>
-              <Route path='/admin/dashboard/category' element={<Category />} />
+              <Route index element={<div>Welcome to admin Dashboard!</div>}/>
+              <Route path='/admin/dashboard/categories' element={<Category />} />
             </Route>
             <Route path='/seller/dashboard' element={<SellerDashboard />}>
-              <Route path='/seller/dashboard/category' element={<Category />} />
+              <Route path='/seller/dashboard/categories' element={<Category />} />
             </Route>
             <Route path='*' element={<NoPage />} />
           </Route>

@@ -1,9 +1,12 @@
 /*Mobile First Style*/
 .main {
-  
+  width: var(--full-width);
+  height: var(--he)
 }
 
-.input {}
+.button {
+
+}
 
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {

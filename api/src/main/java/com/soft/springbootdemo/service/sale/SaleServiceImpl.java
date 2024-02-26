@@ -12,17 +12,16 @@ import com.soft.springbootdemo.dto.requestdto.SaleRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.SaleResponseDTO;
 import com.soft.springbootdemo.model.Customer;
 import com.soft.springbootdemo.model.Product;
-import com.soft.springbootdemo.model.ProductInventory;
+import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.model.Sale;
 import com.soft.springbootdemo.model.SaleItem;
 import com.soft.springbootdemo.model.Seller;
 import com.soft.springbootdemo.repo.CustomerRepo;
-import com.soft.springbootdemo.repo.ProductInventoryRepo;
-import com.soft.springbootdemo.repo.ProductRepo;
+import com.soft.springbootdemo.repo.SellerProductsRepo;
 import com.soft.springbootdemo.repo.SaleItemRepo;
 import com.soft.springbootdemo.repo.SaleRepo;
 import com.soft.springbootdemo.repo.SellerRepo;
-import com.soft.springbootdemo.service.ProductInventory.ProductInventoryService;
+import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
 import com.soft.springbootdemo.util.Util;
 
 import jakarta.transaction.Transactional;
@@ -37,10 +36,10 @@ public class SaleServiceImpl implements SaleService {
 
   private final SaleRepo saleRepo;
   private final CustomerRepo customerRepo;
-  private final ProductRepo productRepo;
+  private final SellerProductsRepo sellerProductsRepo;
   private final SellerRepo sellerRepo;
   private final SaleItemRepo saleItemRepo;
-  private final ProductInventoryService pis;
+  private final SellerProductsService sps;
 
   @Override
   public SaleResponseDTO save(SaleRequestDTO saleRequestDTO) {
@@ -61,7 +60,7 @@ public class SaleServiceImpl implements SaleService {
       List<SaleRequestDTO.SaleItems> saleItemsList = saleRequestDTO.getSaleItems();
       for (SaleRequestDTO.SaleItems saleItems : saleItemsList) {
         SaleItem saleItem = new SaleItem();
-        Optional<Product> product = productRepo.findById(saleItems.getProductId());
+        Optional<SellerProducts> product = sellerProductsRepo.findById(saleItems.getProductId());
         Optional<Seller> seller = sellerRepo.findById(saleItems.getSellerId());
         if (product.isPresent() && seller.isPresent()) {
           saleItem.setSale(savedSale);
@@ -73,7 +72,7 @@ public class SaleServiceImpl implements SaleService {
           SaleItem savedSaleItem = saleItemRepo.save(saleItem);
           savedSale.getSaleItems().add(savedSaleItem);
           // Update product inventory here...
-          pis.updateInventoryQty(product.get().getId(), saleItems.getQty(), false);
+          sps.updateProductQty(product.get().getId(), saleItems.getQty(), false);
         }
       }
       return Util.convertSaleToResponseDTO(savedSale, true);

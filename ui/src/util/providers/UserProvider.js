@@ -8,8 +8,8 @@ export const UserProvider = ({ children }) => {
   const [role, setRole] = useState("");
 
   useEffect(()=> {
-    setUsername(userData.username);
-    setRole(userData.role);
+    setUsername(userData?.username);
+    setRole(userData?.role);
   }, []);
 
   return (

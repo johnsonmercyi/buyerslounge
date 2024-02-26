@@ -12,7 +12,7 @@ const Input = ({
   ...props }) => {
   return (
     <div className={styles.main}>
-      <label htmlFor="">{label}</label>
+      <label>{label}</label>
       <input
         className={styles.input}
         type={type || "text"}

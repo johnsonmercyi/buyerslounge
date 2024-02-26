@@ -1,19 +1,21 @@
 import React from "react";
 import styles from './styles.module.css';
-import Input from "../../../components/ui/FormUI/Input/Input";
+import Input from "../../../components/ui/Form/Input/Input";
+import Form from "../../../components/ui/Form/Form";
+import Button from "../../../components/ui/UIButton/Button";
 
 const Category = () => {
   return (
-    <div className={styles}>
-      <h2>New Category</h2>
+    <div className={styles.main}>
+      <h2>New Category ✨</h2>
 
-      <form>
-        {/* Category name Field */}
+      <Form >
         <Input
           label={"Category"}
           placeholder={"Enter category name"} />
-        {/* Submit Button */}
-      </form>
+        
+        <Button text={"Submit"} type={"submit"} onClickHandler={null}/>
+      </Form>
     </div>
   );
 }

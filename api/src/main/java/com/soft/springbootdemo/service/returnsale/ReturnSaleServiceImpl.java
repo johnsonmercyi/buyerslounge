@@ -15,9 +15,9 @@ import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.model.ReturnSale;
 import com.soft.springbootdemo.model.Sale;
 import com.soft.springbootdemo.repo.SellerProductsRepo;
+import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
 import com.soft.springbootdemo.repo.ReturnSaleRepo;
 import com.soft.springbootdemo.repo.SaleRepo;
-import com.soft.springbootdemo.service.SellerProducts.SellerProductsService;
 import com.soft.springbootdemo.util.Util;
 
 import jakarta.transaction.Transactional;
@@ -31,7 +31,8 @@ public class ReturnSaleServiceImpl implements ReturnSaleService {
   private final ReturnSaleRepo returnSaleRepo;
   private final SaleRepo saleRepo;
   private final SellerProductsRepo sellerProductsRepo;
-  private final SellerProductsService pis;
+  private final SellerProductsService sps;
+
   @Override
   public ReturnSaleResponseDTO save(ReturnSaleRequestDTO returnSaleRequestDTO) {
     Optional<Sale> sale = saleRepo.findById(returnSaleRequestDTO.getSaleId());
@@ -46,10 +47,10 @@ public class ReturnSaleServiceImpl implements ReturnSaleService {
       // Update product inventory here...
       returnSale.getSale().getSaleItems().stream()
       .forEach(saleItem -> {
-        Product p = saleItem.getProduct();
+        SellerProducts p = saleItem.getProduct();
         int qty = saleItem.getQuantity();
         // Update inventory
-        pis.updateInventoryQty(p.getId(), qty, true);
+        sps.updateProductQty(p.getId(), qty, true);
 
       });
       return responseDTO;      
