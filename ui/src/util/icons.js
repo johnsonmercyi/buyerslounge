@@ -7,9 +7,9 @@ const Icon = ({
   strokeColor,
   strokeWidth,
   className,
+  strokeLinecap,
+  strokeLinejoin
 }) => {
-
-  console.log("ClassName: ", className);
 
   const icons = {
     product: (
@@ -21,8 +21,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round">
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
         <path d="M12 12l8 -4.5" />
@@ -41,8 +41,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round">
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M4 4h6v6h-6z" />
         <path d="M14 4h6v6h-6z" />
@@ -60,8 +60,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round">
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
         <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
@@ -79,8 +79,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round">
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
         <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
@@ -96,8 +96,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round">
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
         <path d="M2 13.5v5.5l5 3" />
@@ -109,8 +109,26 @@ const Icon = ({
         <path d="M7 5.03v5.455" />
         <path d="M12 8l5 -3" />
       </svg>
+    ),
+
+    loader: (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-packages"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "round"}
+        strokeLinejoin={strokeLinejoin || "round"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 3a9 9 0 1 0 9 9" />
+      </svg>
     )
   }
+
+  // alert(className)
 
   return (
     <div className={className || ''}>

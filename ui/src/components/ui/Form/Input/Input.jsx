@@ -2,10 +2,9 @@ import React from "react";
 import styles from './styles.module.css';
 
 const Input = ({
-  error,
+  error = false,
   type,
   label,
-  inputLabel,
   value = "",
   placeholder,
   onChangeHandler,
@@ -14,13 +13,18 @@ const Input = ({
     <div className={styles.main}>
       <label>{label}</label>
       <input
-        className={styles.input}
+        className={`${styles.input} ${error ? styles.error : ""}`}
         type={type || "text"}
-        aria-label={inputLabel}
         value={value}
         placeholder={placeholder}
         onChange={onChangeHandler}
         {...props} />
+      {
+        error ? (
+          <span>This field is required</span>
+        ) : null
+      }
+
     </div>
   );
 }

@@ -35,6 +35,19 @@
   border: 1px solid var(--hover-border-color);
 }
 
+.main input.error, 
+.main input.error:focus,
+.main input.error:hover {
+  border: 1px solid var(--danger);
+}
+
+.main span {
+  width: var(--full-width);
+  font-size: var(--text-normal);
+  color: var(--danger);
+  padding: 0.2rem;
+}
+
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
 
