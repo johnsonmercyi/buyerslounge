@@ -5,7 +5,7 @@
   --primary-bg-color  : #0f172a;
   --secondary-bg-color: #16213C;
   --tetiary-bg-color  : #1B294B;
-  --ui-bg-color: #0066ff;
+  --ui-bg-color       : #0066ff;
   --dim-area-bg-color : rgba(15, 23, 42, 0.4);
 
   --container-padding: 2rem;
@@ -14,12 +14,22 @@
   --white        : #fff;
   --mute         : #94a3b8;
   --danger       : #dc0933;
+  --link-color   : #3074da;
 
-  --default-border-color: #1e293b;
-  --hover-border-color  : #475569;
-  --ui-hover-border-color: rgba(255, 255, 255, 0.2);
-  --hover-bg-color: var(--secondary-bg-color);
+  --default-border-color        : #1e293b;
+  --hover-border-color          : #475569;
+  --ui-hover-border-color       : rgba(255, 255, 255, 0.2);
+  --ui-button-border-color      : rgba(73, 146, 255, 1);
+  --ui-button-hover-border-color: rgb(46, 130, 255);
+
+  --ui-button-bg-color  : #4992ff;
+  --hover-bg-color      : var(--secondary-bg-color);
+  --hover-light-bg-color: rgba(148, 163, 184, 0.05);
+
   --ui-hover-bg-color: #005ae0;
+
+  --default-border-radius: 0.2rem;
+  --default-padding      : 0.7rem;
 
   --display-flex: flex;
 
@@ -56,13 +66,18 @@
   --form-container-label-width    : var(--full-width);
   --form-container-label-align    : var(--left);
 
-  --ui-wrapper-width                : var(--full-width);
-  --ui-wrapper-height               : auto;
-  --ui-wrapper-display              : var(--display-flex);
-  --ui-wrapper-flex-direction-row   : var(--flex-direction-row);
-  --ui-wrapper-flex-direction-column: var(--flex-direction-column);
-  --ui-wrapper-justify-content      : var(--justify-content-center);
-  --ui-wrapper-align-items          : var(--align-items-center);
+  --ui-wrapper-width                     : var(--full-width);
+  --ui-wrapper-height                    : auto;
+  --ui-wrapper-display                   : var(--display-flex);
+  --ui-wrapper-flex-direction-row        : var(--flex-direction-row);
+  --ui-wrapper-flex-direction-column     : var(--flex-direction-column);
+  --ui-wrapper-justify-content           : var(--justify-content-center);
+  --ui-wrapper-justify-content-flex-start: var(--justify-content-flex-start);
+  --ui-wrapper-justify-content-flex-end  : var(--justify-content-flex-end);
+  --ui-wrapper-align-items               : var(--align-items-center);
+  --ui-wrapper-align-items-flex-start    : var(--align-items-flex-start);
+  --ui-wrapper-align-items-flex-end      : var(--align-items-flex-end);
+  --ui-wrapper-padding-all               : 1rem;
 
   --form-padding-all: 1rem;
   --form-width      : var(--full-width);
@@ -81,14 +96,18 @@
   --text-large  : 1.7rem;
   --text-x-large: 2rem;
 
+  --default-margin-all: 1rem;
+  --margin-sides-auto : 1rem auto;
+
   --button-padding: 0 1rem;
-  --button-width: var(--full-width); 
+  --button-width  : var(--full-width);
 
 }
 
 @media (min-width: 576px) {
   :root {
-    --form-container-width: 40rem;
-    --button-width: fit-content;
+    --form-container-width: 40vw;
+    --ui-wrapper-width: 80vw;
+    --button-width        : fit-content;
   }
 }

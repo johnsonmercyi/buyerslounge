@@ -1,0 +1,51 @@
+/*Mobile First Style*/
+.main {
+  width : var(--ui-wrapper-width);
+  height: var(--ui-wrapper-height);
+
+  background-color: var(--secondary-bg-color);
+  border-radius   : var(--default-border-radius);
+  border          : 1px solid var(--default-border-color);
+  padding         : calc(var(--ui-wrapper-padding-all));
+}
+
+.tableWrapper {
+  width           : var(--full-width);
+  padding         : var(--ui-wrapper-padding-all);
+  border-radius   : var(--default-border-radius);
+}
+
+.title {
+  background-color: var(--tetiary-bg-color);
+  border-radius   : var(--default-border-radius);
+  width           : var(--full-width);
+  padding         : 0.8rem;
+
+  color: var(--mute);
+
+  margin-top: 1rem;
+}
+
+.table {
+  width    : var(--full-width);
+  font-size: var(--text-normal);
+
+  border-collapse: collapse;
+  border-spacing : 0;
+}
+
+.tHead {
+  width        : var(--full-width);
+  border-bottom: 1px solid var(--hover-border-color);
+  color: var(--mute);
+}
+
+.tHead * {
+  width     : var(--full-width);
+  padding   : var(--default-padding);
+  text-align: left;
+
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

@@ -1,78 +1,65 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from './styles.module.css';
+import Table from "../../../components/ui/Table/Table";
 import Input from "../../../components/ui/Form/Input/Input";
-import Form from "../../../components/ui/Form/Form";
 import Button from "../../../components/ui/UIButton/Button";
 import { HTTPMethods, makeRequest } from "../../../util/utils";
 
 const Category = () => {
 
-  const [category, setCategory] = useState("");
-  const [categoryError, setCategoryError] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const onChangeHandler = (event) => {
-    setCategory(event.target.value);
-  }
+  useEffect(()=> {
+    fetchCategories();
+  }, []);
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-
+  const fetchCategories = async() => {
     try {
+      const response = await makeRequest('/categories', HTTPMethods.GET);
+      if (response.error) {
+        setLoading(false);
+        setIsError(true);
+        setMessage(response.message);
 
-      if (validateField()) {
-        // Send a POST request
-        const response = await makeRequest(`/categories`, HTTPMethods.POST, {
-          name: category
+        alert(response.message);
+      } else {
+        setLoading(false);
+        const categories = response.map((category, index) => {
+          
+          return {
+            sn: index+1,
+            name: category.name
+          }
         });
-
-        if (response.error) {
-          setLoading(false);
-          setIsError(true);
-          setMessage(data.message);
-
-          alert(data.message);
-        } else {
-          setLoading(false);
-          alert("Successfully submitted!");
-          // ⚠️TODO: Navigate to categories route here...
-        }
+        console.log("CAT: ", categories);
+        setCategories(categories);
       }
-
-    } catch (error) {
+    } catch(error) {
       setIsError(true);
       setMessage(error.message);
     }
-  }
-
-  const validateField = () => {
-    if (!category) {
-      setCategoryError(true);
-    }
-
-    return category.length > 0
+    
   }
 
   return (
     <div className={styles.main}>
-      <h2>New Category ✨</h2>
-
-      <Form onSubmitHandler={onSubmitHandler}>
+      <h2>Categories ✨</h2>
+      <div className={styles.actionComponentsWrapper}>
         <Input
-          error={categoryError}
-          value={category}
-          label={"Category"}
-          placeholder={"Enter category name"}
-          onChangeHandler={onChangeHandler} />
+          placeholder={"Search Categories"} />
 
         <Button
-          loading={loading}
-          disabled={loading}
-          text={"Submit"}
-          type={"submit"} />
-      </Form>
+          className={styles.buttonMain}
+          text={"Create New Category"}
+          fitButtonToWrapper />
+      </div>
+      <Table
+        title={"Category Records"}
+        headers={["SN", "NAME", "ACTION"]}
+        content={categories} />
     </div>
   );
 }

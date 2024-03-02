@@ -6,7 +6,7 @@ export const HTTPMethods = {
 const apiUrl = "http://localhost:8080/api";
 
 export const makeRequest = async(url, method, payload) => {
-  const response = await fetch(`${apiUrl}/${url}`, {
+  const response = await fetch(`${apiUrl}${url}`, {
     method: method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

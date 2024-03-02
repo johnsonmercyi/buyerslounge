@@ -3,7 +3,6 @@ import styles from './styles.module.css';
 import Item from "./Items/Item";
 
 const Navigation = ({ listItems = [], ...props }) => {
-  console.log(listItems);
   return (
     <ul className={styles.navigation} {...props}>
       {
