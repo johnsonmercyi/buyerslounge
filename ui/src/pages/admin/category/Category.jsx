@@ -4,6 +4,7 @@ import Table from "../../../components/ui/Table/Table";
 import Input from "../../../components/ui/Form/Input/Input";
 import Button from "../../../components/ui/UIButton/Button";
 import { HTTPMethods, makeRequest } from "../../../util/utils";
+import { Link, Router } from "react-router-dom";
 
 const Category = () => {
 
@@ -44,24 +45,26 @@ const Category = () => {
     
   }
 
-  return (
-    <div className={styles.main}>
-      <h2>Categories ✨</h2>
-      <div className={styles.actionComponentsWrapper}>
-        <Input
-          placeholder={"Search Categories"} />
-
-        <Button
-          className={styles.buttonMain}
-          text={"Create New Category"}
-          fitButtonToWrapper />
+    return (
+      <div className={styles.main}>
+        <h2>Categories ✨</h2>
+        <div className={styles.actionComponentsWrapper}>
+          <Input
+            placeholder={"Search Categories"} />
+          <Link to="/categories/create">
+            <Button
+              className={styles.buttonMain}
+              text={"Create New Category"}
+              fitButtonToWrapper />
+          </Link>
+        </div>
+        <Table
+          title={"Category Records"}
+          headers={["SN", "NAME", "ACTION"]}
+          content={categories} />
       </div>
-      <Table
-        title={"Category Records"}
-        headers={["SN", "NAME", "ACTION"]}
-        content={categories} />
-    </div>
-  );
+    );
+
 }
 
 export default Category;

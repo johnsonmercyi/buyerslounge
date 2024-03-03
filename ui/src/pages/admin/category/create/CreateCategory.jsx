@@ -4,6 +4,7 @@ import Form from "../../../../components/ui/Form/Form";
 import Input from "../../../../components/ui/Form/Input/Input";
 import Button from "../../../../components/ui/UIButton/Button";
 import { HTTPMethods, makeRequest } from "../../../../util/utils";
+import { Route } from "react-router-dom";
 
 const CreateCategory = () => {
 
@@ -54,27 +55,27 @@ const CreateCategory = () => {
 
     return category.length > 0
   }
-
-  return (
-    <div className={styles.main}>
-      <h2>New Category ✨</h2>
-
-      <Form onSubmitHandler={onSubmitHandler}>
-        <Input
-          error={categoryError}
-          value={category}
-          label={"Category"}
-          placeholder={"Enter category name"}
-          onChangeHandler={onChangeHandler} />
-
-        <Button
-          loading={loading}
-          disabled={loading}
-          text={"Submit"}
-          type={"submit"} />
-      </Form>
-    </div>
-  );
+ 
+      return (
+        <div className={styles.main}>
+          <h2>New Category ✨</h2>
+    
+          <Form onSubmitHandler={onSubmitHandler}>
+            <Input
+              error={categoryError}
+              value={category}
+              label={"Category"}
+              placeholder={"Enter category name"}
+              onChangeHandler={onChangeHandler} />
+    
+            <Button
+              loading={loading}
+              disabled={loading}
+              text={"Submit"}
+              type={"submit"} />
+          </Form>
+        </div>
+      );
 }
 
 export default CreateCategory;
