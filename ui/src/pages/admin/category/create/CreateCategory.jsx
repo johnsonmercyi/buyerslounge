@@ -4,14 +4,17 @@ import Form from "../../../../components/ui/Form/Form";
 import Input from "../../../../components/ui/Form/Input/Input";
 import Button from "../../../../components/ui/UIButton/Button";
 import { HTTPMethods, makeRequest } from "../../../../util/utils";
+import { useNavigate } from "react-router-dom";
 
-const CreateCategory = () => {
+const CreateCategory = ({props}) => {
 
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setCategory(event.target.value);
@@ -32,12 +35,9 @@ const CreateCategory = () => {
           setLoading(false);
           setIsError(true);
           setMessage(response.message);
-
-          alert(response.message);
         } else {
           setLoading(false);
-          alert("Successfully submitted!");
-          // ⚠️TODO: Navigate to categories route here...
+          navigate("/admin/dashboard/categories");
         }
       }
 
@@ -54,27 +54,27 @@ const CreateCategory = () => {
 
     return category.length > 0
   }
-
-  return (
-    <div className={styles.main}>
-      <h2>New Category ✨</h2>
-
-      <Form onSubmitHandler={onSubmitHandler}>
-        <Input
-          error={categoryError}
-          value={category}
-          label={"Category"}
-          placeholder={"Enter category name"}
-          onChangeHandler={onChangeHandler} />
-
-        <Button
-          loading={loading}
-          disabled={loading}
-          text={"Submit"}
-          type={"submit"} />
-      </Form>
-    </div>
-  );
+ 
+      return (
+        <div className={styles.main}>
+          <h2>New Category ✨</h2>
+    
+          <Form onSubmitHandler={onSubmitHandler}>
+            <Input
+              error={categoryError}
+              value={category}
+              label={"Category"}
+              placeholder={"Enter category name"}
+              onChangeHandler={onChangeHandler} />
+    
+            <Button
+              loading={loading}
+              disabled={loading}
+              text={"Submit"}
+              type={"submit"} />
+          </Form>
+        </div>
+      );
 }
 
 export default CreateCategory;

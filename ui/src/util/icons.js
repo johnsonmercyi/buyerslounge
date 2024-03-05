@@ -21,8 +21,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
         <path d="M12 12l8 -4.5" />
@@ -41,8 +41,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M4 4h6v6h-6z" />
         <path d="M14 4h6v6h-6z" />
@@ -60,8 +60,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
         <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
@@ -79,8 +79,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M6.331 8h11.339a2 2 0 0 1 1.977 2.304l-1.255 8.152a3 3 0 0 1 -2.966 2.544h-6.852a3 3 0 0 1 -2.965 -2.544l-1.255 -8.152a2 2 0 0 1 1.977 -2.304z" />
         <path d="M9 11v-5a3 3 0 0 1 6 0v5" />
@@ -96,8 +96,8 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z" />
         <path d="M2 13.5v5.5l5 3" />
@@ -120,10 +120,52 @@ const Icon = ({
         strokeWidth={strokeWidth || "1.5"}
         stroke={strokeColor || "#2c3e50"}
         fill="none"
-        strokeLinecap={strokeLinecap || "round"}
-        strokeLinejoin={strokeLinejoin || "round"}>
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 3a9 9 0 1 0 9 9" />
+      </svg>
+    ),
+
+    error: (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-packages"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 9v-1a3 3 0 0 1 6 0v1" />
+        <path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3" />
+        <path d="M3 13l4 0" />
+        <path d="M17 13l4 0" />
+        <path d="M12 20l0 -6" />
+        <path d="M4 19l3.35 -2" />
+        <path d="M20 19l-3.35 -2" />
+        <path d="M4 7l3.75 2.4" />
+        <path d="M20 7l-3.75 2.4" />
+      </svg>
+    ),
+
+    search: (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-packages"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+        <path d="M21 21l-6 -6" />
       </svg>
     )
   }

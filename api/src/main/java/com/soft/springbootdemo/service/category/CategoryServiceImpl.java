@@ -1,11 +1,14 @@
 package com.soft.springbootdemo.service.category;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.soft.springbootdemo.dto.responsedto.CategoryResponseDTO;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.repo.CategoryRepo;
 
@@ -50,6 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
       return categoryRepo.save(category);
     }
     return null;
+  }
+
+  @Override
+  public Collection<Category> findByNameContaining(String searchString) {
+    return categoryRepo.findByNameContaining(searchString);
   }
   
 }

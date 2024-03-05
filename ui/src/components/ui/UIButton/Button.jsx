@@ -11,13 +11,13 @@ const Button = ({
   loading = false,
   disabled = false,
   className="",
+  floating=false,
   ...props
 }) => {
-  console.log("CLASS NAME: ", className);
   return (
     <div className={`${styles.main} ${fitButtonToWrapper ? styles.fitButtonToWrapper : ''} ${className ? className : ""}`}>
       <button
-        className={styles.button}
+        className={`${styles.button} ${floating ? styles.floating : ''}`}
         type={type || "button"}
         disabled={disabled}
         onClick={onClickHandler}

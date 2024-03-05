@@ -14,6 +14,18 @@
   font-size: var(--text-normal);
 }
 
+.main .wrapper {
+  width: var(--full-width);
+  position: relative;
+}
+
+.main .wrapper .icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-40%);
+}
+
 .main input {
   width: var(--form-input-width);
   height: var(--ui-size-normal);
