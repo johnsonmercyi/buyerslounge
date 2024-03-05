@@ -22,7 +22,7 @@ const Button = ({
           {
             loading ? (
             <Icon
-              className={styles.rotate}
+              className={styles.loading}
               name={"loader"}
               strokeWidth={"3.5"}
               strokeColor={"#e6e6e6"}

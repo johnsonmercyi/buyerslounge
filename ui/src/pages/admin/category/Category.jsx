@@ -20,6 +20,9 @@ const Category = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
+    setIsError(false);
+    setMessage("");
     try {
 
       if (validateField()) {
