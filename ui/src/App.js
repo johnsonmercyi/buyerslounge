@@ -12,6 +12,7 @@ import AdminCategory from './pages/admin/category/Category';
 import AdminDashboard from './pages/admin/dashboard';
 import SellerDashboard from './pages/seller/dashboard';
 import Category from './pages/admin/category/Category';
+import CreateCategory from './pages/admin/category/create/CreateCategory';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path='/admin/dashboard' element={<AdminDashboard />}>
               <Route index element={<div>Welcome to admin Dashboard!</div>}/>
               <Route path='/admin/dashboard/categories' element={<Category />} />
+              <Route path='/admin/dashboard/categories/create' element={<CreateCategory />} />
             </Route>
             <Route path='/seller/dashboard' element={<SellerDashboard />}>
               <Route path='/seller/dashboard/categories' element={<Category />} />

@@ -4,3 +4,23 @@ body {
   background-color: var(--primary-bg-color);
   color: var(--default-color);
 }
+
+.rotate {
+  /* background-color: red; */
+  padding: 0;
+
+  display        : var(--dashboard-display);
+  justify-content: var(--justify-content-center);
+  align-items    : var(--align-items-center);
+  animation      : rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -4,6 +4,7 @@ export const HTTPMethods = {
 }
 
 const apiUrl = "http://localhost:8080/api";
+// const apiUrl = "http://192.168.250.122:8080/api";
 
 export const makeRequest = async(url, method, payload) => {
   const response = await fetch(`${apiUrl}${url}`, {

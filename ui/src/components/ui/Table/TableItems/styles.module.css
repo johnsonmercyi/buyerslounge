@@ -1,0 +1,31 @@
+/*Mobile First Style*/
+.tBody {
+  width: var(--full-width);
+  padding: var(--default-padding);
+}
+
+.tBody tr {
+  transition: all 0.3s ease-in-out;
+}
+
+.tBody tr:hover {
+  background-color: var(--hover-light-bg-color);
+}
+
+.tBody tr td {
+  padding: calc(var(--default-padding) + 0.2rem);
+  border-bottom: 1px solid var(--hover-border-color);
+}
+
+td.action button {
+  width: fit-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--link-color);
+  cursor: pointer;
+}
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

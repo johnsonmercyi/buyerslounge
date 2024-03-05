@@ -11,6 +11,8 @@
 
   opacity: 0;
   display: none;
+
+  z-index: 1;
 }
 
 .sidebar {
@@ -24,6 +26,7 @@
   /* For test */
   background-color: var(--tetiary-bg-color);
   /* border          : 1px solid #aaa; */
+  
 }
 
 .header {

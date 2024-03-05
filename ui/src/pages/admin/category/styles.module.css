@@ -1,21 +1,39 @@
 /*Mobile First Style*/
-.main,
-.main form {
-  display        : var(--form-container-display);
-  flex-direction : var(--form-container-flex-direction);
-  justify-content: var(--form-container-justify-content);
-  align-items    : var(--form-container-align-items);
-}
-
 .main {
-  width : var(--form-container-width);
-  height: var(--form-container-height);
+  width : var(--ui-wrapper-width);
+  height: var(--ui-wrapper-height);
+
+  display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
+  justify-content: var(--ui-wrapper-justify-content-flex-start);
+  align-items    : var(--ui-wrapper-align-items-flex-start);
+
+  position: relative;
 }
 
-.main form {
-  width: var(--form-width);
-  align-items : var(--align-items-center);
+.actionComponentsWrapper {
+  width          : var(--full-width);
+  display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
+  justify-content: var(--ui-wrapper-justify-content-flex-end);
+  align-items    : var(--ui-wrapper-align-items-flex-start);
+}
+
+.buttonMain {
+  margin-left: 0.5rem;
+}
+
+.buttonMain button {
+  
 }
 
 /*Devices larger than mobile phone*/
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+  .actionComponentsWrapper {
+    flex-direction: var(--ui-wrapper-flex-direction-row);
+  }
+
+  .buttonMain button {
+    width: 15rem !important;
+  }
+}

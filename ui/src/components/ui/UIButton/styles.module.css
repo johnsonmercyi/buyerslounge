@@ -5,12 +5,17 @@
   padding: 0.5rem 0;
 }
 
+.main.fitButtonToWrapper, 
+.main.fitButtonToWrapper button {
+  width : fit-content;
+}
+
 .button {
   width           : var(--button-width);
   height          : var(--ui-size-normal);
   padding         : var(--button-padding);
   background-color: var(--ui-bg-color);
-  border          : 1px solid var(--default-border-color);
+  border          : 1px solid var(--ui-button-border-color);
   border-radius   : 0.2rem;
   color           : var(--default-color);
   transition      : 0.3s ease-in-out;
@@ -18,11 +23,13 @@
   display        : var(--dashboard-display);
   justify-content: var(--justify-content-center);
   align-items    : var(--align-items-center);
+
+  cursor: pointer;
 }
 
 .button:hover {
   background-color: var(--ui-hover-bg-color);
-  border-color    : var(--ui-hover-border-color);
+  border-color    : var(--ui-button-hover-border-color);
 }
 
 .button .loading {
@@ -34,6 +41,17 @@
   justify-content: var(--justify-content-center);
   align-items    : var(--align-items-center);
   animation      : rotate 1s linear  infinite;
+}
+
+.floating {
+  position: fixed;
+  right   : 6%;
+  top     : 17%;
+  width   : 3rem !important;
+  height  : 3rem;
+
+  border-radius: 100%;
+  border       : none;
 }
 
 @keyframes rotate {

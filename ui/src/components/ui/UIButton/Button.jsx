@@ -3,18 +3,21 @@ import styles from './styles.module.css';
 import Icon from "../../../util/icons";
 
 const Button = ({
+  fitButtonToWrapper=false,
   text,
   type,
   onClickHandler,
   icon,
   loading = false,
   disabled = false,
+  className="",
+  floating=false,
   ...props
 }) => {
   return (
-    <div className={styles.main}>
+    <div className={`${styles.main} ${fitButtonToWrapper ? styles.fitButtonToWrapper : ''} ${className ? className : ""}`}>
       <button
-        className={styles.button}
+        className={`${styles.button} ${floating ? styles.floating : ''}`}
         type={type || "button"}
         disabled={disabled}
         onClick={onClickHandler}
