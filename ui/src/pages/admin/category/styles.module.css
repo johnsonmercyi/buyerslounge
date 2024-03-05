@@ -7,11 +7,14 @@
   flex-direction : var(--ui-wrapper-flex-direction-column);
   justify-content: var(--ui-wrapper-justify-content-flex-start);
   align-items    : var(--ui-wrapper-align-items-flex-start);
+
+  position: relative;
 }
 
 .actionComponentsWrapper {
-  width: var(--full-width);
+  width          : var(--full-width);
   display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
   justify-content: var(--ui-wrapper-justify-content-flex-end);
   align-items    : var(--ui-wrapper-align-items-flex-start);
 }
@@ -21,8 +24,16 @@
 }
 
 .buttonMain button {
-  width: 15rem !important;
+  
 }
 
 /*Devices larger than mobile phone*/
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+  .actionComponentsWrapper {
+    flex-direction: var(--ui-wrapper-flex-direction-row);
+  }
+
+  .buttonMain button {
+    width: 15rem !important;
+  }
+}

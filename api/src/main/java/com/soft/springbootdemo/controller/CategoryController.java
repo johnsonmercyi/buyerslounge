@@ -13,12 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.service.category.CategoryService;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("api/categories")
 @RequiredArgsConstructor
+@Log4j2
 public class CategoryController {
 
   private final CategoryService categoryService;
@@ -43,9 +49,23 @@ public class CategoryController {
     return ResponseEntity.ok(categoryService.save(category));
   }
 
-  @PostMapping("{id}")
+  @PostMapping("/{id}")
   public ResponseEntity<Category> saveCategory(@RequestBody Category category, @PathVariable UUID id) {
     return ResponseEntity.ok(categoryService.update(id, category));
   }
 
+  @PostMapping("/search")
+  public ResponseEntity<Collection<Category>> searchCategories(@RequestBody SearchString searchString) {
+    log.info("SEARCH: {}", searchString.getSearchText());
+    return ResponseEntity.ok(categoryService.findByNameContaining(searchString.getSearchText()));
+  }
+
+  
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class SearchString {
+  private String searchText;
 }

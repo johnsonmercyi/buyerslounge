@@ -7,6 +7,8 @@
   --tetiary-bg-color  : #1B294B;
   --ui-bg-color       : #0066ff;
   --dim-area-bg-color : rgba(15, 23, 42, 0.4);
+  --faded-light-bg-02-color: rgba(255, 255, 255, 0.2);
+  --faded-light-bg-01-color: rgba(255, 255, 255, 0.1);
 
   --container-padding: 2rem;
 
@@ -18,7 +20,7 @@
 
   --default-border-color        : #1e293b;
   --hover-border-color          : #475569;
-  --ui-hover-border-color       : rgba(255, 255, 255, 0.2);
+  --ui-hover-border-color       : var(--faded-light-bg-02-color);
   --ui-button-border-color      : rgba(73, 146, 255, 1);
   --ui-button-hover-border-color: rgb(46, 130, 255);
 
@@ -106,7 +108,7 @@
 
 @media (min-width: 576px) {
   :root {
-    --form-container-width: 40vw;
+    --form-container-width: 80vw;
     --ui-wrapper-width: 80vw;
     --button-width        : fit-content;
   }

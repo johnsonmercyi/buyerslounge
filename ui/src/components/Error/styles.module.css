@@ -1,0 +1,20 @@
+/*Mobile First Style*/
+.main {
+  width: var(--full-width);
+  height: 20rem;
+
+  display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
+  justify-content: var(--ui-wrapper-justify-content);
+  align-items    : var(--ui-wrapper-align-items);
+
+  color: var(--default);
+
+  font-size: var(--text-medium);
+
+  text-align: center;
+  line-height: 150%;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

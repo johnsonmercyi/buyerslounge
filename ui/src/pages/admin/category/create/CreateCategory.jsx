@@ -4,15 +4,17 @@ import Form from "../../../../components/ui/Form/Form";
 import Input from "../../../../components/ui/Form/Input/Input";
 import Button from "../../../../components/ui/UIButton/Button";
 import { HTTPMethods, makeRequest } from "../../../../util/utils";
-import { Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const CreateCategory = () => {
+const CreateCategory = ({props}) => {
 
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setCategory(event.target.value);
@@ -33,12 +35,9 @@ const CreateCategory = () => {
           setLoading(false);
           setIsError(true);
           setMessage(response.message);
-
-          alert(response.message);
         } else {
           setLoading(false);
-          alert("Successfully submitted!");
-          // ⚠️TODO: Navigate to categories route here...
+          navigate("/admin/dashboard/categories");
         }
       }
 
