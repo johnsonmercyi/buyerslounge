@@ -1,7 +1,39 @@
 /*Mobile First Style*/
-.main {}
+.main,
+.pagination,
+.pagination .actions {
+  display        : var(--ui-wrapper-display);
+  justify-content: var(--ui-wrapper-justify-content);
+  align-items    : var(--ui-wrapper-align-items);
+}
+
+.main {
+  width : var(--full-width);
+  height: auto;
+
+  background-color: var(--secondary-bg-color);
+}
+
+.pagination {
+  width : var(--full-width);
+  height: auto;
+  padding: 1rem;
+}
+
+.pagination .stats {
+  width: var(--full-width);
+  
+}
+
+.pagination .actions {
+  width: var(--full-width);
+  justify-content: var(--ui-wrapper-justify-content-flex-end);
+}
+
+.pagination .actions .btn>button {
+  width: 5rem;
+  margin: 0 0.25rem;
+}
 
 /*Devices larger than mobile phone*/
-@media (min-width: 576px) {
-
-}
+@media (min-width: 576px) {}

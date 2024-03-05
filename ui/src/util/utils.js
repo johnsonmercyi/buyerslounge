@@ -6,13 +6,21 @@ export const HTTPMethods = {
 const apiUrl = "http://localhost:8080/api";
 // const apiUrl = "http://192.168.250.122:8080/api";
 
-export const makeRequest = async(url, method, payload) => {
-  const response = await fetch(`${apiUrl}${url}`, {
-    method: method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
+export const makeRequest = async(url, method, payload, headersPayload={}) => {
 
+  const options = {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headersPayload
+    }
+  }
+
+  if (payload) {
+    options.body = JSON.stringify(payload);
+  }
+
+  const response = await fetch(`${apiUrl}${url}`, options);
   return await response.json();
 }
 

@@ -28,6 +28,17 @@ const Category = ({ ...props }) => {
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Pagination States
+  const PAGE_SIZE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [numberOfElements, setNumberOfElements] = useState(0);
+  const [pageSize, setPageSize] = useState(PAGE_SIZE);
+  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [last, setLast] = useState(false);
+  const [pageStart, setPageStart] = useState(0);
+  const [pageEnd, setPageEnd] = useState(0);
+
   const navigate = useNavigate();
 
 
@@ -55,14 +66,19 @@ const Category = ({ ...props }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await makeRequest('/categories', HTTPMethods.GET);
+      const response = await makeRequest('/categories', HTTPMethods.GET, undefined, {
+        'pageNo': currentPage,
+        'pageSize': pageSize
+      });
+
       if (response.error) {
         setLoading(false);
         setIsError(true);
         setMessage(response.message);
       } else {
         setLoading(false);
-        const categories = response.map((category, index) => {
+        console.log("RESPONSE: ", response);
+        const categories = response.content.map((category, index) => {
 
           return {
             sn: index + 1,

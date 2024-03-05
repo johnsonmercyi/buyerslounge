@@ -46,12 +46,13 @@
 .floating {
   position: fixed;
   right   : 6%;
-  top     : 17%;
+  bottom     : 8%;
   width   : 3rem !important;
   height  : 3rem;
 
   border-radius: 100%;
   border       : none;
+  z-index: 1;
 }
 
 @keyframes rotate {
