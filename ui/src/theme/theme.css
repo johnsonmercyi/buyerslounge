@@ -6,6 +6,7 @@
   --secondary-bg-color: #16213C;
   --tetiary-bg-color  : #1B294B;
   --ui-bg-color       : #0066ff;
+  --ui-secondary-bg-color :#ffd500;
   --dim-area-bg-color : rgba(15, 23, 42, 0.4);
   --faded-light-bg-02-color: rgba(255, 255, 255, 0.2);
   --faded-light-bg-01-color: rgba(255, 255, 255, 0.1);
@@ -29,6 +30,7 @@
   --hover-light-bg-color: rgba(148, 163, 184, 0.05);
 
   --ui-hover-bg-color: #005ae0;
+  --ui-hover-secondary-bg-color :#e3ae00;
 
   --default-border-radius: 0.2rem;
   --default-padding      : 0.7rem;
