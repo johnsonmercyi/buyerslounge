@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import styles from './styles.module.css';
-import Form from "../../../../components/ui/Form/Form";
-import Input from "../../../../components/ui/Form/Input/Input";
-import Button from "../../../../components/ui/UIButton/Button";
-import { HTTPMethods, makeRequest } from "../../../../util/utils";
-import { useNavigate } from "react-router-dom";
+import Form from 'components/ui/Form/Form';
+import Input from 'components/ui/Form/Input/Input';
+import Button from 'components/ui/UIButton/Button';
+import Select from 'components/ui/Form/Select/Select';
 
-const CreateCategory = ({ props }) => {
+const NewProduct = () => {
 
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
+  const [productName, setProductName] = useState("");
+  const [productNameError, setProductNameError] = useState(false);
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   const onChangeHandler = (event) => {
     setCategory(event.target.value);
@@ -57,15 +56,15 @@ const CreateCategory = ({ props }) => {
 
   return (
     <div className={styles.main}>
-      <h2>New Category ✨</h2>
+      <h2>New Products ✨</h2>
 
       <Form onSubmitHandler={onSubmitHandler}>
-        <Input
-          error={categoryError}
-          value={category}
-          label={"Category"}
-          placeholder={"Enter category name"}
-          onChangeHandler={onChangeHandler} />
+        <Select
+          options={[
+            { label: "Demo 1", value: "demo1" },
+            { label: "Demo 2", value: "demo2" },
+            { label: "Demo 3", value: "demo3" },
+          ]} />
 
         <Button
           loading={loading}
@@ -77,4 +76,4 @@ const CreateCategory = ({ props }) => {
   );
 }
 
-export default CreateCategory;
+export default NewProduct;

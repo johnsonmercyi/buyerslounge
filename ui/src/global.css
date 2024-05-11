@@ -2,7 +2,28 @@
 
 body {
   background-color: var(--primary-bg-color);
-  color: var(--default-color);
+  color           : var(--default-color);
+}
+
+.pageContainer {
+  width : var(--ui-wrapper-width);
+  height: var(--ui-wrapper-height);
+
+  display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
+  justify-content: var(--ui-wrapper-justify-content-flex-start);
+  align-items    : var(--ui-wrapper-align-items-flex-start);
+
+  position: relative;
+}
+
+.dashboardContainer {
+  padding: var(--container-padding);
+
+  display        : var(--dashboard-display);
+  flex-direction : var(--dashboard-flex-direction);
+  justify-content: var(--dashboard-justify-content);
+  align-items    : var(--dashboard-align-items);
 }
 
 .rotate {

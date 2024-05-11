@@ -1,0 +1,21 @@
+/*Mobile First Style*/
+.main,
+.main form {
+  display        : var(--form-container-display);
+  flex-direction : var(--form-container-flex-direction);
+  justify-content: var(--form-container-justify-content);
+  align-items    : var(--form-container-align-items);
+}
+
+.main {
+  width : var(--form-container-width);
+  height: var(--form-container-height);
+}
+
+.main form {
+  width      : var(--form-width);
+  align-items: var(--align-items-center);
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

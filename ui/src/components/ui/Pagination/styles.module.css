@@ -22,7 +22,7 @@
 
 .pagination .stats {
   width: var(--full-width);
-  
+  color: var(--mute);
 }
 
 .pagination .actions {

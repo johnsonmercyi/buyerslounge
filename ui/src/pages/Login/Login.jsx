@@ -7,6 +7,7 @@ import UIForm from "../../components/ui/FormUI/Form";
 import { Container } from "semantic-ui-react";
 import UIMessage from "../../components/ui/UIMessage/UIMessage";
 import axios from "axios";
+import { HTTPMethods, makeRequest } from "../../util/utils";
 
 const Login = ({ props }) => {
   const [loading, setLoading] = useState(false);
@@ -46,16 +47,14 @@ const Login = ({ props }) => {
           password: inputs.password
         };
 
-        const res = await axios.post("api/login", loginPayload);
-        const userData = res.data;
-        // console.log(userData);
+        const response = await makeRequest("/login", HTTPMethods.POST ,loginPayload);
 
-        if (res.status === 200) {
+        if (!response.error) {
           //If the user is logged in successfully
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('userData', JSON.stringify({
-            username: userData.username,
-            role: userData.userRoles[0].name
+            username: response.username,
+            role: response.userRoles[0].name
           }));
           setLoading(false);
           setIsError(false);
@@ -63,7 +62,13 @@ const Login = ({ props }) => {
 
           // Navigate to dashboard or home...
           navigate("/");
+        } else {
+          setLoading(false);
+          setIsError(true);
+          setIsSuccess(false);
+          setMessage(response.message);
         }
+
       } catch (err) {
         console.log(err.message);
         setMessage("Invalid credentials");

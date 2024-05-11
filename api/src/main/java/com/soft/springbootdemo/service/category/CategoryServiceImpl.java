@@ -75,8 +75,21 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Collection<Category> findByNameContaining(String searchString) {
-    return categoryRepo.findByNameContaining(searchString);
+  public PagedResponse<Category> findByNameContaining(String name, int pageNo, int pageSize) {
+
+    Pageable pageable = PageRequest.of(pageNo, pageSize);
+    Page<Category> page = categoryRepo.findByNameContaining(name, pageable);
+
+    PagedResponse<Category> response = new PagedResponse<>();
+    response.setContent(page.getContent());
+    response.setLast(page.isLast());
+    response.setPageNo(page.getNumber());
+    response.setNumberOfElements(page.getNumberOfElements());
+    response.setPageSize(page.getSize());
+    response.setTotalElements(page.getTotalElements());
+    response.setTotalPages(page.getTotalPages());
+
+    return response;
   }
   
 }

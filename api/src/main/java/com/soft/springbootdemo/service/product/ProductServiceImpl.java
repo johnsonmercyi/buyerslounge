@@ -6,8 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.soft.springbootdemo.dto.PagedResponse;
 import com.soft.springbootdemo.dto.ProductDTO;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Product;
@@ -39,6 +43,22 @@ public class ProductServiceImpl implements ProductService {
   @Override
   public Collection<Product> findAll() {
     return productRepo.findAll();
+  }
+
+  @Override
+  public PagedResponse<Product> allProducts(int pageNo, int pageSize) {
+    Pageable pageable = PageRequest.of(pageNo, pageSize);
+    Page<Product> page = productRepo.findAll(pageable);
+    return new PagedResponse<>(
+      page.getContent(), 
+      page.getNumber(), 
+      page.getNumberOfElements(), 
+      page.getSize(), 
+      page.getTotalElements(), 
+      page.getTotalPages(), 
+      page.isLast(),
+      page.isFirst()
+    );
   }
 
   @Override

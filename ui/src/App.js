@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-// import './global.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import Home from './pages/Home/Home';
@@ -13,6 +12,8 @@ import AdminDashboard from './pages/admin/dashboard';
 import SellerDashboard from './pages/seller/dashboard';
 import Category from './pages/admin/category/Category';
 import CreateCategory from './pages/admin/category/create/CreateCategory';
+import Product from './pages/admin/product/Product';
+import NewProduct from './pages/admin/product/new/Page';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
               <Route index element={<div>Welcome to admin Dashboard!</div>}/>
               <Route path='/admin/dashboard/categories' element={<Category />} />
               <Route path='/admin/dashboard/categories/create' element={<CreateCategory />} />
+
+              <Route path='/admin/dashboard/products' element={<Product />} />
+              <Route path='/admin/dashboard/products/create' element={<NewProduct />} />
+
             </Route>
             <Route path='/seller/dashboard' element={<SellerDashboard />}>
               <Route path='/seller/dashboard/categories' element={<Category />} />

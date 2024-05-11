@@ -1,10 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import styles from './styles.module.css';
+// import styles from './styles.module.css';
 
 const AdminDashboard = () => {
   return (
-    <div className={styles.main}>
+    <div className={`dashboardContainer`}>
       <Outlet />
     </div>
   );

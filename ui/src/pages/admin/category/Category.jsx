@@ -3,18 +3,12 @@ import styles from './styles.module.css';
 import Table from "../../../components/ui/Table/Table";
 import Input from "../../../components/ui/Form/Input/Input";
 import Button from "../../../components/ui/UIButton/Button";
-import { HTTPMethods, makeRequest } from "../../../util/utils";
+import { HTTPMethods, devices, makeRequest } from "../../../util/utils";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading/Loading";
 import ErrorPage from "../../../components/Error/Error";
 import { BrowserContext } from "../../../util/context/BrowserContext";
-import Pagination from "../../../components/ui/Pagination/Pagination";
-
-const devices = {
-  MOBILE: "mobile",
-  TABLET: "tablet",
-  DESKTOP: "desktop"
-}
+import Pagination, { disabledButtonStates } from "../../../components/ui/Pagination/Pagination";
 
 const Category = ({ ...props }) => {
 
@@ -29,15 +23,19 @@ const Category = ({ ...props }) => {
   const [message, setMessage] = useState("");
 
   // Pagination States
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
+  const PAGE_START = 1;
   const [currentPage, setCurrentPage] = useState(0);
   const [numberOfElements, setNumberOfElements] = useState(0);
   const [pageSize, setPageSize] = useState(PAGE_SIZE);
   const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [last, setLast] = useState(false);
-  const [pageStart, setPageStart] = useState(0);
-  const [pageEnd, setPageEnd] = useState(0);
+  const [pageStart, setPageStart] = useState(PAGE_START);
+  const [pageEnd, setPageEnd] = useState(PAGE_SIZE);
+  const [paginationAction, setPaginationAction] = useState("");
+
+  const [disabledButton, setDisabledButton] = useState(disabledButtonStates.PREVIOUS);
 
   const navigate = useNavigate();
 
@@ -48,13 +46,21 @@ const Category = ({ ...props }) => {
 
   useEffect(() => {
     if (searchText.trim().length === 0) {
-      fetchCategories();
+      fetchCategories(true);
     }
   }, [searchText]);
 
   useEffect(() => {
     decideDevices();
   }, [browserWidth]);
+
+  useEffect(() => {
+    if (searchText.trim().length > 0) {
+      fetchSearchCategories();
+    } else {
+      fetchCategories();
+    }
+  }, [pageSize, currentPage]);
 
   const decideDevices = () => {
     if (browserWidth > 576) {
@@ -64,10 +70,20 @@ const Category = ({ ...props }) => {
     }
   }
 
-  const fetchCategories = async () => {
+  const pageNavigationHandler = (action) => {
+    if (action === "next") {
+      setCurrentPage(pageNo => pageNo += 1);
+    } else if (action === "previous") {
+      setCurrentPage(pageNo => pageNo -= 1);
+    }
+    setPaginationAction(action);
+    setSearchLoading(true);
+  }
+
+  const fetchCategories = async (resetPageNo = false) => {
     try {
       const response = await makeRequest('/categories', HTTPMethods.GET, undefined, {
-        'pageNo': currentPage,
+        'pageNo': resetPageNo ? 0 : currentPage,
         'pageSize': pageSize
       });
 
@@ -77,7 +93,6 @@ const Category = ({ ...props }) => {
         setMessage(response.message);
       } else {
         setLoading(false);
-        console.log("RESPONSE: ", response);
         const categories = response.content.map((category, index) => {
 
           return {
@@ -86,6 +101,19 @@ const Category = ({ ...props }) => {
           }
         });
         setCategories(categories);
+
+        // Set pagination states here
+        setLast(response.last);
+        setNumberOfElements(response.numberOfElements);
+        setCurrentPage(response.pageNo);
+        setPageSize(response.pageSize);
+        setTotalElements(response.totalElements);
+        setTotalPages(response.totalPages);
+
+        // Update the pagination values
+        updatePaginationValues(response);
+        setSearchLoading(false);
+
       }
     } catch (error) {
       setLoading(false);
@@ -99,6 +127,84 @@ const Category = ({ ...props }) => {
 
   }
 
+  
+  const fetchSearchCategories = async (resetPageNo = false) => {
+    setSearchLoading(true);
+    try {
+      const response = await makeRequest('/categories/search', HTTPMethods.POST, undefined, {
+        'pageNo': resetPageNo ? 0 : currentPage,
+        'pageSize': pageSize,
+        'name': searchText
+      });
+
+      if (response.error) {
+        setSearchLoading(false);
+        setIsError(true);
+        setMessage(response.message);
+      } else {
+        setSearchLoading(false);
+        const categories = response.content.map((category, index) => {
+
+          return {
+            sn: index + 1,
+            name: category.name
+          }
+        });
+        setCategories(categories);
+
+        // Set pagination states here
+        setLast(response.last);
+        setNumberOfElements(response.numberOfElements);
+        setCurrentPage(response.pageNo);
+        setPageSize(response.pageSize);
+        setTotalElements(response.totalElements);
+        setTotalPages(response.totalPages);
+
+        // Update the pagination values
+        updatePaginationValues(response);
+        setSearchLoading(false);
+      }
+    } catch (error) {
+      setSearchLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+    }
+  }
+
+  const updatePaginationValues = (response) => {
+    console.log(response);
+
+    const { pageNo, pageSize, totalPages, last } = response;
+
+    if (pageNo === 0) { // If this the start page
+      setPageStart(1);
+      setPageEnd(response.numberOfElements /**|| pageSize**/); // ⚠️
+      setDisabledButton("previous"); // The previous button is disabled
+
+      if (last) {
+        setDisabledButton("both"); // The next button is disabled
+      }
+    } else if (pageNo > 0) { // The subsequent pages
+      setDisabledButton(""); // Neither of the buttons are disabled
+      if (paginationAction === "next") { // Checks if user clicks the next button
+        // Increment page start by page size on each next button click
+        setPageStart(prevPageStart => prevPageStart += pageSize);
+        if (last) { // If this is the last page
+          setPageEnd(totalElements); // Set page end with total elements value
+          setDisabledButton("next"); // The next button is disabled
+        } else if (pageNo < (totalPages - 1)) {
+          // Increment page end by page size on each next button click
+          setPageEnd(prevPageEnd => prevPageEnd += numberOfElements);
+        }
+      } else if (paginationAction === "previous") { // Checks if user clicks the previous button
+        // Increment page start by page size on each next button click
+        setPageStart(prevPageStart => prevPageStart -= pageSize);
+        setPageEnd(prevPageEnd => prevPageEnd -= numberOfElements);
+      }
+
+    }
+  }
+
   const createNewCategoryHandler = () => {
     navigate('/admin/dashboard/categories/create');
   }
@@ -109,32 +215,7 @@ const Category = ({ ...props }) => {
 
   const onSearchHandler = async (event) => {
     if (String(event.key).toLowerCase() === "enter") {
-      setSearchLoading(true);
-      try {
-        const response = await makeRequest('/categories/search', HTTPMethods.POST, {
-          searchText: searchText
-        });
-
-        if (response.error) {
-          setSearchLoading(false);
-          setIsError(true);
-          setMessage(response.message);
-        } else {
-          setSearchLoading(false);
-          const categories = response.map((category, index) => {
-
-            return {
-              sn: index + 1,
-              name: category.name
-            }
-          });
-          setCategories(categories);
-        }
-      } catch (error) {
-        setSearchLoading(false);
-        setIsError(true);
-        setMessage(error.message);
-      }
+      fetchSearchCategories(true);
     }
   }
 
@@ -142,7 +223,7 @@ const Category = ({ ...props }) => {
 
     loading ? (<Loading load={loading} loadingText="Please wait" />) :
       isError ? (<ErrorPage errorMessage={message} />) :
-        (<div className={styles.main}>
+        (<div className={`pageContainer`}>
           <h2>Categories ✨</h2>
           <div className={styles.actionComponentsWrapper}>
             <Input
@@ -163,8 +244,18 @@ const Category = ({ ...props }) => {
             headers={["SN", "NAME", "ACTION"]}
             content={categories}
             load={searchLoading} />
-          
-          <Pagination />
+
+          {/* Data Table Pagination */}
+          {
+            categories.length > 0 ? (
+              <Pagination
+                disabledButton={disabledButton}
+                pageStart={pageStart}
+                pageEnd={pageEnd}
+                totalRecords={totalElements}
+                pageNavigationHandler={pageNavigationHandler} />
+            ) : null
+          }
         </div>)
 
   );

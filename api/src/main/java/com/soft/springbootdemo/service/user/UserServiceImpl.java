@@ -44,12 +44,16 @@ public class UserServiceImpl implements UserService {
       userDTO = findByUsername(usernameOrEmail);
     }
     
-    if (userDTO.getPassword().equals(password)) {
-      log.info("Logged in user {} and {}: ", userDTO.getUsername(), userDTO.getPassword());
-      return userDTO;
+    if (userDTO != null) {
+      if (userDTO.getPassword().equals(password)) {
+        log.info("Logged in user {} and {}: ", userDTO.getUsername(), userDTO.getPassword());
+        
+        return userDTO;
+      }
     }
 
     throw new NullPointerException("Incorrect Username or password.");
+
   }
 
   @Override

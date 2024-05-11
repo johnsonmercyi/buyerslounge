@@ -59,9 +59,11 @@ public class CategoryController {
   }
 
   @PostMapping("/search")
-  public ResponseEntity<Collection<Category>> searchCategories(@RequestBody SearchString searchString) {
-    log.info("SEARCH: {}", searchString.getSearchText());
-    return ResponseEntity.ok(categoryService.findByNameContaining(searchString.getSearchText()));
+  public PagedResponse<Category> searchCategories(
+      @RequestHeader(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+      @RequestHeader(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+      @RequestHeader(value = "name", defaultValue = "", required = true) String name) {
+    return categoryService.findByNameContaining(name, pageNo, pageSize);
   }
 
 }

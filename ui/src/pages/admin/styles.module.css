@@ -1,11 +1,6 @@
 /*Mobile First Style*/
 .main {
-  padding: var(--container-padding);
-
-  display        : var(--dashboard-display);
-  flex-direction : var(--dashboard-flex-direction);
-  justify-content: var(--dashboard-justify-content);
-  align-items    : var(--dashboard-align-items);
+  
 }
 
 /*Devices larger than mobile phone*/

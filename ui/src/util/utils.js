@@ -3,8 +3,8 @@ export const HTTPMethods = {
   GET: "get",
 }
 
-const apiUrl = "http://localhost:8080/api";
-// const apiUrl = "http://192.168.250.122:8080/api";
+// const apiUrl = "http://localhost:8080/api";
+const apiUrl = "http://192.168.10.122:8080/api";
 
 export const makeRequest = async(url, method, payload, headersPayload={}) => {
 
@@ -57,4 +57,10 @@ export const animate = (
       }, delay + duration);
     }
   }
+}
+
+export const devices = {
+  MOBILE: "mobile",
+  TABLET: "tablet",
+  DESKTOP: "desktop"
 }

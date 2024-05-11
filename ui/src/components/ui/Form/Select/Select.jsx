@@ -1,30 +1,23 @@
-import React from "react";
+import React from 'react';
+import Icon from 'util/icons';
 import styles from './styles.module.css';
-import Icon from "../../../../util/icons";
 
-const Input = ({
-  error = false,
-  type,
-  label,
-  value = "",
-  placeholder,
-  icon,
-  iconColor,
-  onChangeHandler,
-  onKeyDown,
-  ...props }) => {
+const Select = ({ icon, error, options = [], label = "", ...props }) => {
   return (
     <div className={styles.main}>
       <label>{label}</label>
       <div className={styles.wrapper}>
-        <input
+        <select
           className={`${styles.input} ${error ? styles.error : ""}`}
-          type={type || "text"}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDown}
-          {...props} />
+          {...props}>
+          {
+            options.map((option, index) => (
+              <option key={index} value={option.value}>
+                {option.label}
+              </option>
+            ))
+          }
+        </select>
         {
           icon ? (
             <Icon
@@ -45,4 +38,4 @@ const Input = ({
   );
 }
 
-export default Input;
+export default Select;

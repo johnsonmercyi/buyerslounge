@@ -18,7 +18,7 @@
   border          : 1px solid var(--ui-button-border-color);
   border-radius   : 0.2rem;
   color           : var(--default-color);
-  transition      : 0.3s ease-in-out;
+  transition      : 0.1s ease-in-out;
 
   display        : var(--dashboard-display);
   justify-content: var(--justify-content-center);
@@ -46,9 +46,9 @@
 .floating {
   position: fixed;
   right   : 6%;
-  bottom  : 8%;
-  width   : 3rem !important;
-  height  : 3rem;
+  bottom  : 15%;
+  width   : 3.5rem !important;
+  height  : 3.5rem;
 
   border-radius: 100%;
   border       : none;
@@ -62,6 +62,13 @@
 
 .button.floating:hover {
   background-color: var(--ui-hover-secondary-bg-color);
+}
+
+.button:disabled {
+  background-color: var(--default-border-color);
+  border-color    : var(--hover-border-color);
+  color: var(--mute);
+  cursor: not-allowed;
 }
 
 @keyframes rotate {
