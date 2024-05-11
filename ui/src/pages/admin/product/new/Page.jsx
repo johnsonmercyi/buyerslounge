@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import Form from 'components/ui/Form/Form';
 import Input from 'components/ui/Form/Input/Input';
 import Button from 'components/ui/UIButton/Button';
 import Select from 'components/ui/Form/Select/Select';
+import { makeRequest } from '../../../../util/utils';
 
 const NewProduct = () => {
 
@@ -14,6 +15,43 @@ const NewProduct = () => {
   const [isError, setIsError] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      console.log("Woring at this point 1...");
+      const response = await makeRequest('/categories', HTTPMethods.GET, undefined, {
+        'pageNo': 0,
+        'pageSize': 5
+      });
+      console.log("Woring at this point 2...");
+
+      // const response = await fetch(`http://localhost:8080/api/categories`, {
+      //   method: "GET",
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'pageNo': 0,
+      //     'pageSize': 5
+      //   }
+      // });
+
+      // const data = await response.json();
+
+      console.log("RESPONSE: ", response);
+
+    } catch(error) {
+      setLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+
+      if (String(error.message).toLowerCase().includes("failed to fetch")) {
+        setMessage("Sorry! Our server might be down at the moment. Please check back later!");
+      }
+    }
+  }
 
   const onChangeHandler = (event) => {
     setCategory(event.target.value);

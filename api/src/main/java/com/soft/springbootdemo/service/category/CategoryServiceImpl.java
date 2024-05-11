@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Collection<Category> findAll() {
-    return null;
+    return categoryRepo.findAll();
   }
 
   @Override

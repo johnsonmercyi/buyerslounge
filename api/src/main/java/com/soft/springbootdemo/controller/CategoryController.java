@@ -32,10 +32,17 @@ public class CategoryController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public PagedResponse<Category> findAllCategories(
+  public ResponseEntity<Object> findAllCategories(
+      @RequestHeader(value = "paginate", defaultValue = "true", required = false) boolean paginate,
       @RequestHeader(value = "pageNo", defaultValue = "0", required = false) int pageNo,
       @RequestHeader(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-    return categoryService.findAll(pageNo, pageSize);
+        log.info("Paginate {}", paginate);
+        if (paginate) {
+          return ResponseEntity.ok(categoryService.findAll(pageNo, pageSize));
+        } else {
+          
+          return ResponseEntity.ok(categoryService.findAll());
+        }
   }
 
   @GetMapping("/{id}")
