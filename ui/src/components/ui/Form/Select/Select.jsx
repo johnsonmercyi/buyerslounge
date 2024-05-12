@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import Icon from 'util/icons';
 import styles from './styles.module.css';
 
+/**
+ * Custom Select UI Component
+ * @param {*} param0 
+ * @returns 
+ */
 const Select = ({
   name = "",
   icon,
@@ -13,14 +18,21 @@ const Select = ({
   selectHandler,
   ...props }) => {
 
+    /**
+     * Component states
+     */
   const [selectedItem, setSelectedItem] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isShowUpsideNeeded, setIsShowUpsideNeeded] = useState(false);
 
-  const optionListRef = useRef(null);
-  const itemsWrapperRef = useRef(null);
-  const selectRef = useRef(null);
+  const optionListRef = useRef(null); // Select dropdown reference
+  const itemsWrapperRef = useRef(null); // Select options items wrapper reference
+  const selectRef = useRef(null); // Select Component reference
 
+  /**
+   * Determine the position the dropdown should be positioned
+   * Upside or downside.
+   */
   useEffect(() => {
     console.log("Select is open: ", isOpen);
     if (isOpen) {
@@ -40,28 +52,51 @@ const Select = ({
     }
   }, [isOpen]);
 
+  /**
+   * Automically scrolls to the selected option if there's one.
+   */
   useEffect(() => {
     if (isOpen) {
+      /**
+       * Fetch the selected option whose data-value equals
+       * selected item's value
+       */
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
 
 
+      /**
+       * Checks if there's a selected option
+       */
       if (selectedOption) {
         const selectedOptionRect = selectedOption.getBoundingClientRect();
         const optionListRect = itemsWrapperRef.current.getBoundingClientRect();
 
+        /**
+         * Calculate the extent the options wrapper should scroll to
+         */
         const scrollTop = selectedOptionRect.top - optionListRect.top;
 
+        /**
+         * Scoll to the selected option
+         */
         itemsWrapperRef.current.scrollTo({
           top: scrollTop,
           behaviour: 'auto'
         });
 
+        /**
+         * Style the selected option element
+         */
         selectedOption.style.backgroundColor = "rgba(148, 163, 184, 0.1)";
         selectedOption.style.color = "#e3ae00";
       }
     }
   }, [isOpen, selectedItem]);
 
+  /**
+   * Close the select dropdown when user clicks outside of the select component
+   * boundaries
+   */
   useEffect(() => {
     document.addEventListener('click', (event) => {
       if (selectRef.current && !selectRef.current.contains(event.target)) {
@@ -84,7 +119,12 @@ const Select = ({
     <div className={styles.main} ref={selectRef}>
       <label>{label}</label>
       <div className={styles.wrapper}>
-        <div className={styles.select} onClick={toggleOpen}>
+        <div
+          style={{
+            border: isOpen ? '1px solid #475569' : '1px solid #1e293b'
+          }}
+          className={styles.select}
+          onClick={toggleOpen}>
           <input
             disabled
             type="text"

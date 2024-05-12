@@ -28,7 +28,7 @@
   background-color: var(--secondary-bg-color);
   padding         : 0 0.7rem;
   color           : var(--default-color);
-  transition      : 0.3s ease-in-out;
+  transition      : all 0.3s ease-in-out;
 
   display        : var(--display-flex);
   justify-content: var(--justify-content-center);
@@ -36,12 +36,7 @@
 }
 
 .main .wrapper .select:hover {
-  border: 1px solid var(--hover-border-color);
-}
-
-.main .wrapper .select:focus {
-  outline: none;
-  border : 1px solid var(--hover-border-color);
+  border: 1px solid var(--hover-border-color) !important;
 }
 
 .main .wrapper .select.error,
