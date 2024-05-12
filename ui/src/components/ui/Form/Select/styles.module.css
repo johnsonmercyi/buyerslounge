@@ -19,14 +19,7 @@
   position: relative;
 }
 
-.main .wrapper .icon {
-  position : absolute;
-  top      : 50%;
-  right    : 10px;
-  transform: translateY(-40%);
-}
-
-.main select {
+.main .wrapper .select {
   width : var(--form-input-width);
   height: var(--ui-size-normal);
 
@@ -36,20 +29,24 @@
   padding         : 0 0.7rem;
   color           : var(--default-color);
   transition      : 0.3s ease-in-out;
+
+  display        : var(--display-flex);
+  justify-content: var(--justify-content-center);
+  align-items    : var(--align-items-center);
 }
 
-.main select:hover {
+.main .wrapper .select:hover {
   border: 1px solid var(--hover-border-color);
 }
 
-.main select:focus {
+.main .wrapper .select:focus {
   outline: none;
   border : 1px solid var(--hover-border-color);
 }
 
-.main select.error,
-.main select.error:focus,
-.main select.error:hover {
+.main .wrapper .select.error,
+.main .wrapper .select.error:focus,
+.main .wrapper .select.error:hover {
   border: 1px solid var(--danger);
 }
 
@@ -58,6 +55,90 @@
   font-size: var(--text-normal);
   color    : var(--danger);
   padding  : 0.2rem;
+}
+
+.main .wrapper .select input {
+  width           : 100%;
+  height          : 100%;
+  border          : none;
+  outline         : none;
+  background-color: var(--secondary-bg-color);
+  color           : var(--default-color)
+}
+
+.main .wrapper .select .icon {
+  width : 2rem;
+  height: 100%;
+
+  display        : var(--display-flex);
+  justify-content: var(--justify-content-center);
+  align-items    : var(--align-items-center);
+}
+
+.main .wrapper .optionList {
+  width           : var(--full-width);
+  height          : 10.2rem;
+  overflow-x      : auto;
+  padding         : 0;
+  background-color: var(--tetiary-bg-color);
+  border-radius   : 0 0 0.3rem 0.3rem;
+
+  position: absolute;
+
+}
+
+.main .wrapper .optionList.showUpside {
+  bottom       : 100%;
+  left         : 0;
+  border-radius: 0.3rem 0.3rem 0 0;
+}
+
+.main .wrapper .optionList .itemsWrapper {
+  width   : var(--full-width);
+  height  : 9.7rem;
+  overflow: auto;
+  padding : 0.5rem 0.5rem 0 0.5rem;
+}
+
+/* width */
+.main .wrapper .optionList .itemsWrapper::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Track */
+.main .wrapper .optionList .itemsWrapper::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track-bg-color);
+  border-radius   : 0;
+}
+
+/* Handle */
+.main .wrapper .optionList .itemsWrapper::-webkit-scrollbar-thumb {
+  background   : var(--scrollbar-thumb-bg-color);
+  border-radius: 0.3rem;
+  transition   : all 0.3s ease-in-out;
+
+}
+
+/* Handle on hover */
+.main .wrapper .optionList .itemsWrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-bg-hover-color);
+}
+
+.main .wrapper .optionList .item {
+  width           : var(--full-width);
+  height          : var(--ui-size-small);
+  display         : var(--display-flex);
+  justify-content : var(--justify-content-flex-start);
+  align-items     : var(--align-items-center);
+  padding         : 0.5rem;
+  /* border-radius: 0.3rem; */
+  border-bottom   : 0.05rem dotted hsla(215, 20%, 65%, 0.232);
+
+  color: var(--mute);
+}
+
+.main .wrapper .optionList .item:hover {
+  background-color: var(--hover-light-bg-color);
 }
 
 /*Devices larger than mobile phone*/

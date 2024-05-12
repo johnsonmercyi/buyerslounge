@@ -12,8 +12,8 @@ const searchOptions = [
 ];
 
 const Header1 = ({ props }) => {
-  
-  useEffect(()=> {
+
+  useEffect(() => {
   }, []);
 
   return (

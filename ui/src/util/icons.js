@@ -167,6 +167,38 @@ const Icon = ({
         <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
         <path d="M21 21l-6 -6" />
       </svg>
+    ),
+
+    "arrow-down": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-packages"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M20.118 3h-16.225a2.914 2.914 0 0 0 -2.503 4.371l8.116 13.549a2.917 2.917 0 0 0 4.987 .005l8.11 -13.539a2.914 2.914 0 0 0 -2.486 -4.386z" strokeWidth={strokeWidth || "0"} fill="currentColor" />
+      </svg>
+    ),
+
+    "arrow-up": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-packages"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 1.67a2.914 2.914 0 0 0 -2.492 1.403l-8.11 13.537a2.914 2.914 0 0 0 2.484 4.385h16.225a2.914 2.914 0 0 0 2.503 -4.371l-8.116 -13.546a2.917 2.917 0 0 0 -2.494 -1.408z" strokeWidth={strokeWidth || "0"} fill="currentColor" />
+      </svg>
     )
   }
 

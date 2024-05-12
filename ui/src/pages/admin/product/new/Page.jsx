@@ -4,10 +4,11 @@ import Form from 'components/ui/Form/Form';
 import Input from 'components/ui/Form/Input/Input';
 import Button from 'components/ui/UIButton/Button';
 import Select from 'components/ui/Form/Select/Select';
-import { makeRequest } from '../../../../util/utils';
+import { HTTPMethods, makeRequest } from 'util/utils';
 
 const NewProduct = () => {
 
+  const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
   const [productName, setProductName] = useState("");
@@ -22,27 +23,25 @@ const NewProduct = () => {
 
   const fetchCategories = async () => {
     try {
-      console.log("Woring at this point 1...");
+      console.log("Working at this point 1...");
+
       const response = await makeRequest('/categories', HTTPMethods.GET, undefined, {
-        'pageNo': 0,
-        'pageSize': 5
+        'paginate': false,
       });
-      console.log("Woring at this point 2...");
 
-      // const response = await fetch(`http://localhost:8080/api/categories`, {
-      //   method: "GET",
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     'pageNo': 0,
-      //     'pageSize': 5
-      //   }
-      // });
-
-      // const data = await response.json();
+      if (response.error) {
+        console.log(response.error);
+      } else {
+        const categories = response.map(category => ({
+          label: category.name,
+          value: category.id
+        }));
+        setCategories(categories);
+      }
 
       console.log("RESPONSE: ", response);
 
-    } catch(error) {
+    } catch (error) {
       setLoading(false);
       setIsError(true);
       setMessage(error.message);
@@ -50,11 +49,13 @@ const NewProduct = () => {
       if (String(error.message).toLowerCase().includes("failed to fetch")) {
         setMessage("Sorry! Our server might be down at the moment. Please check back later!");
       }
+
+      console.error(error.message);
     }
   }
 
-  const onChangeHandler = (event) => {
-    setCategory(event.target.value);
+  const selectCategoryHandler = (item) => {
+    setCategory(item);
   }
 
   const onSubmitHandler = async (event) => {
@@ -98,11 +99,9 @@ const NewProduct = () => {
 
       <Form onSubmitHandler={onSubmitHandler}>
         <Select
-          options={[
-            { label: "Demo 1", value: "demo1" },
-            { label: "Demo 2", value: "demo2" },
-            { label: "Demo 3", value: "demo3" },
-          ]} />
+          placeholder='Categories'
+          options={categories}
+          selectHandler={selectCategoryHandler} />
 
         <Button
           loading={loading}
