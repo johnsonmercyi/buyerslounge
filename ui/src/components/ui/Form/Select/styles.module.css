@@ -42,7 +42,7 @@
 .main .wrapper .select.error,
 .main .wrapper .select.error:focus,
 .main .wrapper .select.error:hover {
-  border: 1px solid var(--danger);
+  border: 1px solid var(--danger)  !important;
 }
 
 .main span {
@@ -79,6 +79,8 @@
   border-radius   : 0 0 0.3rem 0.3rem;
 
   position: absolute;
+
+  z-index: 1;
 
 }
 
@@ -134,6 +136,11 @@
 
 .main .wrapper .optionList .item:hover {
   background-color: var(--hover-light-bg-color);
+}
+
+.main .wrapper .optionList .item.focused {
+  background-color: rgba(148, 163, 184, 0.1);
+  color: var(--ui-hover-secondary-bg-color)
 }
 
 /*Devices larger than mobile phone*/

@@ -5,6 +5,7 @@ const Icon = ({
   width,
   height,
   strokeColor,
+  bgColor,
   strokeWidth,
   className,
   strokeLinecap,
@@ -198,6 +199,40 @@ const Icon = ({
         strokeLinejoin={strokeLinejoin || "square"}>
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M12 1.67a2.914 2.914 0 0 0 -2.492 1.403l-8.11 13.537a2.914 2.914 0 0 0 2.484 4.385h16.225a2.914 2.914 0 0 0 2.503 -4.371l-8.116 -13.546a2.917 2.917 0 0 0 -2.494 -1.408z" strokeWidth={strokeWidth || "0"} fill="currentColor" />
+      </svg>
+    ),
+
+    "information-alert": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-info-circle-filled"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 2c5.523 0 10 4.477 10 10a10 10 0 0 1 -19.995 .324l-.005 -.324l.004 -.28c.148 -5.393 4.566 -9.72 9.996 -9.72zm0 9h-1l-.117 .007a1 1 0 0 0 0 1.986l.117 .007v3l.007 .117a1 1 0 0 0 .876 .876l.117 .007h1l.117 -.007a1 1 0 0 0 .876 -.876l.007 -.117l-.007 -.117a1 1 0 0 0 -.764 -.857l-.112 -.02l-.117 -.006v-3l-.007 -.117a1 1 0 0 0 -.876 -.876l-.117 -.007zm.01 -3l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007z" strokeWidth="0" fill={`${bgColor || 'currentColor'}`} />
+      </svg>
+    ),
+
+    "error-alert": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-alert-triangle-filled"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 1.67c.955 0 1.845 .467 2.39 1.247l.105 .16l8.114 13.548a2.914 2.914 0 0 1 -2.307 4.363l-.195 .008h-16.225a2.914 2.914 0 0 1 -2.582 -4.2l.099 -.185l8.11 -13.538a2.914 2.914 0 0 1 2.491 -1.403zm.01 13.33l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -7a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" strokeWidth="0" fill={`${bgColor || "currentColor"}`} />
       </svg>
     )
   }

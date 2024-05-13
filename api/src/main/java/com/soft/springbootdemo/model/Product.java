@@ -25,7 +25,7 @@ public class Product {
   @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false, unique = false)
   private Category category;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String name; 
 
   @CreationTimestamp

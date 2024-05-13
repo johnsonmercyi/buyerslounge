@@ -9,8 +9,6 @@ import styles from './styles.module.css';
  */
 const Select = ({
   name = "",
-  icon,
-  iconColor,
   error,
   options = [],
   label = "",
@@ -18,9 +16,9 @@ const Select = ({
   selectHandler,
   ...props }) => {
 
-    /**
-     * Component states
-     */
+  /**
+   * Component states
+   */
   const [selectedItem, setSelectedItem] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [isShowUpsideNeeded, setIsShowUpsideNeeded] = useState(false);
@@ -63,35 +61,32 @@ const Select = ({
        */
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
 
-
       /**
        * Checks if there's a selected option
        */
       if (selectedOption) {
-        const selectedOptionRect = selectedOption.getBoundingClientRect();
-        const optionListRect = itemsWrapperRef.current.getBoundingClientRect();
-
-        /**
-         * Calculate the extent the options wrapper should scroll to
-         */
-        const scrollTop = selectedOptionRect.top - optionListRect.top;
-
-        /**
-         * Scoll to the selected option
-         */
-        itemsWrapperRef.current.scrollTo({
-          top: scrollTop,
-          behaviour: 'auto'
-        });
-
-        /**
-         * Style the selected option element
-         */
-        selectedOption.style.backgroundColor = "rgba(148, 163, 184, 0.1)";
-        selectedOption.style.color = "#e3ae00";
+        scollTo(selectedOption);
       }
     }
   }, [isOpen, selectedItem]);
+
+  const scollTo = (selectedOption) => {
+    const selectedOptionRect = selectedOption.getBoundingClientRect();
+    const optionListRect = itemsWrapperRef.current.getBoundingClientRect();
+
+    /**
+     * Calculate the extent the options wrapper should scroll to
+     */
+    const scrollTop = selectedOptionRect.top - optionListRect.top;
+
+    /**
+     * Scoll to the selected option
+     */
+    itemsWrapperRef.current.scrollTo({
+      top: scrollTop,
+      behaviour: 'auto'
+    });
+  }
 
   /**
    * Close the select dropdown when user clicks outside of the select component
@@ -114,25 +109,85 @@ const Select = ({
     setSelectedItem(selectedItem);
   }
 
+  const handleKeydown = (event) => {
+    if (event.key === "ArrowDown") {
+      // Get the selected option
+      const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
+      let nextIndex = 0;
+      if (selectedOption) {
+        nextIndex = options.findIndex(option => option.value === selectedOption.dataset.value) + 1;
+        selectedOption.classList.remove("focused");
+      }
+
+      // Handle when length of option is reached
+      if (nextIndex >= options.length) {
+        nextIndex = 0;
+      }
+
+      setSelectedItem(options[nextIndex]); // Set the selected item state
+
+      /**
+       * Take care of visually updating the selected item
+       */
+      const currentSelectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${options[nextIndex].value}"]`);
+      currentSelectedOption.classList.add('focused');
+
+      // console.log("New selected option: ", currentSelectedOption);
+      
+      scollTo(currentSelectedOption);
+      
+    } else if (event.key === "ArrowUp") {
+      // Get the selected option
+      const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
+      let nextIndex = 0;
+
+      if (selectedOption) {
+        nextIndex = options.findIndex(option => option.value === selectedOption.dataset.value) - 1;
+        selectedOption.classList.remove("focused");
+      }
+
+      // Handle when length of option is reached
+      if (nextIndex <= 1) {
+        nextIndex = options.length - 1;
+      }
+
+      setSelectedItem(options[nextIndex]); // Set the selected item state
+
+      /**
+       * Take care of visually updating the selected item
+       */
+      const currentSelectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${options[nextIndex].value}"]`);
+      currentSelectedOption.classList.add('focused');
+
+      scollTo(currentSelectedOption);
+    } else if (event.key === "Enter") {
+      setIsOpen(false);
+    }
+  }
+
 
   return (
-    <div className={styles.main} ref={selectRef}>
+    <div
+      className={styles.main}
+      ref={selectRef}
+      onKeyDown={handleKeydown}>
       <label>{label}</label>
       <div className={styles.wrapper}>
         <div
           style={{
-            border: isOpen ? '1px solid #475569' : '1px solid #1e293b'
+            border: isOpen && error ? '1px solid #dc0933' : isOpen && !error ? '1px solid #475569' : error ? "1px solid #dc0933" : '1px solid #1e293b'
           }}
-          className={styles.select}
+          className={`${styles.select} ${error? styles.error : ""}`}
           onClick={toggleOpen}>
           <input
-            disabled
+            // disabled
             type="text"
             name={name}
             placeholder={placeholder}
             value={selectedItem.label || ""}
-            onChange={(event) => setSelectedValue(event.target.value)}
-            style={{ pointerEvents: 'none' }} />
+            onChange={(event) => setSelectedItem(event.target.value)}
+            // style={{ pointerEvents: 'auto' }} 
+            />
 
           <Icon
             className={styles.icon}
@@ -154,7 +209,13 @@ const Select = ({
                   options.map((option, index) => (
                     <div
                       data-value={option.value}
-                      className={styles.item}
+                      className={
+                        `${styles.item} 
+                        ${
+                          option.value === selectedItem.value ? 
+                          styles.focused : ""
+                        }`
+                      }
                       key={index}
                       onClick={() => {
                         selectItemHandler(option);

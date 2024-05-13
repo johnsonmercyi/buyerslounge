@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import styles from './styles.module.css';
-import Form from 'components/ui/Form/Form';
-import Input from 'components/ui/Form/Input/Input';
+import Form, { Input, Select, } from 'components/ui/Form/Form';
 import Button from 'components/ui/UIButton/Button';
-import Select from 'components/ui/Form/Select/Select';
+import React, { useEffect, useState } from 'react';
 import { HTTPMethods, makeRequest } from 'util/utils';
+import styles from './styles.module.css';
+import Alert from 'components/Alert/Alert';
+import { useNavigate } from '../../../../../node_modules/react-router-dom/dist/index';
 
 const NewProduct = () => {
+
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
@@ -56,6 +58,7 @@ const NewProduct = () => {
 
   const selectCategoryHandler = (item) => {
     setCategory(item);
+    setCategoryError(item ? false : true);
   }
 
   const onSubmitHandler = async (event) => {
@@ -65,17 +68,22 @@ const NewProduct = () => {
 
       if (validateField()) {
         // Send a POST request
-        const response = await makeRequest(`/categories`, HTTPMethods.POST, {
-          name: category
+        const response = await makeRequest(`/products`, HTTPMethods.POST, {
+          categoryId: category,
+          name: productName
         });
 
         if (response.error) {
           setLoading(false);
           setIsError(true);
           setMessage(response.message);
+
+          if (String(response.message).includes("Duplicate entry")) {
+            setMessage(productName + " already exists!");
+          }
         } else {
           setLoading(false);
-          navigate("/admin/dashboard/categories");
+          navigate("/admin/dashboard/products");
         }
       }
 
@@ -88,20 +96,48 @@ const NewProduct = () => {
   const validateField = () => {
     if (!category) {
       setCategoryError(true);
+    } else {
+      setCategoryError(false);
     }
 
-    return category.length > 0
+    if (!productName) {
+      setProductNameError(true);
+    } else {
+      setProductNameError(false);
+    }
+    
+    return category && productName;
+  }
+
+  const handleInputChange = (event) => {
+    setProductName(event.target.value);
   }
 
   return (
     <div className={styles.main}>
-      <h2>New Products ✨</h2>
+      <h2>Create New Products ✨</h2>
 
       <Form onSubmitHandler={onSubmitHandler}>
+
         <Select
+          error={categoryError}
           placeholder='Categories'
           options={categories}
-          selectHandler={selectCategoryHandler} />
+          selectHandler={selectCategoryHandler}
+        />
+
+        <Input
+          placeholder={"Product name"}
+          onChangeHandler={handleInputChange}
+          error={productNameError}
+          value={productName}
+        />
+
+        {
+          isError ? (
+            <Alert type={"error"} message={message}/>
+          ) : null
+        }
 
         <Button
           loading={loading}
