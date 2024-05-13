@@ -73,7 +73,7 @@
 .main .wrapper .optionList {
   width           : var(--full-width);
   height          : 10.2rem;
-  overflow-x      : auto;
+  /* overflow-x      : auto; */
   padding         : 0;
   background-color: var(--tetiary-bg-color);
   border-radius   : 0 0 0.3rem 0.3rem;

@@ -71,20 +71,12 @@ const Select = ({
   }, [isOpen, selectedItem]);
 
   const scollTo = (selectedOption) => {
-    const selectedOptionRect = selectedOption.getBoundingClientRect();
-    const optionListRect = itemsWrapperRef.current.getBoundingClientRect();
-
-    /**
-     * Calculate the extent the options wrapper should scroll to
-     */
-    const scrollTop = selectedOptionRect.top - optionListRect.top;
-
     /**
      * Scoll to the selected option
      */
-    itemsWrapperRef.current.scrollTo({
-      top: scrollTop,
-      behaviour: 'auto'
+    selectedOption.scrollIntoView({
+      behavior: 'smooth', // Add smooth scrolling animation (optional)
+      block: 'nearest' // Ensure the option is fully visible
     });
   }
 
@@ -147,7 +139,7 @@ const Select = ({
       }
 
       // Handle when length of option is reached
-      if (nextIndex <= 1) {
+      if (nextIndex < 0) {
         nextIndex = options.length - 1;
       }
 
