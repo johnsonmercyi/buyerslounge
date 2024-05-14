@@ -6,7 +6,7 @@ import Input from "../../../components/ui/Form/Input/Input";
 import Button from "../../../components/ui/UIButton/Button";
 import Table from "../../../components/ui/Table/Table";
 import Pagination, { disabledButtonStates } from "../../../components/ui/Pagination/Pagination";
-import { devices } from "../../../util/utils";
+import { HTTPMethods, devices, makeRequest } from "../../../util/utils";
 import { BrowserContext } from "../../../util/context/BrowserContext";
 import { useNavigate } from "../../../../node_modules/react-router-dom/dist/index";
 
@@ -47,6 +47,14 @@ const Product = () => {
     decideDevices();
   }, [browserWidth]);
 
+  useEffect(() => {
+    if (searchText.trim().length > 0) {
+      fetchSearchProducts();
+    }else{
+      fetchProducts();
+    }
+  }, [pageSize, currentPage]);
+
   const decideDevices = () => {
     if (browserWidth > 576) {
       setDevice(devices.DESKTOP);
@@ -55,26 +63,154 @@ const Product = () => {
     }
   }
 
-  const fetchProducts = () => {
-    
+  const pageNavigationHandler = (action) => {
+    if (action === "next") {
+      setCurrentPage(pageNo => pageNo += 1);
+    } else if (action === "previous") {
+      setCurrentPage(pageNo => pageNo -= 1);
+    }
+    setPaginationAction(action);
+    setSearchLoading(true);
   }
 
+  const fetchProducts = async(resetPageNo = false) => {
+    try{
+      const response = await makeRequest('/products', HTTPMethods.GET, undefined,{
+        'pageNo': resetPageNo ? 0 : currentPage,
+        'pageSize': pageSize
+      });
+      
+      if (response.error){
+        setLoading(false);
+        setIsError(true);
+        setMessage(response.message);
+      } else if (Array.isArray(response)){
+        setLoading(false);
+        console.log('product response: ', response);
+        const products = response.map((product, index) => {
+          return {
+            sn: index + 1,
+            name: product.name
+          }
+        });
+        setProducts(products);
+
+        //set pagination states here
+        setLast(response.last);
+        setNumberOfElements(response.numberOfElements);
+        setCurrentPage(response.pageNo);
+        setPageSize(response.pageSize);
+        setTotalElements(response.totalElements);
+        setTotalPages(response.totalPages);
+
+      //Update the pagination values
+      updatePaginationValues(response);
+      setSearchLoading(false);
+      }
+    } catch (error){
+      setLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+
+      if(String(error.message).toLowerCase().includes("failed to fetch")){
+        setMessage("Sorry! Our server might be down at the moment. Please check back later!");
+      }
+    }
+  }
+
+  const fetchSearchProducts = async (resetPageNo = false) => {
+    setSearchLoading(true);
+    try{
+      const response = await makeRequest('/products/search', HTTPMethods.POST, undefined, {
+        'pageNo': resetPageNo ? 0 : currentPage,
+        'pageSize': pageSize,
+        'name': searchText
+      });
+
+      if (response.error) {
+        setSearchLoading(false);
+        setIsError(true);
+        setMessage(response.message);
+      } else {
+        setSearchLoading(false);
+        const product = response.content.map((product, index) => {
+
+          return {
+            sn: index + 1,
+            name: product.name
+          }
+        });
+        setProducts(product);
+
+        // Set pagination states here
+        setLast(response.last);
+        setNumberOfElements(response.numberOfElements);
+        setCurrentPage(response.pageNo);
+        setPageSize(response.pageSize);
+        setTotalElements(response.totalElements);
+        setTotalPages(response.totalPages);
+
+        // Update the pagination values
+        updatePaginationValues(response);
+        setSearchLoading(false);
+      }
+    } catch (error) {
+      setSearchLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+    }
+  }
 
   const onSearchChangeHandler = () => {
-
+    setSearchText(event.target.value);
   }
 
-  const onSearchKeyDownHandler = () => {
 
+  const onSearchKeyDownHandler = () => {
+    if (String(event.key).toLowerCase() === "enter") {
+      fetchSearchProducts(true);
+    }
+  }
+
+  const updatePaginationValues = (response) => {
+    console.log(response);
+
+    const { pageNo, pageSize, totalPages, last } = response;
+
+    if (pageNo === 0) { // If this the start page
+      setPageStart(1);
+      setPageEnd(response.numberOfElements /**|| pageSize**/); // ⚠️
+      setDisabledButton("previous"); // The previous button is disabled
+
+      if (last) {
+        setDisabledButton("both"); // The next button is disabled
+      }
+    } else if (pageNo > 0) { // The subsequent pages
+      setDisabledButton(""); // Neither of the buttons are disabled
+      if (paginationAction === "next") { // Checks if user clicks the next button
+        // Increment page start by page size on each next button click
+        setPageStart(prevPageStart => prevPageStart += pageSize);
+        if (last) { // If this is the last page
+          setPageEnd(totalElements); // Set page end with total elements value
+          setDisabledButton("next"); // The next button is disabled
+        } else if (pageNo < (totalPages - 1)) {
+          // Increment page end by page size on each next button click
+          setPageEnd(prevPageEnd => prevPageEnd += numberOfElements);
+        }
+      } else if (paginationAction === "previous") { // Checks if user clicks the previous button
+        // Increment page start by page size on each next button click
+        setPageStart(prevPageStart => prevPageStart -= pageSize);
+        setPageEnd(prevPageEnd => prevPageEnd -= numberOfElements);
+      }
+
+    }
   }
 
   const createNewProductHandler = () => {
     navigate('/admin/dashboard/products/create');
   }
 
-  const pageNavigationHandler = () => {
-
-  }
+ 
 
 
   return (
