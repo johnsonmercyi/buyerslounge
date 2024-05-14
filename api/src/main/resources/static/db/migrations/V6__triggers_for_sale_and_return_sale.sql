@@ -24,4 +24,4 @@ BEFORE UPDATE ON return_sale
 FOR EACH ROW
     BEGIN
         SET NEW.updated = NOW();
-    END; */
+    END; 
