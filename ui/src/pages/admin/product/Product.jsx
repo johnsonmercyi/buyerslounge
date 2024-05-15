@@ -9,6 +9,7 @@ import Pagination, { disabledButtonStates } from "../../../components/ui/Paginat
 import { HTTPMethods, devices, makeRequest } from "../../../util/utils";
 import { BrowserContext } from "../../../util/context/BrowserContext";
 import { useNavigate } from "../../../../node_modules/react-router-dom/dist/index";
+import Radio from "components/ui/Form/Radio/Radio";
 
 const Product = () => {
   const { browserWidth } = useContext(BrowserContext);
@@ -252,6 +253,7 @@ const Product = () => {
                 pageNavigationHandler={pageNavigationHandler} />
             ) : null
           }
+          <Radio/>
         </div>
       )
   );
