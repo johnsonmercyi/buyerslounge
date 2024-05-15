@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,8 +34,20 @@ public class ProductController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public ResponseEntity<Collection<Product>> findAllProducts() {
-    return ResponseEntity.ok(productService.findAll());
+  // public ResponseEntity<Collection<Product>> findAllProducts() {
+  //   return ResponseEntity.ok(productService.findAll());
+  // }
+  public ResponseEntity<Object> findAllProducts(
+    @RequestHeader(value = "paginate", defaultValue = "true", required = false) boolean paginate,
+    @RequestHeader(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+    @RequestHeader(value = "pageSize", defaultValue = "10", required = false) int pageSize){
+
+      if (paginate){
+        return ResponseEntity.ok(productService.findAll(pageNo, pageSize));
+      } else {
+        return ResponseEntity.ok(productService.findAll());
+      }
+
   }
 
   @GetMapping("/{id}")

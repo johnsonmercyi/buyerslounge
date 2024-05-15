@@ -46,6 +46,23 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public PagedResponse<Product> findAll(int pageNo, int pageSize){
+    Pageable pageable = PageRequest.of(pageNo, pageSize);
+    Page<Product> page = productRepo.findAll(pageable);
+
+    PagedResponse<Product> response = new PagedResponse<>();
+    response.setContent(page.getContent());
+    response.setLast(page.isLast());
+    response.setPageNo(page.getNumber());
+    response.setNumberOfElements(page.getNumberOfElements());
+    response.setPageSize(page.getSize());
+    response.setTotalElements(page.getTotalElements());
+    response.setTotalPages(page.getTotalPages());
+
+    return response;
+  }
+
+  @Override
   public PagedResponse<Product> allProducts(int pageNo, int pageSize) {
     Pageable pageable = PageRequest.of(pageNo, pageSize);
     Page<Product> page = productRepo.findAll(pageable);
@@ -105,5 +122,23 @@ public class ProductServiceImpl implements ProductService {
     .filter(product -> product.getCategory().getId().equals(catId))
     .toList();
   }  
+
+  @Override
+  public PagedResponse<Product> findByNameContaining(String name, int pageNo, int pageSize){
+
+    Pageable pageable = PageRequest.of(pageNo, pageSize);
+    Page<Product> page = productRepo.findByNameContaining(name, pageable);
+
+    PagedResponse<Product> response = new PagedResponse<>();
+    response.setContent(page.getContent());
+    response.setLast(page.isLast());
+    response.setPageNo(page.getNumber());
+    response.setNumberOfElements(page.getNumberOfElements());
+    response.setPageSize(page.getSize());
+    response.setTotalElements(page.getTotalElements());
+    response.setTotalPages(page.getTotalPages());
+
+    return response;
+  }
 
 }

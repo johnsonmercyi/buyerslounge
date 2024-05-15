@@ -84,10 +84,10 @@ const Product = () => {
         setLoading(false);
         setIsError(true);
         setMessage(response.message);
-      } else if (Array.isArray(response)){
+      } else {
         setLoading(false);
         console.log('product response: ', response);
-        const products = response.map((product, index) => {
+        const products = response.content.map((product, index) => {
           return {
             sn: index + 1,
             name: product.name
