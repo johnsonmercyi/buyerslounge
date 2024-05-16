@@ -9,6 +9,7 @@ import Pagination, { disabledButtonStates } from "../../../components/ui/Paginat
 import { HTTPMethods, devices, makeRequest } from "../../../util/utils";
 import { BrowserContext } from "../../../util/context/BrowserContext";
 import { useNavigate } from "../../../../node_modules/react-router-dom/dist/index";
+import Checkbox from "components/ui/Form/Checkbox/Checkbox";
 import Radio from "components/ui/Form/Radio/Radio";
 
 const Product = () => {
@@ -253,6 +254,7 @@ const Product = () => {
                 pageNavigationHandler={pageNavigationHandler} />
             ) : null
           }
+          <Checkbox/>
           <Radio/>
         </div>
       )
