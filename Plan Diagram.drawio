@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-05-13T15:07:35.715Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="NCwXfbTXWAnapnaea70l" version="24.2.5" type="device" pages="4">
+<mxfile host="Electron" modified="2024-05-15T14:40:30.313Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="tKIqtq-wyDwHhiPliMsh" version="24.2.5" type="device" pages="4">
   <diagram name="Page-1" id="sIDUJ0RPUK7b8widtkhv">
     <mxGraphModel dx="1036" dy="607" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -143,31 +143,49 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="2EUiG7StMMdANbY9xQMo-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="30" y="280" width="770" height="50" as="geometry" />
+          <mxGeometry x="30" y="90" width="770" height="50" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-2" value="" style="triangle;whiteSpace=wrap;html=1;direction=south;" parent="1" vertex="1">
-          <mxGeometry x="761" y="298" width="20" height="15" as="geometry" />
+          <mxGeometry x="761" y="108" width="20" height="15" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-3" value="Textfield" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="40" y="285.5" width="710" height="40" as="geometry" />
+          <mxGeometry x="40" y="95.5" width="710" height="40" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-4" value="" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="30" y="340" width="770" height="160" as="geometry" />
+          <mxGeometry x="30" y="150" width="770" height="160" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-5" value="Text" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fillColor=#C4C4C4;" parent="1" vertex="1">
-          <mxGeometry x="30" y="340" width="770" height="40" as="geometry" />
+          <mxGeometry x="30" y="150" width="770" height="40" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-6" value="Text" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fillColor=#C4C4C4;" parent="1" vertex="1">
-          <mxGeometry x="30" y="380" width="770" height="40" as="geometry" />
+          <mxGeometry x="30" y="190" width="770" height="40" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-7" value="Text" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fillColor=#C4C4C4;" parent="1" vertex="1">
-          <mxGeometry x="30" y="420" width="770" height="40" as="geometry" />
+          <mxGeometry x="30" y="230" width="770" height="40" as="geometry" />
         </mxCell>
         <mxCell id="2EUiG7StMMdANbY9xQMo-8" value="Text" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=15;fillColor=#C4C4C4;" parent="1" vertex="1">
-          <mxGeometry x="30" y="460" width="770" height="40" as="geometry" />
+          <mxGeometry x="30" y="270" width="770" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="hs0vwdsw4qgQPkWqBJR1-1" value=".focused" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="395" y="345" width="60" height="30" as="geometry" />
+        <mxCell id="hs0vwdsw4qgQPkWqBJR1-1" value=".focused" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="395" y="155" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-1" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Select Component&lt;/h1&gt;&lt;p&gt;Clickon anywahere on the select container to dropdown &lt;b&gt;OptionList&lt;/b&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="340" width="760" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-2" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;OptionList&lt;/h1&gt;&lt;p&gt;Displays all &lt;b&gt;Select Options&lt;/b&gt;. Selecting an option initializes the selected and dsiplays the selected option label on the &lt;b&gt;Select Display Area&lt;/b&gt;.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="421" width="760" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-3" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Selected Value&lt;/h1&gt;&lt;p&gt;The &lt;b&gt;selectedOption&lt;/b&gt;&amp;nbsp;is styled with class &lt;b&gt;&#39;.focused&#39;&lt;/b&gt;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="501" width="760" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-4" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;On Dropdown&lt;/h1&gt;&lt;p&gt;The selected option scrolls into view on clicking the &lt;b&gt;Select Component&lt;/b&gt;&amp;nbsp;which triggers the dropdown.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="591" width="760" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-5" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Hover&lt;/h1&gt;&lt;p&gt;Provide a hover style for options in the dropdown.&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="681" width="760" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="1GwzmusYFsbKmwbp0Hdi-6" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Keyboard Navigation&lt;/span&gt;&lt;/h1&gt;&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Use the keyboard arrow up and down keys to navigate through the list of options and &lt;/span&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;esc &lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;amp; &lt;/span&gt;enter&lt;span style=&quot;font-weight: normal;&quot;&gt;&amp;nbsp;keys removes the dropdown from view.&lt;br&gt;&lt;/span&gt;&lt;/span&gt;&lt;/h1&gt;&lt;div&gt;&lt;b&gt;Note:&lt;/b&gt;&amp;nbsp;while navigating through the options, the selectedValue should be initialized upon navaigating the next/previous options in the list.&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="30" y="773" width="760" height="119" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

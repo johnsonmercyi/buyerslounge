@@ -19,7 +19,7 @@ const Select = ({
   /**
    * Component states
    */
-  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedItem, setSelectedItem] = useState({value: "", label: ""});
   const [isOpen, setIsOpen] = useState(false);
   const [isShowUpsideNeeded, setIsShowUpsideNeeded] = useState(false);
 
