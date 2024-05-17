@@ -9,8 +9,11 @@ import Loading from "../../../components/Loading/Loading";
 import ErrorPage from "../../../components/Error/Error";
 import { BrowserContext } from "../../../util/context/BrowserContext";
 import Pagination, { disabledButtonStates } from "../../../components/ui/Pagination/Pagination";
+import { useTable } from "util/providers/TableProvider";
 
 const Category = ({ ...props }) => {
+
+  const { setTableEntity } = useTable();
 
   const { browserWidth } = useContext(BrowserContext);
 
@@ -42,6 +45,7 @@ const Category = ({ ...props }) => {
 
   useEffect(() => {
     fetchCategories();
+    setTableEntity("categories");
   }, []);
 
   useEffect(() => {
@@ -93,14 +97,8 @@ const Category = ({ ...props }) => {
         setMessage(response.message);
       } else {
         setLoading(false);
-        const categories = response.content.map((category, index) => {
 
-          return {
-            sn: index + 1,
-            name: category.name
-          }
-        });
-        setCategories(categories);
+        setCategories(prepareTableData(response.content));
 
         // Set pagination states here
         setLast(response.last);
@@ -143,14 +141,7 @@ const Category = ({ ...props }) => {
         setMessage(response.message);
       } else {
         setSearchLoading(false);
-        const categories = response.content.map((category, index) => {
-
-          return {
-            sn: index + 1,
-            name: category.name
-          }
-        });
-        setCategories(categories);
+        setCategories(prepareTableData(response.content));
 
         // Set pagination states here
         setLast(response.last);
@@ -172,7 +163,6 @@ const Category = ({ ...props }) => {
   }
 
   const updatePaginationValues = (response) => {
-    console.log(response);
 
     const { pageNo, pageSize, totalPages, last } = response;
 
@@ -219,6 +209,29 @@ const Category = ({ ...props }) => {
     }
   }
 
+  const visibleRowColumns = (row, index) => {
+    return [
+      <td key={index+"_sn"}>{row.sn}</td>,
+      <td key={index+"_name"}>{row.name}</td>,
+    ]
+  }
+
+  const prepareTableData = (data=[]) => {
+    return data.map((row, index) => ({
+      sn: index + 1,
+      id: row.id,
+      name: row.name
+    }));
+
+    // [].map(row => ({
+    //   name: "johnson"
+    // }));
+    // const obj = {};
+    // Object.keys(obj).map(key => {
+    //   return obj[key];
+    // });
+  }
+
   return (
 
     loading ? (<Loading load={loading} loadingText="Please wait" />) :
@@ -240,6 +253,8 @@ const Category = ({ ...props }) => {
               fitButtonToWrapper />
           </div>
           <Table
+            action={true}
+            visibleRowColumns={visibleRowColumns}
             title={"Category Records"}
             headers={["SN", "NAME", "ACTION"]}
             content={categories}
