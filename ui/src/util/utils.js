@@ -29,7 +29,7 @@ export const makeRequest = async(url, method, payload, headersPayload={}) => {
 export const animate = (
   el,
   delay,
-  duration,
+  duration,//
   iterations,
   easing = "ease-in-out",
   frames = [],
