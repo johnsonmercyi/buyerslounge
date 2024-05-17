@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import styles from './styles.module.css';
-import { Link, Outlet } from "react-router-dom";
-import UIButton from "../ui/Button/Button";
+import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
+import { TableProvider } from "util/providers/TableProvider";
+import { BrowserContext } from "../../util/context/BrowserContext";
+import { SidebarContext } from "../../util/context/SidebarContext";
+import { UserProvider } from "../../util/providers/UserProvider";
 import AppHeader from "../ui/app-header/app-header";
 import UISideBar from "../ui/sidebar/sidebar";
-import { SidebarContext } from "../../util/context/SidebarContext";
-import { BrowserContext } from "../../util/context/BrowserContext";
-import { UserProvider } from "../../util/providers/UserProvider";
+import styles from './styles.module.css';
 
 const Layout = ({ props }) => {
 
@@ -24,32 +24,34 @@ const Layout = ({ props }) => {
   }
 
   return (
-    <UserProvider>
-      <BrowserContext.Provider value={{ browserWidth }}>
-        <SidebarContext.Provider value={{ 
-          showSideBar, 
-          setShowSideBar, 
-          showSideBarHandler,
-          browserWidth
-        }}>
-          <div className={styles.main}>
+    <TableProvider>
+      <UserProvider>
+        <BrowserContext.Provider value={{ browserWidth }}>
+          <SidebarContext.Provider value={{ 
+            showSideBar, 
+            setShowSideBar, 
+            showSideBarHandler,
+            browserWidth
+          }}>
+            <div className={styles.main}>
 
-            <header>
-              {/* App Header*/}
-              <AppHeader />
+              <header>
+                {/* App Header*/}
+                <AppHeader />
 
-              {/* Side/Menu Bar */}
-              <UISideBar />
-              
-            </header>
+                {/* Side/Menu Bar */}
+                <UISideBar />
+                
+              </header>
 
-            <main className="container">
-              <Outlet />
-            </main>
-          </div>
-        </SidebarContext.Provider>
-      </BrowserContext.Provider>
-    </UserProvider>
+              <main className="container">
+                <Outlet />
+              </main>
+            </div>
+          </SidebarContext.Provider>
+        </BrowserContext.Provider>
+      </UserProvider>
+    </TableProvider>
   );
 }
 

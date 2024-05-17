@@ -13,4 +13,6 @@ public interface ProductService extends Service<Product> {
   public Collection<Product> findByCategoryName(String catName);
   public Collection<Product> findByCategoryId(UUID catId);
   public Product update(UUID id, ProductDTO productDTO);
+  public PagedResponse<Product> findAll(int pageNo, int pageSize);
+  PagedResponse<Product> findByNameContaining(String name, int pageNo, int pageSize);
 }

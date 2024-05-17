@@ -4,10 +4,16 @@ import styles from './styles.module.css';
 import TableItems from "./TableItems/TableItems";
 import Loading from "../../Loading/Loading";
 
-const Table = ({ title, headers = [], content = [], load=false }) => {
+const Table = ({
+  title,
+  headers = [],
+  content = [],
+  visibleRowColumns = [],
+  load = false,
+}) => {
   return (
     <div className={styles.main}>
-      
+
       {
         content.length ? (
           <>
@@ -29,6 +35,8 @@ const Table = ({ title, headers = [], content = [], load=false }) => {
                   </tr>
                 </thead>
                 <TableItems
+                  action={headers.includes("ACTION")}
+                  visibleRowColumns={visibleRowColumns}
                   content={content} />
               </table>
             </div>
