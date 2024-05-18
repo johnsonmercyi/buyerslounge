@@ -11,8 +11,10 @@ import { BrowserContext } from "../../../util/context/BrowserContext";
 import { useNavigate } from "../../../../node_modules/react-router-dom/dist/index";
 import Checkbox from "components/ui/Form/Checkbox/Checkbox";
 import Radio from "components/ui/Form/Radio/Radio";
+import { useTable } from "util/providers/TableProvider";
 
-const Product = () => {
+const Product = ({...props}) => {
+  const { setTableEntity } = useTable();
   const { browserWidth } = useContext(BrowserContext);
 
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProducts();
+    setTableEntity("products");
   }, []);
 
   useEffect(() => {
@@ -88,14 +91,7 @@ const Product = () => {
         setMessage(response.message);
       } else {
         setLoading(false);
-        console.log('product response: ', response);
-        const products = response.content.map((product, index) => {
-          return {
-            sn: index + 1,
-            name: product.name
-          }
-        });
-        setProducts(products);
+        setProducts(prepareTableData(response.content));
 
         //set pagination states here
         setLast(response.last);
@@ -135,14 +131,7 @@ const Product = () => {
         setMessage(response.message);
       } else {
         setSearchLoading(false);
-        const product = response.content.map((product, index) => {
-
-          return {
-            sn: index + 1,
-            name: product.name
-          }
-        });
-        setProducts(product);
+        setProducts(prepareTableData(response.content));
 
         // Set pagination states here
         setLast(response.last);
@@ -208,6 +197,21 @@ const Product = () => {
     }
   }
 
+  const visibleRowColumns = (row, index) => {
+    return [
+      <td key={index+"_sn"}>{row.sn}</td>,
+      <td key={index+"_name"}>{row.name}</td>,
+    ]
+  }
+
+  const prepareTableData = (data=[]) => {
+    return data.map((row,index) =>({
+      sn: index + 1,
+      id: row.id,
+      name: row.name
+    }));
+  }
+
   const createNewProductHandler = () => {
     navigate('/admin/dashboard/products/create');
   }
@@ -238,6 +242,8 @@ const Product = () => {
 
           {/* Data Table */}
           <Table
+            action={true}
+            visibleRowColumns={visibleRowColumns}
             title={"Product Records"}
             headers={["SN", "NAME", "ACTION"]}
             content={products}
