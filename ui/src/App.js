@@ -15,6 +15,7 @@ import CreateCategory from './pages/admin/category/create/CreateCategory';
 import Product from './pages/admin/product/Product';
 import NewProduct from './pages/admin/product/new/Page';
 import ViewCategory from 'pages/admin/category/view/Page';
+import ViewProducts from 'pages/admin/product/view/Page';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
 
               <Route path='/admin/dashboard/products' element={<Product />} />
               <Route path='/admin/dashboard/products/create' element={<NewProduct />} />
+              <Route path='/admin/dashboard/products/:product/' element={<ViewProducts />} />
 
             </Route>
             <Route path='/seller/dashboard' element={<SellerDashboard />}>
