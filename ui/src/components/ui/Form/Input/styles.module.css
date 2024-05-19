@@ -47,6 +47,12 @@
   border: 1px solid var(--hover-border-color);
 }
 
+.main input::selection {
+  /* background-color: #0f172a; */
+  color: white;
+}
+
+
 .main input.error, 
 .main input.error:focus,
 .main input.error:hover {

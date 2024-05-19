@@ -2,12 +2,12 @@
 
 /* declare variables in :root */
 :root {
-  --primary-bg-color  : #0f172a;
-  --secondary-bg-color: #16213C;
-  --tetiary-bg-color  : #1B294B;
-  --ui-bg-color       : #0066ff;
-  --ui-secondary-bg-color :#ffd500;
-  --dim-area-bg-color : rgba(15, 23, 42, 0.4);
+  --primary-bg-color       : #0f172a;
+  --secondary-bg-color     : #16213C;
+  --tetiary-bg-color       : #1B294B;
+  --ui-bg-color            : #0066ff;
+  --ui-secondary-bg-color  : #ffd500;
+  --dim-area-bg-color      : rgba(15, 23, 42, 0.4);
   --faded-light-bg-02-color: rgba(255, 255, 255, 0.2);
   --faded-light-bg-01-color: rgba(255, 255, 255, 0.1);
 
@@ -29,8 +29,8 @@
   --hover-bg-color      : var(--secondary-bg-color);
   --hover-light-bg-color: rgba(148, 163, 184, 0.05);
 
-  --ui-hover-bg-color: #005ae0;
-  --ui-hover-secondary-bg-color :#e3ae00;
+  --ui-hover-bg-color          : #005ae0;
+  --ui-hover-secondary-bg-color: #e3ae00;
 
   --default-border-radius: 0.2rem;
   --default-padding      : 0.7rem;
@@ -40,9 +40,12 @@
   --flex-direction-column: column;
   --flex-direction-row   : row;
 
-  --justify-content-center    : center;
-  --justify-content-flex-start: flex-start;
-  --justify-content-flex-end  : flex-end;
+  --justify-content-center       : center;
+  --justify-content-flex-start   : flex-start;
+  --justify-content-flex-end     : flex-end;
+  --justify-content-space-between: space-between;
+  --justify-content-space-evenly : space-evenly;
+  --justify-content-space-around : space-around;
 
   --align-items-center    : center;
   --align-items-flex-start: flex-start;
@@ -70,18 +73,21 @@
   --form-container-label-width    : var(--full-width);
   --form-container-label-align    : var(--left);
 
-  --ui-wrapper-width                     : var(--full-width);
-  --ui-wrapper-height                    : auto;
-  --ui-wrapper-display                   : var(--display-flex);
-  --ui-wrapper-flex-direction-row        : var(--flex-direction-row);
-  --ui-wrapper-flex-direction-column     : var(--flex-direction-column);
-  --ui-wrapper-justify-content           : var(--justify-content-center);
-  --ui-wrapper-justify-content-flex-start: var(--justify-content-flex-start);
-  --ui-wrapper-justify-content-flex-end  : var(--justify-content-flex-end);
-  --ui-wrapper-align-items               : var(--align-items-center);
-  --ui-wrapper-align-items-flex-start    : var(--align-items-flex-start);
-  --ui-wrapper-align-items-flex-end      : var(--align-items-flex-end);
-  --ui-wrapper-padding-all               : 1rem;
+  --ui-wrapper-width                        : var(--full-width);
+  --ui-wrapper-height                       : auto;
+  --ui-wrapper-display                      : var(--display-flex);
+  --ui-wrapper-flex-direction-row           : var(--flex-direction-row);
+  --ui-wrapper-flex-direction-column        : var(--flex-direction-column);
+  --ui-wrapper-justify-content              : var(--justify-content-center);
+  --ui-wrapper-justify-content-flex-start   : var(--justify-content-flex-start);
+  --ui-wrapper-justify-content-flex-end     : var(--justify-content-flex-end);
+  --ui-wrapper-justify-content-space-between: var(--justify-content-space-between);
+  --ui-wrapper-justify-content-space-around : var(--justify-content-space-around);
+  --ui-wrapper-justify-content-space-evenly : var(--justify-content-space-evenly);
+  --ui-wrapper-align-items                  : var(--align-items-center);
+  --ui-wrapper-align-items-flex-start       : var(--align-items-flex-start);
+  --ui-wrapper-align-items-flex-end         : var(--align-items-flex-end);
+  --ui-wrapper-padding-all                  : 1rem;
 
   --form-padding-all: 1rem;
   --form-width      : var(--full-width);
@@ -89,10 +95,11 @@
   --form-align-items: var(--align-items-center);
   --form-input-width: var(--full-width);
 
-  --ui-size-small : 2.3rem;
-  --ui-size-normal: 3rem;
-  --ui-size-medium: 3.7rem;
-  --ui-size-big   : 4.3rem;
+  --ui-size-small  : 2.3rem;
+  --ui-size-normal : 3rem;
+  --ui-size-medium : 3.7rem;
+  --ui-size-large  : 4.3rem;
+  --ui-size-x-large: 5rem;
 
   --text-small  : 0.7rem;
   --text-normal : 1rem;
@@ -106,9 +113,9 @@
   --button-padding: 0 1rem;
   --button-width  : var(--full-width);
 
-  --scrollbar-width: 0.5rem;
-  --scrollbar-track-bg-color: hsla(222, 46%, 11%, 0.221);
-  --scrollbar-thumb-bg-color: hsl(215, 19%, 35%);
+  --scrollbar-width               : 0.5rem;
+  --scrollbar-track-bg-color      : hsla(222, 46%, 11%, 0.221);
+  --scrollbar-thumb-bg-color      : hsl(215, 19%, 35%);
   --scrollbar-thumb-bg-hover-color: hsl(215, 19%, 70%);
 
 }
@@ -116,7 +123,7 @@
 @media (min-width: 576px) {
   :root {
     --form-container-width: 80vw;
-    --ui-wrapper-width: 80vw;
+    --ui-wrapper-width    : 80vw;
     --button-width        : fit-content;
   }
 }

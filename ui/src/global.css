@@ -36,6 +36,14 @@ body {
   animation      : rotate 1s linear infinite;
 }
 
+.actionComponentsWrapper {
+  width          : var(--full-width);
+  display        : var(--ui-wrapper-display);
+  flex-direction : var(--ui-wrapper-flex-direction-column);
+  justify-content: var(--ui-wrapper-justify-content-flex-end);
+  align-items    : var(--ui-wrapper-align-items-flex-start);
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -43,5 +51,12 @@ body {
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+  .actionComponentsWrapper {
+    flex-direction: var(--ui-wrapper-flex-direction-row);
   }
 }

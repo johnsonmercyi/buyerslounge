@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2024-05-19T00:16:54.735Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="MJS8vvsL9ARJgTmgZc0A" version="24.2.5" type="device" pages="5">
+<mxfile host="Electron" modified="2024-05-19T00:25:16.635Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="HaIa9aupUtfhC0DrFU-K" version="24.2.5" type="device" pages="5">
   <diagram name="Page-1" id="sIDUJ0RPUK7b8widtkhv">
     <mxGraphModel dx="1036" dy="607" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -261,11 +261,8 @@
         <mxCell id="OI0mY_5z-Yricc_yIiJL-50" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="OI0mY_5z-Yricc_yIiJL-1" vertex="1">
           <mxGeometry x="279" y="246" width="530" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="OI0mY_5z-Yricc_yIiJL-51" value="Name" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="OI0mY_5z-Yricc_yIiJL-1" vertex="1">
-          <mxGeometry x="279" y="261" width="60" height="30" as="geometry" />
-        </mxCell>
         <mxCell id="OI0mY_5z-Yricc_yIiJL-52" value="Sport" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="OI0mY_5z-Yricc_yIiJL-1" vertex="1">
-          <mxGeometry x="749" y="261" width="60" height="30" as="geometry" />
+          <mxGeometry x="289" y="261" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="PvwdoQ44E_qPKAbpIFB0-7" value="" style="group" parent="OI0mY_5z-Yricc_yIiJL-1" vertex="1" connectable="0">
           <mxGeometry x="279" y="495" width="530" height="62" as="geometry" />

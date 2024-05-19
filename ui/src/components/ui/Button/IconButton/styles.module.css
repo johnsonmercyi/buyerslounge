@@ -1,0 +1,12 @@
+/*Mobile First Style*/
+.iconButton {
+  width           : var(--ui-size-medium);
+  height          : 100%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

@@ -12,18 +12,27 @@ const Input = ({
   iconColor,
   onChangeHandler,
   onKeyDown,
+  onFocusHandler,
+  onBlurHandler,
+  inputRef,
   ...props }) => {
+
   return (
     <div className={styles.main}>
-      <label>{label}</label>
+      {
+        label ? (<label>{label}</label>) : null
+      }
       <div className={styles.wrapper}>
         <input
-          className={`${styles.input} ${error ? styles.error : ""}`}
+          ref={inputRef}
+          className={`${error ? styles.error : ""}`}
           type={type || "text"}
           value={value}
           placeholder={placeholder}
           onChange={onChangeHandler}
           onKeyDown={onKeyDown}
+          onFocus={onFocusHandler}
+          onBlur={onBlurHandler}
           {...props} />
         {
           icon ? (

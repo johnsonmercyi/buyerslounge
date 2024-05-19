@@ -1,10 +1,12 @@
 package com.soft.springbootdemo.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.soft.springbootdemo.dto.ProductDTO;
 import com.soft.springbootdemo.dto.responsedto.AdminDTO;
+import com.soft.springbootdemo.dto.responsedto.CategoryProductsDTO;
 import com.soft.springbootdemo.dto.responsedto.CategoryResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.CustomerDTO;
 import com.soft.springbootdemo.dto.responsedto.ProductResponseDTO;
@@ -19,6 +21,7 @@ import com.soft.springbootdemo.dto.responsedto.SellerDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.UserDTO;
 import com.soft.springbootdemo.model.Admin;
+import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Customer;
 import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.model.ReturnSale;
@@ -135,10 +138,11 @@ public class Util {
             saleItemDTO.setId(saleItem.getId());
 
             SellerProducts sellerProduct = saleItem.getProduct();
-            
+
             saleItemDTO.setProduct(new CustomProduct(
                 sellerProduct.getId(),
-                new CategoryResponseDTO(sellerProduct.getProduct().getCategory().getId(), sellerProduct.getProduct().getCategory().getName()),
+                new CategoryResponseDTO(sellerProduct.getProduct().getCategory().getId(),
+                    sellerProduct.getProduct().getCategory().getName()),
                 sellerProduct.getProduct().getName()));
 
             saleItemDTO.setQuantity(saleItem.getQuantity());
@@ -178,7 +182,7 @@ public class Util {
 
   public static SellerProductsResponseDTO convertSellerProductsToResponseDTO(SellerProducts sellerProducts,
       boolean fetchRoles) {
-        
+
     Seller mainSeller = sellerProducts.getSeller();
     SellerDTO cstSeller = mapSellerToDTO(mainSeller, fetchRoles);
 
@@ -204,4 +208,15 @@ public class Util {
         sellerProducts.getUpdated());
   }
 
+  public static CategoryProductsDTO convertCategoryAndProductToDTO(Category category, Collection<Product> products) {
+    return new CategoryProductsDTO(
+        category.getId(),
+        category.getName(),
+        products.stream()
+            .map(product -> {
+              return new CategoryProductsDTO.CustomProduct(
+                  product.getId(),
+                  product.getName());
+            }).toList());
+  }
 }

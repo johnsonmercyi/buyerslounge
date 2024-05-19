@@ -1,0 +1,22 @@
+/*Mobile First Style*/
+.modifyLabel {
+  width : 100%;
+  height: var(--ui-size-normal);
+
+  display        : var(--ui-wrapper-display);
+  justify-content: var(--ui-wrapper-justify-content-center);
+  align-items    : var(--ui-wrapper-align-items-center);
+}
+
+.modifyLabel label {
+  text-align: center;
+
+  display        : var(--display-flex);
+  justify-content: var(--justify-content-center);
+  align-items    : var(--align-items-center);
+
+  padding-left: 1rem;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {}

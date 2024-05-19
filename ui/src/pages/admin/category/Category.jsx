@@ -238,7 +238,7 @@ const Category = ({ ...props }) => {
       isError ? (<ErrorPage errorMessage={message} />) :
         (<div className={`pageContainer`}>
           <h2>Categories ✨</h2>
-          <div className={styles.actionComponentsWrapper}>
+          <div className={"actionComponentsWrapper"}>
             <Input
               value={searchText}
               placeholder={"Search Categories"}

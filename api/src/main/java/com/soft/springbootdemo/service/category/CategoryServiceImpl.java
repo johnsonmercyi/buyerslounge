@@ -10,13 +10,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.soft.springbootdemo.dto.PagedResponse;
+import com.soft.springbootdemo.dto.responsedto.CategoryProductsDTO;
 import com.soft.springbootdemo.model.Category;
+import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.repo.CategoryRepo;
+import com.soft.springbootdemo.service.product.ProductService;
+import com.soft.springbootdemo.util.Util;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
 
 @Service
 @Transactional
@@ -25,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepo categoryRepo;
+  private final ProductService productService;
 
   @Override
   public Category save(Category category) {
@@ -34,6 +38,18 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public Optional<Category> findById(UUID id) {
     return categoryRepo.findById(id);
+  }
+
+  @Override
+  public CategoryProductsDTO findCategoryProductsById(UUID id) {
+    Optional<Category> optionalCat = findById(id);
+    Collection<Product> products = productService.findByCategoryId(id);
+
+    if (optionalCat.isPresent()) {
+      Category category = optionalCat.get();
+      return Util.convertCategoryAndProductToDTO(category, products);
+    }
+    return null;
   }
 
   @Override
@@ -50,7 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
   public PagedResponse<Category> findAll(int pageNo, int pageSize) {
     Pageable pageable = PageRequest.of(pageNo, pageSize);
     Page<Category> page = categoryRepo.findAll(pageable);
-    
+
     PagedResponse<Category> response = new PagedResponse<>();
     response.setContent(page.getContent());
     response.setLast(page.isLast());
@@ -91,5 +107,5 @@ public class CategoryServiceImpl implements CategoryService {
 
     return response;
   }
-  
+
 }
