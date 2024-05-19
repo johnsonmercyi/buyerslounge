@@ -13,6 +13,7 @@ const ViewCategory = ({ ...props }) => {
 
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [oldCategory, setOldCategory] = useState("");
   const [category, setCategory] = useState("");
   const [products, setProducts] = useState([]);
   const [isEditCategory, setIsEditCategory] = useState(false);
@@ -23,6 +24,16 @@ const ViewCategory = ({ ...props }) => {
       fetchData(param.category);
     }
   }, [param]);
+
+  /* 📄🤔👇🏽 */
+  /**
+   * Execute update if update action is triggered
+   */
+  useEffect(() => {
+    if (isUpdatingCategory) {
+      updateCategory();
+    }
+  }, [isUpdatingCategory]);
 
   const fetchData = async (id) => {
     try {
@@ -42,51 +53,47 @@ const ViewCategory = ({ ...props }) => {
     }
   }
 
+  /* 📄🤔👇🏽 */
   const editCategoryHandler = () => {
-    if (!isEditCategory) {
+    if (!isUpdatingCategory) {
+      setOldCategory(category);
       setIsEditCategory(true);
-    } else {
-      updateCategory();
     }
   }
 
+  /* 📄🤔👇🏽 */
   const blurHandler = () => {
-    updateCategory();
+    triggerUpdate();
   }
 
+  /* 📄🤔👇🏽 */
+  const keydownHandler = (event) => {
+    if (event.key === "Enter") {
+      triggerUpdate();
+    }
+  }
+
+  /* 📄🤔👇🏽 */
+  /**
+   * Stop editing and trigger update action
+   */
+  const triggerUpdate = () => {
+    if (isEditCategory) {
+      setIsEditCategory(false);
+      if (oldCategory !== category) {
+        setIsUpdatingCategory(true);
+      }
+    }
+  }
+
+  /* 📄🤔👇🏽 */
   const updateCategory = () => {
-    setIsUpdatingCategory(true);
-    setIsEditCategory(false);
+    // Update Category code Implementation...
+    console.log('Updating Category...');
   }
 
   const changeHandler = (event) => {
     setCategory(event.target.value);
-  }
-
-  const renderIconButtonIcon = () => {
-    if (isEditCategory) {
-      return (
-        <Icon
-          name={"edit-done"}
-          strokeColor={"#4992ff"} />
-      );
-    } else {
-      if (isUpdatingCategory) {
-        return (
-          <Icon
-            className={"rotate"}
-            name={"loader"}
-            strokeColor={"#94a3b8"}
-            strokeWidth={"0.2rem"} />
-        );
-      } 
-
-      return (
-        <Icon
-          name={"edit"}
-          strokeColor={"#94a3b8"} />
-      );
-    }
   }
 
   return (
@@ -102,11 +109,12 @@ const ViewCategory = ({ ...props }) => {
                 value={category}
                 changeHandler={changeHandler}
                 blurHandler={blurHandler}
-              />
 
-              <IconButton
-                clickHandler={editCategoryHandler}
-                icon={renderIconButtonIcon()} />
+                /* 📄🤔👇🏽 */
+                actionHandler={keydownHandler}
+                modifyHandler={editCategoryHandler}
+                isUpdating={isUpdatingCategory}
+              />
             </div>
           </div>
         )

@@ -1,14 +1,19 @@
 /*Mobile First Style*/
 .modifyLabel {
-  width : 100%;
+  width : var(--full-width);
   height: var(--ui-size-normal);
 
   display        : var(--ui-wrapper-display);
-  justify-content: var(--ui-wrapper-justify-content-center);
-  align-items    : var(--ui-wrapper-align-items-center);
+  justify-content: var(--ui-wrapper-justify-content-space-between);
+  align-items    : var(--ui-wrapper-align-items);
+
+  background-color: var(--secondary-bg-color);
+  border-radius   : var(--default-border-radius);
+  padding         : 0 1rem 0 1rem;
 }
 
 .modifyLabel label {
+  height: var(--ui-size-normal);
   text-align: center;
 
   display        : var(--display-flex);
@@ -16,6 +21,10 @@
   align-items    : var(--align-items-center);
 
   padding-left: 1rem;
+  color: #94a3b8;
+
+  font-weight: 500;
+  font-size: 1.3rem;
 }
 
 /*Devices larger than mobile phone*/
