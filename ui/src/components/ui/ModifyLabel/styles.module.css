@@ -12,8 +12,26 @@
   padding         : 0 1rem 0 1rem;
 }
 
+.modifyLabel.error {
+  border: 1px solid var(--danger);
+}
+
+.errorContainer {
+  width  : var(--full-width);
+  height : auto;
+  padding: 0.3rem;
+
+  display        : var(--ui-wrapper-display);
+  justify-content: var(--ui-wrapper-justify-content-flex-start);
+  align-items    : var(--ui-wrapper-align-items);
+}
+
+.errorContainer .error {
+  color: var(--danger);
+}
+
 .modifyLabel label {
-  height: var(--ui-size-normal);
+  height    : var(--ui-size-normal);
   text-align: center;
 
   display        : var(--display-flex);
@@ -21,10 +39,10 @@
   align-items    : var(--align-items-center);
 
   padding-left: 1rem;
-  color: #94a3b8;
+  color       : #94a3b8;
 
   font-weight: 500;
-  font-size: 1.3rem;
+  font-size  : 1.3rem;
 }
 
 /*Devices larger than mobile phone*/

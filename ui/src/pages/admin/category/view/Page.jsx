@@ -13,12 +13,14 @@ const ViewCategory = ({ ...props }) => {
 
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [message, setMessage] = useState("");
   const [oldCategory, setOldCategory] = useState("");
   const [category, setCategory] = useState("");
   const [products, setProducts] = useState([]);
   const [isEditCategory, setIsEditCategory] = useState(false);
   const [isUpdatingCategory, setIsUpdatingCategory] = useState(false);
-  const [categoryError , setCategoryError] = useState(false);
+  const [categoryError, setCategoryError] = useState(false);
+  const [categoryErrorMessage, setCategoryErrorMessage] = useState("");
 
   useEffect(() => {
     if (param) {
@@ -42,6 +44,9 @@ const ViewCategory = ({ ...props }) => {
 
       if (response.error) {
         console.error(response.error);
+        setLoading(false);
+        setIsError(true);
+        setMessage(response.message);
       } else {
         const { name, products } = response;
         setCategory(name);
@@ -50,24 +55,29 @@ const ViewCategory = ({ ...props }) => {
       }
     } catch (error) {
       setLoading(false);
+      setIsError(true);
+      setMessage(error.message);
       console.error(error.message);
     }
   }
 
-  /* 📄🤔👇🏽 */
-  const editCategoryHandler = () => {
-    if (!isUpdatingCategory) {
+  /* 📄🤔👇🏽 Start editing category name*/
+  const editCategoryClickHandler = () => {
+    if (!categoryError) {
       setOldCategory(category);
-      setIsEditCategory(true);
     }
+
+    setIsEditCategory(true);
+    setCategoryError(false);
+    setCategoryErrorMessage("");
   }
 
-  /* 📄🤔👇🏽 */
+  /* 📄🤔👇🏽 Handle when field loses focus*/
   const blurHandler = () => {
     triggerUpdate();
   }
 
-  /* 📄🤔👇🏽 */
+  /* 📄🤔👇🏽 Handle when the Enter key is pressed*/
   const keydownHandler = (event) => {
     if (event.key === "Enter") {
       triggerUpdate();
@@ -81,49 +91,58 @@ const ViewCategory = ({ ...props }) => {
   const triggerUpdate = () => {
     if (isEditCategory) {
       setIsEditCategory(false);
-      if (oldCategory !== category) {
-        updateCategory(param.category);
-        setIsUpdatingCategory(true);
-        setCategoryError(false);
-      }else if(category.trim.length === 0){
+      if (String(oldCategory).trim() !== String(category).trim()) {
+        if (String(category).trim().length) {
+          setIsUpdatingCategory(true);
+        } else {
+          setCategory(oldCategory);
+        }
+      } else {
         setCategory(oldCategory);
-      }else{
-        setCategoryError(true);
       }
     }
   }
 
-  /* 📄🤔👇🏽 */
+  /* 📄🤔👇🏽 Try updating the category in the DB*/
   const updateCategory = async (id) => {
     // Update Category code Implementation...
-    
-    if (isEditCategory){
-      const payload = {
-        id: param.category,
-        name: category
-      };
-      try{
-         const response = await makeRequest(`/${id}`, HTTPMethods.POST, payload, null);
-         if (response.error) {
-            setCategoryError(true);
-            console.error("ERROR: ",response.error);
-          } else {
-            console.log('Category Updated...');
-            setIsUpdatingCategory(false);
-            setCategoryError(false);
-            
-            
-          }
-      }catch (error){
-        console.log(error.message);
+    const payload = {
+      id: param.category,
+      name: category
+    };
+
+    try {
+      const response = await makeRequest(`/categories/${id}`, HTTPMethods.POST, payload, null);
+      if (response.error) {
+        setIsUpdatingCategory(false);
+        setCategory(oldCategory);
+        setCategoryError(true);
+        setCategoryErrorMessage(response.message);
+        if (String(response.message).includes("Duplicate entry")) {
+          setCategoryErrorMessage(`Unsuccessful update! ${category} already exists!`);
+        }
+        // console.error("ERROR: ", response.error);
+      } else {
+        console.log('Category Updated...');
+        setCategory(response.name);
+        setIsUpdatingCategory(false);
+        setCategoryError(false);
+        setCategoryErrorMessage("");
       }
-    }else{
+    } catch (error) {
+      setIsUpdatingCategory(false);
       setCategory(oldCategory);
+      setCategoryError(true);
+      setCategoryErrorMessage(error.message);
+      console.log(error.message);
     }
-    
+
   }
 
-
+  /**
+   * Input change handler
+   * @param {*} event 
+   */
   const changeHandler = (event) => {
     setCategory(event.target.value);
   }
@@ -137,6 +156,8 @@ const ViewCategory = ({ ...props }) => {
             <h2>Category ✨</h2>
             <div className={styles.categoryDetailsWrapper}>
               <ModifyLabel
+                error={categoryError}
+                errorMessage={categoryErrorMessage}
                 isEditing={isEditCategory}
                 value={category}
                 changeHandler={changeHandler}
@@ -144,12 +165,9 @@ const ViewCategory = ({ ...props }) => {
 
                 /* 📄🤔👇🏽 */
                 actionHandler={keydownHandler}
-                modifyHandler={editCategoryHandler}
+                modifyHandler={editCategoryClickHandler}
                 isUpdating={isUpdatingCategory}
               />
-              {
-                categoryError ? `<div>Error </div>` : '' 
-              }
             </div>
           </div>
         )

@@ -1,7 +1,7 @@
 /*Mobile First Style*/
 .categoryDetailsWrapper {
   width : var(--full-width);
-  height: var(--ui-size-large);
+  height: auto;
 
   display        : var(--ui-wrapper-display);
   justify-content: var(--ui-wrapper-justify-content-space-between);
@@ -10,7 +10,8 @@
   background-color: var(--secondary-bg-color);
   border-radius   : var(--default-border-radius);
   border          : 1px solid var(--default-border-color);
-  padding         : 0 1rem 0 1rem;
+  /* padding         : 0 1rem 0 1rem; */
+  padding         : 0.5rem;
 }
 
 

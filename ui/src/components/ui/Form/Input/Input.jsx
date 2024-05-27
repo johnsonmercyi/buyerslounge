@@ -4,6 +4,7 @@ import Icon from "../../../../util/icons";
 
 const Input = ({
   error = false,
+  errorMessage,
   type,
   label,
   value = "",
@@ -46,7 +47,7 @@ const Input = ({
       </div>
       {
         error ? (
-          <span>This field is required</span>
+          <span>{errorMessage || "This field is required"}</span>
         ) : null
       }
 

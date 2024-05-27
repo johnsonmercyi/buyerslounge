@@ -5,6 +5,8 @@ import IconButton from "../Button/IconButton/IconButton";
 import Icon from "util/icons";
 
 const ModifyLabel = ({
+  error,
+  errorMessage,
   isEditing = false,
   isUpdating = false,
   value,
@@ -44,27 +46,45 @@ const ModifyLabel = ({
   }
 
   return (
-    <div className={styles.modifyLabel}>
-      {
-        isEditing ? (
-          <Input
-            inputRef={inputRef}
-            value={value}
-            onChangeHandler={changeHandler}
-            onFocusHandler={focusHandler}
-            onBlurHandler={blurHandler}
-            onKeyDown={actionHandler} />
-        ) : (
-          <>
-            <label>{value}</label>
+    <div style={{
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "flex-start"
+    }}>
+      <div className={`${styles.modifyLabel} ${error ? styles.error : ""}`}>
+        {
+          isEditing ? (
+            <Input
+              inputRef={inputRef}
+              value={value}
+              onChangeHandler={changeHandler}
+              onFocusHandler={focusHandler}
+              onBlurHandler={blurHandler}
+              onKeyDown={actionHandler} />
+          ) : (
+            <>
+              <label>{value}</label>
 
               {/* 📄🤔👇🏽 */}
-            <IconButton
-                style={{ cursor: `${isUpdating ? 'not-allowed' : 'defualt'}`}}
-              clickHandler={modifyHandler}
-              icon={renderIconButtonIcon()} />
-          </>
-        )
+              <IconButton
+                style={{ cursor: `${isUpdating ? 'not-allowed' : 'default'}` }}
+                clickHandler={modifyHandler}
+                icon={renderIconButtonIcon()} />
+            </>
+          )
+        }
+      </div>
+
+      {
+        error ? (
+          <div className={styles.errorContainer}>
+            <span className={styles.error}>
+              {errorMessage}
+            </span>
+          </div>
+        ) : null
       }
     </div>
   );
