@@ -18,6 +18,7 @@ const ViewCategory = ({ ...props }) => {
   const [products, setProducts] = useState([]);
   const [isEditCategory, setIsEditCategory] = useState(false);
   const [isUpdatingCategory, setIsUpdatingCategory] = useState(false);
+  const [categoryError , setCategoryError] = useState(false);
 
   useEffect(() => {
     if (param) {
@@ -31,7 +32,7 @@ const ViewCategory = ({ ...props }) => {
    */
   useEffect(() => {
     if (isUpdatingCategory) {
-      updateCategory();
+      updateCategory(param.category);
     }
   }, [isUpdatingCategory]);
 
@@ -81,16 +82,47 @@ const ViewCategory = ({ ...props }) => {
     if (isEditCategory) {
       setIsEditCategory(false);
       if (oldCategory !== category) {
+        updateCategory(param.category);
         setIsUpdatingCategory(true);
+        setCategoryError(false);
+      }else if(category.trim.length === 0){
+        setCategory(oldCategory);
+      }else{
+        setCategoryError(true);
       }
     }
   }
 
   /* 📄🤔👇🏽 */
-  const updateCategory = () => {
+  const updateCategory = async (id) => {
     // Update Category code Implementation...
-    console.log('Updating Category...');
+    
+    if (isEditCategory){
+      const payload = {
+        id: param.category,
+        name: category
+      };
+      try{
+         const response = await makeRequest(`/${id}`, HTTPMethods.POST, payload, null);
+         if (response.error) {
+            setCategoryError(true);
+            console.error("ERROR: ",response.error);
+          } else {
+            console.log('Category Updated...');
+            setIsUpdatingCategory(false);
+            setCategoryError(false);
+            
+            
+          }
+      }catch (error){
+        console.log(error.message);
+      }
+    }else{
+      setCategory(oldCategory);
+    }
+    
   }
+
 
   const changeHandler = (event) => {
     setCategory(event.target.value);
@@ -115,6 +147,9 @@ const ViewCategory = ({ ...props }) => {
                 modifyHandler={editCategoryHandler}
                 isUpdating={isUpdatingCategory}
               />
+              {
+                categoryError ? `<div>Error </div>` : '' 
+              }
             </div>
           </div>
         )
