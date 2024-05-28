@@ -7,9 +7,12 @@ import ErrorPage from 'components/Error/Error';
 import ModifyLabel from 'components/ui/ModifyLabel/ModifyLabel';
 import IconButton from 'components/ui/Button/IconButton/IconButton';
 import Icon from 'util/icons';
+import Table from 'components/ui/Table/Table';
+import { useTable } from 'util/providers/TableProvider';
 
 const ViewCategory = ({ ...props }) => {
   const param = useParams();
+  const { setTableEntity } = useTable();
 
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -25,6 +28,7 @@ const ViewCategory = ({ ...props }) => {
   useEffect(() => {
     if (param) {
       fetchData(param.category);
+      setTableEntity("products");
     }
   }, [param]);
 
@@ -50,7 +54,10 @@ const ViewCategory = ({ ...props }) => {
       } else {
         const { name, products } = response;
         setCategory(name);
-        setProducts(products);
+        setProducts(products && products.map((product, index) => ({
+          sn: index + 1,
+          ...product
+        })));
         setLoading(false);
       }
     } catch (error) {
@@ -119,7 +126,7 @@ const ViewCategory = ({ ...props }) => {
         setCategoryError(true);
         setCategoryErrorMessage(response.message);
         if (String(response.message).includes("Duplicate entry")) {
-          setCategoryErrorMessage(`Unsuccessful update! ${category} already exists!`);
+          setCategoryErrorMessage(`Unsuccessful update! ${category} already exists.`);
         }
         // console.error("ERROR: ", response.error);
       } else {
@@ -147,6 +154,13 @@ const ViewCategory = ({ ...props }) => {
     setCategory(event.target.value);
   }
 
+  const visibleRowColumns = (row, index) => {
+    return [
+      <td key={index + "_sn"}>{row.sn}</td>,
+      <td key={index + "_name"}>{row.name}</td>,
+    ]
+  }
+
   return (
 
     loading ? (<Loading load={loading} loadingText="Please wait" />) :
@@ -169,6 +183,13 @@ const ViewCategory = ({ ...props }) => {
                 isUpdating={isUpdatingCategory}
               />
             </div>
+
+            <Table
+              title={`Products`}
+              content={products}
+              headers={["SN", "NAME", "ACTION"]}
+              visibleRowColumns={visibleRowColumns}
+            />
           </div>
         )
 

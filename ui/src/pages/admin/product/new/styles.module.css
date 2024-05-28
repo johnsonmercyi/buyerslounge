@@ -15,6 +15,7 @@
 .main form {
   width      : var(--form-width);
   align-items: var(--align-items-center);
+  row-gap: 0.5rem;
 }
 
 /*Devices larger than mobile phone*/

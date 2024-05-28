@@ -69,7 +69,7 @@ const ModifyLabel = ({
 
               {/* 📄🤔👇🏽 */}
               <IconButton
-                style={{ cursor: `${isUpdating ? 'not-allowed' : 'default'}` }}
+                style={{ cursor: `${isUpdating ? 'not-allowed' : 'pointer'}` }}
                 clickHandler={modifyHandler}
                 icon={renderIconButtonIcon()} />
             </>

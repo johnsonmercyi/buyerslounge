@@ -8,6 +8,7 @@ import styles from './styles.module.css';
  * @returns 
  */
 const Select = ({
+  value,
   name = "",
   error,
   options = [],
@@ -15,11 +16,10 @@ const Select = ({
   placeholder = "",
   selectHandler,
   ...props }) => {
-
   /**
    * Component states
    */
-  const [selectedItem, setSelectedItem] = useState({value: "", label: ""});
+  const [selectedItem, setSelectedItem] = useState({ value: "", label: "" });
   const [isOpen, setIsOpen] = useState(false);
   const [isShowUpsideNeeded, setIsShowUpsideNeeded] = useState(false);
 
@@ -27,6 +27,12 @@ const Select = ({
   const itemsWrapperRef = useRef(null); // Select options items wrapper reference
   const selectRef = useRef(null); // Select Component reference
 
+  useEffect(() => {
+    if (value) {
+      selectHandler(value.value);
+      setSelectedItem(value);
+    }
+  }, [value]);
   /**
    * Determine the position the dropdown should be positioned
    * Upside or downside.
@@ -58,7 +64,9 @@ const Select = ({
       /**
        * Fetch the selected option whose data-value equals
        * selected item's value
-       */
+      */
+
+      // console.log("WRAPPER: ", itemsWrapperRef.current, selectedItem.value);
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
 
       /**
@@ -125,9 +133,9 @@ const Select = ({
       currentSelectedOption.classList.add('focused');
 
       // console.log("New selected option: ", currentSelectedOption);
-      
+
       scollTo(currentSelectedOption);
-      
+
     } else if (event.key === "ArrowUp") {
       // Get the selected option
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
@@ -169,7 +177,7 @@ const Select = ({
           style={{
             border: isOpen && error ? '1px solid #dc0933' : isOpen && !error ? '1px solid #475569' : error ? "1px solid #dc0933" : '1px solid #1e293b'
           }}
-          className={`${styles.select} ${error? styles.error : ""}`}
+          className={`${styles.select} ${error ? styles.error : ""}`}
           onClick={toggleOpen}>
           <input
             // disabled
@@ -178,8 +186,8 @@ const Select = ({
             placeholder={placeholder}
             value={selectedItem.label || ""}
             onChange={(event) => setSelectedItem(event.target.value)}
-            // style={{ pointerEvents: 'auto' }} 
-            />
+          // style={{ pointerEvents: 'auto' }} 
+          />
 
           <Icon
             className={styles.icon}
@@ -192,9 +200,15 @@ const Select = ({
         {
           isOpen ? (
             <div
+              style={{
+                height: options.length ? `10.2rem` : `3.5rem`
+              }}
               ref={optionListRef}
               className={`${styles.optionList} ${isShowUpsideNeeded ? styles.showUpside : ""}`}>
               <div
+                style={{
+                  height: options.length ? `9.2rem` : `100%`
+                }}
                 ref={itemsWrapperRef}
                 className={styles.itemsWrapper}>
                 {
@@ -203,8 +217,7 @@ const Select = ({
                       data-value={option.value}
                       className={
                         `${styles.item} 
-                        ${
-                          option.value === selectedItem.value ? 
+                        ${option.value === selectedItem.value ?
                           styles.focused : ""
                         }`
                       }

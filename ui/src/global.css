@@ -41,7 +41,7 @@ body {
   display        : var(--ui-wrapper-display);
   flex-direction : var(--ui-wrapper-flex-direction-column);
   justify-content: var(--ui-wrapper-justify-content-flex-end);
-  align-items    : var(--ui-wrapper-align-items-flex-start);
+  align-items    : var(--ui-wrapper-align-items);
 }
 
 @keyframes rotate {

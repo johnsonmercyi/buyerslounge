@@ -42,7 +42,7 @@
 .main .wrapper .select.error,
 .main .wrapper .select.error:focus,
 .main .wrapper .select.error:hover {
-  border: 1px solid var(--danger)  !important;
+  border: 1px solid var(--danger) !important;
 }
 
 .main span {
@@ -71,12 +71,12 @@
 }
 
 .main .wrapper .optionList {
-  width           : var(--full-width);
-  height          : 10.2rem;
+  width              : var(--full-width);
+  height             : 10.2rem;
   /* overflow-x      : auto; */
-  padding         : 0;
-  background-color: var(--tetiary-bg-color);
-  border-radius   : 0 0 0.3rem 0.3rem;
+  padding            : 0;
+  background-color   : var(--tetiary-bg-color);
+  border-radius      : 0 0 0.3rem 0.3rem;
 
   position: absolute;
 
@@ -140,7 +140,7 @@
 
 .main .wrapper .optionList .item.focused {
   background-color: rgba(148, 163, 184, 0.1);
-  color: var(--ui-hover-secondary-bg-color)
+  color           : var(--ui-hover-secondary-bg-color)
 }
 
 /*Devices larger than mobile phone*/

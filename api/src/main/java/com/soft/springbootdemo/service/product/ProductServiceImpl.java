@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.soft.springbootdemo.dto.PagedResponse;
 import com.soft.springbootdemo.dto.ProductDTO;
+import com.soft.springbootdemo.dto.requestdto.RequestProductDTO;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.repo.CategoryRepo;
@@ -84,9 +85,9 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product update(UUID id, ProductDTO productDTO) {
+  public Product update(UUID id, RequestProductDTO dto) {
     Optional<Product> product = productRepo.findById(id);
-    Optional<Category> category = categoryRepo.findById(productDTO.getCategoryId());
+    Optional<Category> category = categoryRepo.findById(dto.getCategoryId());
     if (product.isPresent()) {
 
       Product oldProduct = product.get();
@@ -95,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
         oldProduct.setCategory(category.get());
       }
 
-      oldProduct.setName(productDTO.getName());
+      oldProduct.setName(dto.getName());
 
       return productRepo.save(oldProduct);
     }

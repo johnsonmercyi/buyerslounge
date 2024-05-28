@@ -17,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soft.springbootdemo.dto.ProductDTO;
+import com.soft.springbootdemo.dto.requestdto.RequestProductDTO;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.service.category.CategoryService;
 import com.soft.springbootdemo.service.product.ProductService;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -91,8 +95,8 @@ public class ProductController {
 
   //Update Product
   @PostMapping("/{id}")
-  public ResponseEntity<Product> updateProduct(@PathVariable UUID id, @RequestBody ProductDTO productDTO){
-    return ResponseEntity.ok(productService.update(id, productDTO));
+  public ResponseEntity<Product> updateProduct(@PathVariable UUID id, @RequestBody RequestProductDTO dto){
+    return ResponseEntity.ok(productService.update(id, dto));
   }
 
 }
