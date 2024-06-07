@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soft.springbootdemo.dto.PagedResponse;
 import com.soft.springbootdemo.dto.ProductDTO;
 import com.soft.springbootdemo.dto.requestdto.RequestProductDTO;
 import com.soft.springbootdemo.model.Category;
@@ -99,4 +100,21 @@ public class ProductController {
     return ResponseEntity.ok(productService.update(id, dto));
   }
 
+  @PostMapping("/search")
+  public PagedResponse<Product> searchProducts(
+    @RequestHeader(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+    @RequestHeader(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+    @RequestHeader(value = "name", defaultValue = "", required = true) String name){
+
+    return productService.findByNameContaining(name, pageNo, pageSize);
+  }
+  
+
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class SearchString{
+  private String searchText;
 }
