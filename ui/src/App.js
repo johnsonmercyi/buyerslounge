@@ -1,21 +1,22 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import Home from './pages/Home/Home';
-import NoPage from './pages/NoPage/NoPage';
-import Login from './pages/Login/Login';
-import ProtectedRoute from './util/ProtectedRoute';
-import SignUp from './pages/SignUp/SignUp';
-import AdminCategory from './pages/admin/category/Category';
-import AdminDashboard from './pages/admin/dashboard';
-import SellerDashboard from './pages/seller/dashboard';
-import Category from './pages/admin/category/Category';
-import CreateCategory from './pages/admin/category/create/CreateCategory';
-import Product from './pages/admin/product/Product';
-import NewProduct from './pages/admin/product/new/Page';
 import ViewCategory from 'pages/admin/category/view/Page';
 import ViewProducts from 'pages/admin/product/view/Page';
+import MyProduct from 'pages/seller/products/Page';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import Layout from './components/Layout/Layout';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import NoPage from './pages/NoPage/NoPage';
+import SignUp from './pages/SignUp/SignUp';
+import Category from './pages/admin/category/Category';
+import CreateCategory from './pages/admin/category/create/CreateCategory';
+import AdminDashboard from './pages/admin/dashboard';
+import Product from './pages/admin/product/Product';
+import NewProduct from './pages/admin/product/new/Page';
+import SellerDashboard from './pages/seller/dashboard';
+import ProtectedRoute from './util/ProtectedRoute';
+import AddNewProduct from 'pages/seller/products/create/Page';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
             <Route path='/admin/dashboard' element={<AdminDashboard />}>
-              <Route index element={<div>Welcome to admin Dashboard!</div>}/>
+              <Route index element={<div>Welcome to admin Dashboard!</div>} />
               <Route path='/admin/dashboard/categories' element={<Category />} />
               <Route path='/admin/dashboard/categories/create' element={<CreateCategory />} />
               <Route path='/admin/dashboard/categories/:category/' element={<ViewCategory />} />
@@ -39,7 +40,9 @@ function App() {
 
             </Route>
             <Route path='/seller/dashboard' element={<SellerDashboard />}>
-              <Route path='/seller/dashboard/categories' element={<Category />} />
+              <Route index element={<div>Welcome to seller Dashboard!</div>} />
+              <Route path='/seller/dashboard/products' element={<MyProduct />} />
+              <Route path='/seller/dashboard/products/create' element={<AddNewProduct />} />
             </Route>
             <Route path='*' element={<NoPage />} />
           </Route>

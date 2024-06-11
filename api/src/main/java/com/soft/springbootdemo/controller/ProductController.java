@@ -108,13 +108,11 @@ public class ProductController {
 
     return productService.findByNameContaining(name, pageNo, pageSize);
   }
-  
-
 }
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class SearchString{
-  private String searchText;
-}
+// @Data
+// @AllArgsConstructor
+// @NoArgsConstructor
+// class SearchString{
+//   private String searchText;
+// }

@@ -7,6 +7,7 @@ const Input = ({
   errorMessage,
   type,
   label,
+  name,
   value = "",
   placeholder,
   icon,
@@ -25,6 +26,7 @@ const Input = ({
       }
       <div className={styles.wrapper}>
         <input
+          name={name || ""}
           ref={inputRef}
           className={`${error ? styles.error : ""}`}
           type={type || "text"}

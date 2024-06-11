@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.soft.springbootdemo.dto.PagedResponse;
-import com.soft.springbootdemo.dto.ProductDTO;
 import com.soft.springbootdemo.dto.requestdto.RequestProductDTO;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Product;

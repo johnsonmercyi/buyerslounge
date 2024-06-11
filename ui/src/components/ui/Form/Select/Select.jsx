@@ -29,7 +29,7 @@ const Select = ({
 
   useEffect(() => {
     if (value) {
-      selectHandler(value.value);
+      // selectHandler(value.value);
       setSelectedItem(value);
     }
   }, [value]);
@@ -73,12 +73,12 @@ const Select = ({
        * Checks if there's a selected option
        */
       if (selectedOption) {
-        scollTo(selectedOption);
+        scrollTo(selectedOption);
       }
     }
   }, [isOpen, selectedItem]);
 
-  const scollTo = (selectedOption) => {
+  const scrollTo = (selectedOption) => {
     /**
      * Scoll to the selected option
      */
@@ -171,7 +171,8 @@ const Select = ({
       className={styles.main}
       ref={selectRef}
       onKeyDown={handleKeydown}>
-      <label>{label}</label>
+      {label ? <label>{label}</label> : null}
+
       <div className={styles.wrapper}>
         <div
           style={{

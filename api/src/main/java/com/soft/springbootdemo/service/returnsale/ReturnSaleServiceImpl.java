@@ -10,14 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.soft.springbootdemo.dto.requestdto.ReturnSaleRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.ReturnSaleResponseDTO;
-import com.soft.springbootdemo.model.Product;
-import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.model.ReturnSale;
 import com.soft.springbootdemo.model.Sale;
-import com.soft.springbootdemo.repo.SellerProductsRepo;
-import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
+import com.soft.springbootdemo.model.SellerProducts;
 import com.soft.springbootdemo.repo.ReturnSaleRepo;
 import com.soft.springbootdemo.repo.SaleRepo;
+import com.soft.springbootdemo.repo.SellerProductsRepo;
+import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
 import com.soft.springbootdemo.util.Util;
 
 import jakarta.transaction.Transactional;

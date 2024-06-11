@@ -269,7 +269,7 @@ const Icon = ({
         <path d="M13.5 6.5l4 4" />
         <path d="M15 19l2 2l4 -4" />
       </svg>
-    )
+    ),
   }
 
   // alert(className)

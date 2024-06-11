@@ -76,7 +76,7 @@ const SignUp = ({ props }) => {
           nationality: inputs.nationality
         };
 
-        const data = await makeRequest(`api/${role}`, HTTPMethods.POST, signupPayload)
+        const data = await makeRequest(`/${role}`, HTTPMethods.POST, signupPayload)
 
         if (data.error) {
           console.log("RESPONSE: ", data);

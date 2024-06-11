@@ -12,7 +12,7 @@ const adminItems = [
 ];
 
 const sellerItems = [
-  { text: "Inventory", icon: "inventory", to: "/seller/dashboard/category" },
+  { text: "My Products", icon: "inventory", to: "/seller/dashboard/products" },
 ];
 
 const customerItems = [

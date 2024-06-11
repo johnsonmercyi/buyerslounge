@@ -1,0 +1,22 @@
+/*Mobile First Style*/
+.main {}
+
+.buttonMain {
+  /* margin-left: 0.5rem; */
+}
+
+.pageTitleContainer {
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+  .buttonMain button {
+    width: 15rem !important;
+  }
+}

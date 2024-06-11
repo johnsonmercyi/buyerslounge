@@ -2,7 +2,7 @@
 .main {
   width  : var(--full-width);
   height : var(--auto-height);
-  padding: 0.5rem 0;
+  /* padding: 0.5rem 0; */
 }
 
 .main.fitButtonToWrapper,

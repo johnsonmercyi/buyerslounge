@@ -16,15 +16,17 @@ const ViewProducts = ({ ...props }) => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isRequestError, setIsRequestError] = useState(false);
+  const [isRequestSuccess, setIsRequestSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(null);
+  const [oldCategory, setOldCategory] = useState("");
   const [categoryError, setCategoryError] = useState(false);
   const [product, setProduct] = useState("");
+  const [oldProduct, setOldProduct] = useState("");
+  const [inputKeyCount, setInputKeyCount] = useState(0);
   const [productError, setProductError] = useState(false);
-  const [productErrorMessage, setProductErrorMessage] = useState("");
-  const [isEditProduct, setIsEditProduct] = useState(false);
-  const [isUpdatingProduct, setIsUpdatingProduct] = useState(false);
+
 
   useEffect(() => {
     if (param) {
@@ -68,13 +70,13 @@ const ViewProducts = ({ ...props }) => {
   const fetchProduct = async (id) => {
     try {
       const response = await makeRequest(`/products/${id}`, HTTPMethods.GET, null, null);
-
+      
+      setLoading(false);
       if (response.error) {
         console.error(response.error);
         setIsError(true);
         setMessage(response.message);
       } else {
-        setLoading(false);
         setProduct(response?.name);
 
         const { category } = response;
@@ -84,7 +86,7 @@ const ViewProducts = ({ ...props }) => {
           label: category.name
         });
 
-        console.log(response);
+        console.log("After Product Fetch:", response);
       }
     } catch (e) {
       console.error(e);
@@ -93,16 +95,103 @@ const ViewProducts = ({ ...props }) => {
     }
   }
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
 
+    console.log("OLD & CURRENT Cat: ", oldCategory.value === category.value);
+    console.log("OLD & CURRENT Product: ", oldProduct === product);
+    console.log("OLD Category: ", oldCategory.value, "\nCURRENT Category: ", category);
+    console.log("OLD Product: ", oldProduct, "\nCURRENT Product: ", product);
+
+    try {
+      if (validateField()) {
+
+        if (!oldCategory.value && !oldProduct) {
+          alert("Hey! Nothing changed...");
+        } else {
+          if (oldCategory.value === category.value && (oldProduct === product || !oldProduct)) {
+            // console.log(category, oldCategory);
+            alert("Hey! Nothing changed...");
+          } else {
+            const response = await makeRequest(`/products/${param.product}`, HTTPMethods.POST, {
+              id: param.product,
+              categoryId: category.value,
+              name: product
+            }, undefined);
+  
+            setLoading(false);
+  
+            if (response.error) {
+              console.error(response.error);
+              setIsError(true);
+              setMessage(response.message);
+            } else {
+              setIsRequestSuccess(true);
+              setProduct(response?.name);
+  
+              const { category } = response;
+  
+              setCategory({
+                value: category.id,
+                label: category.name
+              });
+  
+              setIsError(false);
+              setMessage("Product updated successfully!");
+              setOldCategory({
+                value: category.id,
+                label: category.name
+              });
+              setOldProduct(product);
+            }
+          }
+        }
+      }
+    } catch(error) {
+      console.error(error);
+      setIsError(true);
+      setMessage(error.message);
+    }
   }
 
-  const selectCategoryHandler = () => {
 
+  const validateField = () => {
+    if (!category.value) {
+      setCategoryError(true);
+    } else {
+      setCategoryError(false);
+    }
+
+    if (!product) {
+      setProductError(true);
+    } else {
+      setProductError(false);
+    }
+
+    return category && product;
+  }
+
+  const selectCategoryHandler = (selectedCatValue) => {
+    if (category) {
+      console.log("NEW: ", selectedCatValue, "OLD", category.value);
+      setOldCategory(category);
+    }
+
+    const catObj = categories.find(cat => cat.value === selectedCatValue);
+
+    console.log("WGEOUCD: ", catObj);
+    setCategory(catObj);
   }
 
   const handleInputChange = (event) => {
+    if (inputKeyCount === 0) {
+      if (product) {
+        setOldProduct(product);
+        setInputKeyCount(count => count += 1);
+      }
+    }
 
+    setProduct(event.target.value);
   }
 
   return (
@@ -129,15 +218,15 @@ const ViewProducts = ({ ...props }) => {
             />
 
             {
-              isRequestError ? (
-                <Alert type={"error"} message={message} />
+              isRequestError || isRequestSuccess ? (
+                <Alert type={isRequestError ? "error": "success"} message={message} />
               ) : null
             }
 
             <Button
               loading={buttonLoading}
               disabled={buttonLoading}
-              text={"Submit"}
+              text={"Update Product"}
               type={"submit"} />
           </Form>
         </div>
