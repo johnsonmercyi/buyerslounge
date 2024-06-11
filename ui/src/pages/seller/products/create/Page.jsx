@@ -132,6 +132,7 @@ const AddNewProduct = () => {
             />
 
             <Input
+              name={"quantity"}
               type={"number"}
               placeholder={"Product Quantity"}
               onChangeHandler={inputChangeHandler}
@@ -140,6 +141,7 @@ const AddNewProduct = () => {
             />
 
             <Input
+              name={"cost"}
               type={"number"}
               placeholder={"Purchase Cost"}
               onChangeHandler={inputChangeHandler}
@@ -148,6 +150,7 @@ const AddNewProduct = () => {
             />
 
             <Input
+              name={"price"}
               type={"number"}
               placeholder={"Product price"}
               onChangeHandler={inputChangeHandler}

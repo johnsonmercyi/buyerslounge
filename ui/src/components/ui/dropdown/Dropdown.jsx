@@ -49,7 +49,7 @@ const Dropdown = ({
   }, [isOpen, optionsRef]);
 
   const dropDownHandler = () => {
-    setIsOpen(true);
+    setIsOpen(isOpen => !isOpen);
   }
 
   const clickSelectionHandler = (selectedOption) => {
