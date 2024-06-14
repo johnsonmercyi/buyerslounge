@@ -99,6 +99,11 @@
   text-align: left;
 }
 
+.dropdown .optionWrapper .option.focused  {
+  background-color: rgba(148, 163, 184, 0.1);
+  color           : var(--ui-hover-secondary-bg-color)
+}
+
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
   .dropdown .optionWrapper {

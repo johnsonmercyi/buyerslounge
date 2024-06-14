@@ -57,8 +57,91 @@ const Dropdown = ({
     selectHandler(selectedOption.value);
   }
 
+  const scrollTo = (selectedOption) => {
+    /**
+     * Scoll to the selected option
+     */
+    selectedOption.scrollIntoView({
+      behavior: 'smooth', // Add smooth scrolling animation (optional)
+      block: 'nearest' // Ensure the option is fully visible
+    });
+  }
+  //close the dropdown when clicked outside
+  useEffect (() => {
+    document.addEventListener('click', (event) => {
+      if (optionRef.current && !optionRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    })
+  }, [optionRef]);
+
+ 
+  const handleKeydown = (event) => {
+    if (optionRef.current) {
+      optionRef.current.style.outline = 'none';
+    }
+  
+    if (event.key === "ArrowDown") {
+      setIsOpen(true);
+  
+      const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
+      let nextIndex = 0;
+  
+      if (selectedOption) {
+        const currentIndex = options.findIndex(option => option.value === selectedOption.dataset.value);
+        nextIndex = currentIndex + 1;
+        selectedOption.classList.remove("focused");
+      }
+  
+      // Handle when length of option is reached
+      if (nextIndex >= options.length) {
+        nextIndex = 0;
+      }
+  
+      setSelectedOption(options[nextIndex]); // Set the selected item state
+  
+      // Taking care of visually updating the selected item
+      const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
+      if (currentSelectedOption) {
+        currentSelectedOption.classList.add('focused');
+        scrollTo(currentSelectedOption);
+      }
+  
+    } else if (event.key === "Escape") {
+      setIsOpen(false);
+  
+    } else if (event.key === "Enter") {
+      setIsOpen(false);
+  
+    } else if (event.key === "ArrowUp") {
+      const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
+      let nextIndex = options.length - 1;
+  
+      if (selectedOption) {
+        const currentIndex = options.findIndex(option => option.value === selectedOption.dataset.value);
+        nextIndex = currentIndex - 1;
+        selectedOption.classList.remove("focused");
+      }
+  
+      // Handle when length of option is reached
+      if (nextIndex < 0) {
+        nextIndex = options.length - 1;
+      }
+  
+      setSelectedOption(options[nextIndex]); // Set the selected item state
+  
+      // Taking care of visually updating the selected item
+      const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
+      if (currentSelectedOption) {
+        currentSelectedOption.classList.add('focused');
+        scrollTo(currentSelectedOption);
+      }
+    }
+  };
+  
+
   return (
-    <div className={styles.dropdown} ref={dropdownRef}>
+    <div className={styles.dropdown} ref={dropdownRef} onKeyDown={handleKeydown} tabIndex={0}>
       <button onClick={dropDownHandler}>
         {
           labelType === "text" ? (
@@ -85,10 +168,13 @@ const Dropdown = ({
                       clickSelectionHandler(option);
                       setIsOpen(false);
                     }}
-                    className={styles.option}
+                    className={
+                      `${styles.option} ${selectedOption.value === option.value ? styles.focused : ""}`
+                    }
                     data-selected={
                       selectedOption.value === option.value
                     }
+                    data-index={index}
 
                     data-value={JSON.stringify(option)}
                   >
