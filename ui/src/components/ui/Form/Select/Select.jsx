@@ -110,7 +110,13 @@ const Select = ({
   }
 
   const handleKeydown = (event) => {
+    
+    if (selectRef.current) {
+      selectRef.current.style.outline = 'none';
+    }
+
     if (event.key === "ArrowDown") {
+      
       // Get the selected option
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
       let nextIndex = 0;
@@ -134,7 +140,7 @@ const Select = ({
 
       // console.log("New selected option: ", currentSelectedOption);
 
-      scollTo(currentSelectedOption);
+      scrollTo(currentSelectedOption);
 
     } else if (event.key === "ArrowUp") {
       // Get the selected option
@@ -159,7 +165,7 @@ const Select = ({
       const currentSelectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${options[nextIndex].value}"]`);
       currentSelectedOption.classList.add('focused');
 
-      scollTo(currentSelectedOption);
+      scrollTo(currentSelectedOption);
     } else if (event.key === "Enter") {
       setIsOpen(false);
     }
@@ -170,7 +176,8 @@ const Select = ({
     <div
       className={styles.main}
       ref={selectRef}
-      onKeyDown={handleKeydown}>
+      onKeyDown={handleKeydown}
+      tabIndex={0}>
       {label ? <label>{label}</label> : null}
 
       <div className={styles.wrapper}>
@@ -180,16 +187,11 @@ const Select = ({
           }}
           className={`${styles.select} ${error ? styles.error : ""}`}
           onClick={toggleOpen}>
-          <input
-            // disabled
-            type="text"
-            name={name}
-            placeholder={placeholder}
-            value={selectedItem.label || ""}
-            onChange={(event) => setSelectedItem(event.target.value)}
-          // style={{ pointerEvents: 'auto' }} 
-          />
 
+          <label
+            className={!selectedItem.label ? styles.placeholder : ""}>
+            {selectedItem.label || placeholder}
+          </label>
           <Icon
             className={styles.icon}
             name={isOpen ? "arrow-up" : "arrow-down"}

@@ -1,0 +1,15 @@
+/*Mobile First Style*/
+.fileUploader {
+  width: 100%;
+  height: 5rem;
+
+  border-radius: 0.3rem;
+  border: 1px dotted lightskyblue;
+
+  cursor: pointer;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+
+}

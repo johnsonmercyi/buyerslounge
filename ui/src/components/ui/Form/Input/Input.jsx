@@ -17,10 +17,11 @@ const Input = ({
   onFocusHandler,
   onBlurHandler,
   inputRef,
+  className,
   ...props }) => {
 
   return (
-    <div className={styles.main}>
+    <div className={`${styles.main} ${className || ""}`}>
       {
         label ? (<label>{label}</label>) : null
       }

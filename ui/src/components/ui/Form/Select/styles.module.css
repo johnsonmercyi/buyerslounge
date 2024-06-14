@@ -7,7 +7,7 @@
   align-items    : var(--align-items-flex-start);
 }
 
-.main label {
+.main>label {
   width    : 100%;
   height   : auto;
   padding  : 0.25rem 0.15rem;
@@ -52,13 +52,22 @@
   padding  : 0.2rem;
 }
 
-.main .wrapper .select input {
+.main .wrapper .select>label {
   width           : 100%;
   height          : 100%;
   border          : none;
   outline         : none;
   background-color: var(--secondary-bg-color);
-  color           : var(--default-color)
+  color           : var(--default-color);
+
+  display        : var(--display-flex);
+  justify-content: var(--justify-content-flex-start);
+  align-items    : var(--align-items-center);
+
+}
+
+.main .wrapper .select>label.placeholder {
+  color: gray;
 }
 
 .main .wrapper .select .icon {

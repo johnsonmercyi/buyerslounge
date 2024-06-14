@@ -6,6 +6,7 @@ import Button from "components/ui/UIButton/Button";
 import React, { useEffect, useState } from "react";
 import { HTTPMethods, makeRequest } from "util/utils";
 import styles from './styles.module.css';
+import FileUpload from "components/ui/file-upload/FileUpload";
 
 const AddNewProduct = () => {
 
@@ -87,19 +88,56 @@ const AddNewProduct = () => {
     }
   }
 
+  const fetchCategoryProducts = async (category) => {
+    try {
+      const response = await makeRequest(`/categories/products/${category}`, HTTPMethods.GET, undefined, {
+        'paginate': false,
+      });
+
+      if (response.error) {
+        console.log(response.error);
+        setIsError(true);
+        setMessage(response.message);
+        setLoading(false);
+      } else {
+        const { products } = response;
+        const productsData = products.map(product => ({
+          label: product.name,
+          value: product.id
+        }));
+        setProducts(productsData);
+        setLoading(false);
+      }
+
+      console.log("RESPONSE: ", response);
+
+    } catch (error) {
+      setLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+
+      if (String(error.message).toLowerCase().includes("failed to fetch")) {
+        setMessage("Sorry! Our server might be down at the moment. Please check back later!");
+      }
+
+      console.error(error.message);
+    }
+  }
+
   const selectCategoryHandler = (category) => {
-    setProduct(state => ({
-      ...state,
+    console.log(category);
+    setProduct(currentState => ({
+      ...currentState,
       category: category
     }));
 
     // TODO: initialize products select
-
+    fetchCategoryProducts(category);
   }
 
   const selectProductHandler = (product) => {
-    setProduct(state => ({
-      ...state,
+    setProduct(currentState => ({
+      ...currentState,
       product: product
     }));
   }
@@ -118,6 +156,7 @@ const AddNewProduct = () => {
           <Form onSubmitHandler={onSubmitHandler}>
 
             <Select
+              className="grid-item"
               error={productError.category}
               placeholder='Select product categories'
               options={categories}
@@ -131,32 +170,41 @@ const AddNewProduct = () => {
               selectHandler={selectProductHandler}
             />
 
-            <Input
-              name={"quantity"}
-              type={"number"}
-              placeholder={"Product Quantity"}
-              onChangeHandler={inputChangeHandler}
-              error={productError.quantity}
-              value={product.quantity}
-            />
+            <section className="grid-container">
+              <Input
+                name={"quantity"}
+                type={"number"}
+                placeholder={"Product Quantity"}
+                onChangeHandler={inputChangeHandler}
+                error={productError.quantity}
+                value={product.quantity}
+              />
 
-            <Input
-              name={"cost"}
-              type={"number"}
-              placeholder={"Purchase Cost"}
-              onChangeHandler={inputChangeHandler}
-              error={productError.cost}
-              value={product.cost}
-            />
+              <Input
+                name={"cost"}
+                type={"number"}
+                placeholder={"Purchase Cost"}
+                onChangeHandler={inputChangeHandler}
+                error={productError.cost}
+                value={product.cost}
+              />
 
-            <Input
-              name={"price"}
-              type={"number"}
-              placeholder={"Product price"}
-              onChangeHandler={inputChangeHandler}
-              error={productError.price}
-              value={product.price}
-            />
+              <Input
+                className={"span-two-columns"}
+                name={"price"}
+                type={"number"}
+                placeholder={"Product price"}
+                onChangeHandler={inputChangeHandler}
+                error={productError.price}
+                value={product.price}
+              />
+            </section>
+
+            <section className="grid-container">
+              <FileUpload />
+              <FileUpload />
+              <FileUpload className={"span-two-columns"} />
+            </section>
 
             {
               isFormError ? (
