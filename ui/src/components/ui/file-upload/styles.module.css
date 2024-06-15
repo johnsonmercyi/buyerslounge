@@ -7,8 +7,6 @@
   flex-direction : var(--flex-direction-column);
   justify-content: var(--justify-content-center);
   align-items    : var(--align-items-center);
-
-  row-gap: 0.2rem;
 }
 
 .main .fileImage {
@@ -28,8 +26,8 @@
 }
 
 .main .fileImage .imageWrapper .image {
-  width          : var(--full-width);
-  height         : 4.5rem;
+  width : var(--full-width);
+  height: 4.5rem;
 
   display        : var(--display-flex);
   justify-content: var(--justify-content-flex-start);
@@ -39,9 +37,9 @@
   padding: 0.5rem;
 
   background-color: rgba(22, 33, 60, 0.1);
-  border-radius: 0.3rem;
-  border: 1px dotted rgba(255, 255, 255, 0.09);
-  transition: all 0.3s ease-in-out;
+  border-radius   : 0.3rem;
+  border          : 1px dotted rgba(255, 255, 255, 0.09);
+  transition      : all 0.3s ease-in-out;
 
   cursor: pointer;
 }
@@ -51,12 +49,18 @@
 }
 
 .main .fileImage .imageWrapper .image>span {
-  width          : var(--full-width);
+  width : var(--full-width);
   height: 100%;
+}
+
+main .fileImage .imageWrapper .image>span a {
+  width : var(--full-width);
+  height: 100%;
+
   display        : var(--display-flex);
   justify-content: var(--justify-content-flex-start);
   align-items    : var(--align-items-flex-end);
-  color: var(--hover-border-color);
+  color          : var(--hover-border-color);
 }
 
 .main .fileImage .imageWrapper .image>img {
@@ -66,7 +70,7 @@
 
 .main .fileImage .imageWrapper .image .imageIcon {
   margin-right: 1rem;
-  cursor: pointer;
+  cursor      : pointer;
 }
 
 .fileUploader {

@@ -20,6 +20,9 @@ const FileUpload = ({ name, appendText, description, fileLength, className }) =>
       ...currentFiles,
       ...selectedFiles
     ]));
+
+    // Clear the file input value to allow re-selection of the same file
+    fileInputRef.current.value = null;
   }
 
   const handleDragOver = (event) => {
@@ -49,27 +52,30 @@ const FileUpload = ({ name, appendText, description, fileLength, className }) =>
       <div className={styles.fileImage}>
         {files.length > 0 && (
           <div className={styles.imageWrapper}>
+            {console.log("FILES: ", files)}
             {files.map((file, index) => (
-              <a
-                target='_blank'
-                rel="noopener noreferrer"
-                href={URL.createObjectURL(file)}
-                key={index}>
-                <div className={styles.image}>
-                  <img
-                    alt={`Selected file ${index + 1}`}
-                    src={URL.createObjectURL(file)} />
 
-                  <span>{file.name}</span>
+              <div key={index} className={styles.image}>
+                <img
+                  alt={`Selected file ${index + 1}`}
+                  src={URL.createObjectURL(file)} />
 
-                  <Icon
-                    onClickHandler={() => deleteSelectedImageHandler(file.name)}
-                    className={styles.imageIcon}
-                    name="trash"
-                    strokeColor={"var(--mute)"} />
+                <span>
+                  <a
+                    target='_blank'
+                    rel="noopener noreferrer"
+                    href={URL.createObjectURL(file)}>
+                    {file.name}
+                  </a>
+                </span>
 
-                </div>
-              </a>
+                <Icon
+                  onClickHandler={() => deleteSelectedImageHandler(file.name)}
+                  className={styles.imageIcon}
+                  name="trash"
+                  strokeColor={"var(--mute)"} />
+
+              </div>
             ))}
           </div>
         )}
