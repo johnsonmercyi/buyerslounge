@@ -99,6 +99,13 @@ const Dropdown = ({
       }
   
       setSelectedOption(options[nextIndex]); // Set the selected item state
+      if (selectedOption) {
+        selectHandler(selectedOption.dataset.value);
+      }
+      console.log("options[nextIndex]: ", options[nextIndex]);
+      console.log("selectedOption: ", selectedOption);
+      console.log("selectedOption.value: ", selectedOption.value);
+      console.log("selectedOption value: ", selectedOption.dataset.value);
   
       // Taking care of visually updating the selected item
       const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
@@ -129,6 +136,9 @@ const Dropdown = ({
       }
   
       setSelectedOption(options[nextIndex]); // Set the selected item state
+      if (selectedOption) {
+        selectHandler(selectedOption.dataset.value);
+      }
   
       // Taking care of visually updating the selected item
       const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
