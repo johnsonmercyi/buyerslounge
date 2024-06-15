@@ -10,6 +10,7 @@
   --dim-area-bg-color      : rgba(15, 23, 42, 0.4);
   --faded-light-bg-02-color: rgba(255, 255, 255, 0.2);
   --faded-light-bg-01-color: rgba(255, 255, 255, 0.1);
+  --placeholder-color: gray;
 
   --container-padding: 2rem;
 

@@ -9,7 +9,8 @@ const Icon = ({
   strokeWidth,
   className,
   strokeLinecap,
-  strokeLinejoin
+  strokeLinejoin,
+  onClickHandler,
 }) => {
 
   const icons = {
@@ -270,12 +271,49 @@ const Icon = ({
         <path d="M15 19l2 2l4 -4" />
       </svg>
     ),
+
+    upload: (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-cloud-upload"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
+        <path d="M9 15l3 -3l3 3" />
+        <path d="M12 12l0 9" />
+      </svg>
+    ),
+
+    trash: (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-trash"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M4 7l16 0" />
+        <path d="M10 11l0 6" />
+        <path d="M14 11l0 6" />
+        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+      </svg>
+    )
   }
 
-  // alert(className)
-
   return (
-    <div className={className || ''}>
+    <div onClick={onClickHandler} className={className || ''}>
       {icons[name]}
     </div>
   );

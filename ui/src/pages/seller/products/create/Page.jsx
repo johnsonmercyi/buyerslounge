@@ -200,11 +200,10 @@ const AddNewProduct = () => {
               />
             </section>
 
-            <section className="grid-container">
-              <FileUpload />
-              <FileUpload />
-              <FileUpload className={"span-two-columns"} />
-            </section>
+            <FileUpload appendText={"front-view image"} />
+            <FileUpload appendText={"side-view image"} />
+            <FileUpload appendText={"rear-view image"} />
+
 
             {
               isFormError ? (
