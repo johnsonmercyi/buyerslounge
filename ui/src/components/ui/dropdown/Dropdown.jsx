@@ -77,6 +77,7 @@ const Dropdown = ({
 
  
   const handleKeydown = (event) => {
+    console.log("handleKeydown", event.key);
     if (optionRef.current) {
       optionRef.current.style.outline = 'none';
     }
@@ -109,10 +110,8 @@ const Dropdown = ({
   
     } else if (event.key === "Escape") {
       setIsOpen(false);
-  
     } else if (event.key === "Enter") {
       setIsOpen(false);
-  
     } else if (event.key === "ArrowUp") {
       const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
       let nextIndex = options.length - 1;
