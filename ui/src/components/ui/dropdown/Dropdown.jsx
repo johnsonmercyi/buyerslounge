@@ -14,7 +14,7 @@ const Dropdown = ({
   const [selectedOption, setSelectedOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const dropdownRef = useRef(null);
+  // const dropdownRef = useRef(null);
   const optionsRef = useRef(null);
   const optionRef = useRef(null);
   const optionWrapperRef = useRef(null);
@@ -79,70 +79,73 @@ const Dropdown = ({
       optionWrapperRef.current.style.outline = 'none';
     }
 
-    if (event.key === "ArrowDown") {      
-      const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
-      let nextIndex = 0;
-      
-      if (selectedOption) {
-        const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
-        nextIndex = currentIndex + 1;
-        selectedOption.classList.remove("focused");
+    if (isOpen) {
+      if (event.key === "ArrowDown") {      
+        const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
+        let nextIndex = 0;
+        
+        if (selectedOption) {
+          const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
+          nextIndex = currentIndex + 1;
+          selectedOption.classList.remove("focused");
+        }
+
+        // Handle when length of option is reached
+        if (nextIndex >= options.length) {
+          nextIndex = 0;
+        }
+
+        setSelectedOption(options[nextIndex]); // Set the selected item state
+        if (selectedOption) {
+          selectHandler(selectedOption.dataset.value);
+        }
+
+        // Taking care of visually updating the selected item
+        const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
+        if (currentSelectedOption) {
+          currentSelectedOption.classList.add('focused');
+          scrollTo(currentSelectedOption);
+        }
+
+      } else if (event.key === "Escape") {
+        setIsOpen(false);
+      } else if (event.key === "Enter") {
+        setIsOpen(false);
+        console.log("KEY: ", event.key);
+      } else if (event.key === "ArrowUp") {
+        const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
+        let nextIndex = options.length - 1;
+
+        if (selectedOption) {
+          const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
+          nextIndex = currentIndex - 1;
+          selectedOption.classList.remove("focused");
+        }
+
+        // Handle when length of option is reached
+        if (nextIndex < 0) {
+          nextIndex = options.length - 1;
+        }
+
+        setSelectedOption(options[nextIndex]); // Set the selected item state
+        if (selectedOption) {
+          selectHandler(selectedOption.dataset.value);
+        }
+
+        // Taking care of visually updating the selected item
+        const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
+        if (currentSelectedOption) {
+          currentSelectedOption.classList.add('focused');
+          scrollTo(currentSelectedOption);
+        }
       }
 
-      // Handle when length of option is reached
-      if (nextIndex >= options.length) {
-        nextIndex = 0;
-      }
-
-      setSelectedOption(options[nextIndex]); // Set the selected item state
-      if (selectedOption) {
-        selectHandler(selectedOption.dataset.value);
-      }
-
-      // Taking care of visually updating the selected item
-      const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
-      if (currentSelectedOption) {
-        currentSelectedOption.classList.add('focused');
-        scrollTo(currentSelectedOption);
-      }
-
-    } else if (event.key === "Escape") {
-      setIsOpen(false);
-    } else if (event.key === "Enter") {
-      setIsOpen(false);
-      console.log("KEY: ", event.key);
-    } else if (event.key === "ArrowUp") {
-      const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
-      let nextIndex = options.length - 1;
-
-      if (selectedOption) {
-        const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
-        nextIndex = currentIndex - 1;
-        selectedOption.classList.remove("focused");
-      }
-
-      // Handle when length of option is reached
-      if (nextIndex < 0) {
-        nextIndex = options.length - 1;
-      }
-
-      setSelectedOption(options[nextIndex]); // Set the selected item state
-      if (selectedOption) {
-        selectHandler(selectedOption.dataset.value);
-      }
-
-      // Taking care of visually updating the selected item
-      const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
-      if (currentSelectedOption) {
-        currentSelectedOption.classList.add('focused');
-        scrollTo(currentSelectedOption);
-      }
     }
   };
 
 
   return (
-    <div className={styles.dropdown} ref={dropdownRef} onKeyDown={handleKeydown} tabIndex={0}>
+    <div className={styles.dropdown} ref={optionRef} onKeyDown={handleKeydown} tabIndex={0}>
       <button onClick={dropDownHandler}>
         {
           labelType === "text" ? (
