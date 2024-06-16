@@ -17,6 +17,7 @@ const Dropdown = ({
   const dropdownRef = useRef(null);
   const optionsRef = useRef(null);
   const optionRef = useRef(null);
+  const optionWrapperRef = useRef(null);
 
   useEffect(() => {
     if (options.length > 0) {
@@ -32,21 +33,15 @@ const Dropdown = ({
      */
   }, [options, initialOption]);
 
+  /**
+   * When the dropdown is triggered, it should gain focus
+   */
   useEffect(() => {
     if (isOpen) {
-      if (optionsRef.current) {
-        const selectedOptionNode = optionsRef.current.querySelector(`div[data-selected=true]`);
-
-        if (selectedOptionNode) {
-          selectedOptionNode.style.color = `var(--ui-hover-secondary-bg-color)`;
-          selectedOptionNode.style.backgroundColor = `rgba(148, 163, 184, 0.1)`;
-        }
-
-        document.querySelector
-
-      }
+      // Cause the dropdown to gain focus (The dropdown button losses focus as a result which is expected)
+      optionWrapperRef.current.focus();
     }
-  }, [isOpen, optionsRef]);
+  }, [isOpen, optionsRef.current]);
 
   const dropDownHandler = () => {
     setIsOpen(isOpen => !isOpen);
@@ -66,80 +61,76 @@ const Dropdown = ({
       block: 'nearest' // Ensure the option is fully visible
     });
   }
+
+  // ⚠️ FIX CODE
   //close the dropdown when clicked outside
-  useEffect (() => {
+  useEffect(() => {
     document.addEventListener('click', (event) => {
       if (optionRef.current && !optionRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     })
-  }, [optionRef]);
+  }, [optionRef.current]);
 
- 
+
   const handleKeydown = (event) => {
-    if (optionRef.current) {
-      optionRef.current.style.outline = 'none';
+    // Removes the outline when the dropdown component is focus
+    if (optionWrapperRef.current) {
+      optionWrapperRef.current.style.outline = 'none';
     }
-  
-    if (event.key === "ArrowDown") {
-      setIsOpen(true);
-  
+
+    if (event.key === "ArrowDown") {      
       const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
       let nextIndex = 0;
-  
+      
       if (selectedOption) {
-        const currentIndex = options.findIndex(option => option.value === selectedOption.dataset.value);
+        const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
         nextIndex = currentIndex + 1;
         selectedOption.classList.remove("focused");
       }
-  
+
       // Handle when length of option is reached
       if (nextIndex >= options.length) {
         nextIndex = 0;
       }
-  
+
       setSelectedOption(options[nextIndex]); // Set the selected item state
       if (selectedOption) {
         selectHandler(selectedOption.dataset.value);
       }
-      console.log("options[nextIndex]: ", options[nextIndex]);
-      console.log("selectedOption: ", selectedOption);
-      console.log("selectedOption.value: ", selectedOption.value);
-      console.log("selectedOption value: ", selectedOption.dataset.value);
-  
+
       // Taking care of visually updating the selected item
       const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
       if (currentSelectedOption) {
         currentSelectedOption.classList.add('focused');
         scrollTo(currentSelectedOption);
       }
-  
+
     } else if (event.key === "Escape") {
       setIsOpen(false);
-  
     } else if (event.key === "Enter") {
       setIsOpen(false);
-  
+      console.log("KEY: ", event.key);
     } else if (event.key === "ArrowUp") {
       const selectedOption = optionsRef.current.querySelector(`div[data-selected="true"]`);
       let nextIndex = options.length - 1;
-  
+
       if (selectedOption) {
-        const currentIndex = options.findIndex(option => option.value === selectedOption.dataset.value);
+        const currentIndex = options.findIndex(option => option.value === JSON.parse(selectedOption.dataset.value).value);
         nextIndex = currentIndex - 1;
         selectedOption.classList.remove("focused");
       }
-  
+
       // Handle when length of option is reached
       if (nextIndex < 0) {
         nextIndex = options.length - 1;
       }
-  
+
       setSelectedOption(options[nextIndex]); // Set the selected item state
       if (selectedOption) {
         selectHandler(selectedOption.dataset.value);
       }
-  
+
       // Taking care of visually updating the selected item
       const currentSelectedOption = optionsRef.current.querySelector(`div[data-index="${nextIndex}"]`);
       if (currentSelectedOption) {
@@ -148,7 +139,7 @@ const Dropdown = ({
       }
     }
   };
-  
+
 
   return (
     <div className={styles.dropdown} ref={dropdownRef} onKeyDown={handleKeydown} tabIndex={0}>
@@ -168,7 +159,7 @@ const Dropdown = ({
       </button>
       {
         isOpen ? (
-          <div className={styles.optionWrapper}>
+          <div ref={optionWrapperRef} className={styles.optionWrapper} tabIndex={0}>
             <div className={styles.options} ref={optionsRef}>
               {
                 options.map((option, index) => (
