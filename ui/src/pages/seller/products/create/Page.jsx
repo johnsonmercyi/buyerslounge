@@ -1,7 +1,7 @@
 import Alert from "components/Alert/Alert";
 import ErrorPage from "components/Error/Error";
 import Loading from "components/Loading/Loading";
-import Form, { Input, Select } from "components/ui/Form/Form";
+import Form, { Input, Select, TextArea } from "components/ui/Form/Form";
 import Button from "components/ui/UIButton/Button";
 import React, { useEffect, useState } from "react";
 import { HTTPMethods, makeRequest } from "util/utils";
@@ -17,6 +17,8 @@ const AddNewProduct = () => {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
+  const MAX_FILE_COUNT = 1;
+
   const [product, setProduct] = useState({
     category: '',
     product: '',
@@ -24,9 +26,9 @@ const AddNewProduct = () => {
     cost: '',
     price: '',
     description: '',
-    frontImage: '',
-    sideImage: '',
-    rearImage: '',
+    frontImage: [],
+    sideImage: [],
+    rearImage: [],
   });
 
   const [productError, setProductError] = useState({
@@ -46,6 +48,11 @@ const AddNewProduct = () => {
     setProduct(state => ({
       ...state,
       [name]: value
+    }));
+
+    setProductError(state => ({
+      ...state,
+      [name]: value ? false : true
     }));
   }
 
@@ -131,6 +138,11 @@ const AddNewProduct = () => {
       category: category
     }));
 
+    setProductError(state => ({
+      ...state,
+      category: category ? false : true
+    }));
+
     // TODO: initialize products select
     fetchCategoryProducts(category);
   }
@@ -140,15 +152,69 @@ const AddNewProduct = () => {
       ...currentState,
       product: product
     }));
+
+    setProductError(state => ({
+      ...state,
+      product: product ? false : true
+    }));
   }
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    console.log(product);
+    if (validateForm()) {
+      const payload = {
+        
+      }
+    }
+  }
 
+  const setFilesHandler = (name, selectedFiles) => {
+    console.log({ name: name, files: selectedFiles });
+    setProduct(currentState => ({
+      ...currentState,
+      [name]: selectedFiles
+    }));
+
+    setProductError(state => ({
+      ...state,
+      [name]: selectedFiles.length ? false : true
+    }));
+  }
+
+  const validateForm = () => {
+    Object.keys(product).forEach(name => {
+      // Exclude optional fields from validation
+      if (name === "description" ||
+        name === "sideImage" ||
+        name === "rearImage") {
+        return;
+      }
+
+      if (!product[name]) {
+        setProductError(productErrors => ({ ...productErrors, [name]: true }));
+      } else {
+        setProductError(productErrors => ({ ...productErrors, [name]: false }));
+      }
+
+      if (name === "frontImage") {
+        if (!product[name].length) {
+          setProductError(productErrors => ({ ...productErrors, [name]: true }));
+        } else {
+          setProductError(productErrors => ({ ...productErrors, [name]: false }));
+        }
+      }
+    });
+
+    return product.category &&
+      product.product &&
+      product.quantity &&
+      product.price &&
+      product.cost &&
+      product.frontImage.length;
   }
 
   return (
-
     loading ? (<Loading />) :
       isError ? (<ErrorPage errorMessage={message} />) :
         <div className={`${styles.main} pageContainer`}>
@@ -200,9 +266,36 @@ const AddNewProduct = () => {
               />
             </section>
 
-            <FileUpload appendText={"front-view image"} />
-            <FileUpload appendText={"side-view image"} />
-            <FileUpload appendText={"rear-view image"} />
+            <TextArea
+              error={productError.description}
+              placeholder={"Product Description"}
+              value={product.description}
+              name={"description"}
+              onChangeHandler={inputChangeHandler} />
+
+            <FileUpload
+              error={productError.frontImage}
+              name={"frontImage"}
+              setFilesHandler={setFilesHandler}
+              maxFileCount={MAX_FILE_COUNT}
+              title={"Front view image"}
+              appendText={"front-view image"} />
+
+            <FileUpload
+              error={productError.sideImage}
+              name={"sideImage"}
+              setFilesHandler={setFilesHandler}
+              maxFileCount={MAX_FILE_COUNT}
+              title={"Side view image"}
+              appendText={"side-view image"} />
+
+            <FileUpload
+              error={productError.rearImage}
+              name={"rearImage"}
+              setFilesHandler={setFilesHandler}
+              maxFileCount={MAX_FILE_COUNT}
+              title={"Rear view image"}
+              appendText={"rear-view image"} />
 
 
             {

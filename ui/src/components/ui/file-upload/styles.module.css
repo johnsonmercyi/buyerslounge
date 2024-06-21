@@ -9,6 +9,19 @@
   align-items    : var(--align-items-center);
 }
 
+.main .title {
+  width  : var(--full-width);
+  height : auto;
+  padding: 0.3rem 0.5rem;
+
+  display        : var(--display-flex);
+  justify-content: var(--justify-content-flex-start);
+  align-items    : var(--align-items-center);
+
+  font-weight: 600;
+  color      : var(--mute)
+}
+
 .main .fileImage {
   width : var(--full-width);
   height: auto;
@@ -97,6 +110,30 @@ main .fileImage .imageWrapper .image>span a {
 
 .fileUploader:hover {
   border-color: var(--mute);
+}
+
+.fileUploader.error,
+.fileUploader.error:hover {
+  border-color: var(--danger);
+}
+
+.main span.error {
+  width     : var(--full-width);
+  height    : auto;
+  text-align: left;
+  font-size : var(--text-normal);
+  color     : var(--danger);
+
+  padding: 0.2rem;
+}
+
+.disabled {
+  background-color: var(--disabled-bg-color);
+}
+
+.fileUploader.disabled,
+.fileUploader.disabled:hover {
+  border-color: var(--hover-border-color);
 }
 
 /*Devices larger than mobile phone*/

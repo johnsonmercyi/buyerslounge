@@ -1,0 +1,61 @@
+.main {
+  width : var(--full-width);
+  height: auto;
+
+  display        : var(--display-flex);
+  flex-direction : var(--flex-direction-column);
+  justify-content: var(--justify-content-flex-start);
+  align-items    : var(--align-items-center);
+}
+
+.main>label {
+  width : var(--full-width);
+  height: auto;
+
+  text-align : left;
+  font-size  : var(--text-normal);
+  font-weight: 600;
+  padding    : 0.25rem 0.15rem;
+}
+
+.main .textarea {
+  width : var(--full-width);
+  height: 7rem;
+
+  background-color: var(--secondary-bg-color);
+  border          : 1px solid var(--default-border-color);
+  border-radius   : var(--default-border-radius);
+
+  padding: var(--default-padding);
+  color  : var(--white);
+
+  resize: none;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.main .textarea.error,
+.main .textarea.error:hover {
+  border: 1px solid var(--danger);
+}
+
+.main .textarea:hover {
+  border-color: var(--hover-border-color);
+}
+
+.main .textarea:focus {
+  outline: none;
+}
+
+.main textarea::selection {
+  color: white;
+}
+
+.main span.error {
+  width     : var(--full-width);
+  text-align: left;
+  font-size: var(--text-normal);
+  color     : var(--danger);
+
+  padding  : 0.2rem;
+}

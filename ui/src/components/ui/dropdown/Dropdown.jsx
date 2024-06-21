@@ -16,7 +16,7 @@ const Dropdown = ({
 
   // const dropdownRef = useRef(null);
   const optionsRef = useRef(null);
-  const optionRef = useRef(null);
+  const dropdownRef = useRef(null);
   const optionWrapperRef = useRef(null);
 
   useEffect(() => {
@@ -62,15 +62,14 @@ const Dropdown = ({
     });
   }
 
-  // ⚠️ FIX CODE
   //close the dropdown when clicked outside
   useEffect(() => {
     document.addEventListener('click', (event) => {
-      if (optionRef.current && !optionRef.current.contains(event.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     })
-  }, [optionRef.current]);
+  }, [dropdownRef.current]);
 
 
   const handleKeydown = (event) => {
@@ -145,7 +144,7 @@ const Dropdown = ({
 
 
   return (
-    <div className={styles.dropdown} ref={optionRef} onKeyDown={handleKeydown} tabIndex={0}>
+    <div className={styles.dropdown} ref={dropdownRef} onKeyDown={handleKeydown} tabIndex={0}>
       <button onClick={dropDownHandler}>
         {
           labelType === "text" ? (
