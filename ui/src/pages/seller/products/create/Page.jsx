@@ -60,6 +60,8 @@ const AddNewProduct = () => {
     fetchCategories();
   }, []);
 
+ 
+
   const fetchCategories = async () => {
     try {
       const response = await makeRequest('/categories', HTTPMethods.GET, undefined, {
