@@ -95,7 +95,7 @@ const AddNewProduct = () => {
       const response = await makeRequest(`/categories/products/${category}`, HTTPMethods.GET, undefined, {
         'paginate': false,
       });
-      
+
       if (response.error) {
         console.log(response.error);
         setIsError(true);
@@ -108,7 +108,6 @@ const AddNewProduct = () => {
           value: product.id
         }));
         setProducts(productsData);
-        selectProductHandler(productsData);
         setLoading(false);
       }
 
