@@ -39,9 +39,6 @@ public class ProductController {
   private final CategoryService categoryService;
 
   @GetMapping
-  // public ResponseEntity<Collection<Product>> findAllProducts() {
-  //   return ResponseEntity.ok(productService.findAll());
-  // }
   public ResponseEntity<Object> findAllProducts(
     @RequestHeader(value = "paginate", defaultValue = "true", required = false) boolean paginate,
     @RequestHeader(value = "pageNo", defaultValue = "0", required = false) int pageNo,

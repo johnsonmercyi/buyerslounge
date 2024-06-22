@@ -11,6 +11,7 @@
   --faded-light-bg-02-color: rgba(255, 255, 255, 0.2);
   --faded-light-bg-01-color: rgba(255, 255, 255, 0.1);
   --placeholder-color: gray;
+  --disabled-bg-color: hsl(223, 33%, 17%);
 
   --container-padding: 2rem;
 

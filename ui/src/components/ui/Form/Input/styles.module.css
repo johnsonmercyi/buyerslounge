@@ -1,41 +1,44 @@
 /*Mobile First Style*/
 .main {
-  width: var(--form-input-width);
-  display: var(--display-flex);
-  flex-direction: var(--flex-direction-column);
+  width          : var(--form-input-width);
+  display        : var(--display-flex);
+  flex-direction : var(--flex-direction-column);
   justify-content: var(--justify-content-flex-start);
-  align-items: var(--align-items-flex-start);
+  align-items    : var(--align-items-flex-start);
 }
 
 .main label {
-  width: 100%;
+  width : var(--full-width);
   height: auto;
-  padding: 0.25rem 0.15rem;
-  font-size: var(--text-normal);
+
+  text-align : left;
+  font-size  : var(--text-normal);
+  font-weight: 600;
+  padding    : 0.25rem 0.15rem;
 }
 
 .main .wrapper {
-  width: var(--full-width);
+  width   : var(--full-width);
   position: relative;
 }
 
 .main .wrapper .icon {
-  position: absolute;
-  top: 50%;
-  right: 10px;
+  position : absolute;
+  top      : 50%;
+  right    : 10px;
   transform: translateY(-40%);
 }
 
 .main input {
-  width: var(--form-input-width);
+  width : var(--form-input-width);
   height: var(--ui-size-normal);
 
-  border: 1px solid var(--default-border-color);
-  border-radius: 0.2rem;
+  border          : 1px solid var(--default-border-color);
+  border-radius   : 0.2rem;
   background-color: var(--secondary-bg-color);
-  padding: 0 0.7rem;
-  color: var(--default-color);
-  transition: 0.3s ease-in-out;
+  padding         : 0 0.7rem;
+  color           : var(--default-color);
+  transition      : 0.3s ease-in-out;
 }
 
 .main input:hover {
@@ -44,7 +47,7 @@
 
 .main input:focus {
   outline: none;
-  border: 1px solid var(--hover-border-color);
+  border : 1px solid var(--hover-border-color);
 }
 
 .main input::selection {
@@ -53,20 +56,18 @@
 }
 
 
-.main input.error, 
+.main input.error,
 .main input.error:focus,
 .main input.error:hover {
   border: 1px solid var(--danger);
 }
 
 .main span {
-  width: var(--full-width);
+  width    : var(--full-width);
   font-size: var(--text-normal);
-  color: var(--danger);
-  padding: 0.2rem;
+  color    : var(--danger);
+  padding  : 0.2rem;
 }
 
 /*Devices larger than mobile phone*/
-@media (min-width: 576px) {
-
-}
+@media (min-width: 576px) {}

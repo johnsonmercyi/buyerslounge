@@ -1,6 +1,7 @@
 import React from "react";
 import Input from "./Input/Input";
 import Select from "./Select/Select";
+import TextArea from "./TextArea/TextArea";
 
 const Form = ({ children, onSubmitHandler, style = {}, className }) => {
   return (
@@ -16,5 +17,6 @@ const Form = ({ children, onSubmitHandler, style = {}, className }) => {
 export default Form;
 export {
   Select,
-  Input
+  Input,
+  TextArea,
 }

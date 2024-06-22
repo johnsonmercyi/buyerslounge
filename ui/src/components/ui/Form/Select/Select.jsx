@@ -8,7 +8,7 @@ import styles from './styles.module.css';
  * @returns 
  */
 const Select = ({
-  value,
+  defaultValue,
   name = "",
   error,
   options = [],
@@ -16,10 +16,13 @@ const Select = ({
   placeholder = "",
   selectHandler,
   ...props }) => {
+
+    const defaultSelectedItem = { value: "", label: "" }
+
   /**
    * Component states
    */
-  const [selectedItem, setSelectedItem] = useState({ value: "", label: "" });
+  const [selectedItem, setSelectedItem] = useState(defaultSelectedItem);
   const [isOpen, setIsOpen] = useState(false);
   const [isShowUpsideNeeded, setIsShowUpsideNeeded] = useState(false);
 
@@ -28,11 +31,15 @@ const Select = ({
   const selectRef = useRef(null); // Select Component reference
 
   useEffect(() => {
-    if (value) {
-      // selectHandler(value.value);
-      setSelectedItem(value);
+    if (defaultValue) {
+      const option = options.find(option => option.value === defaultValue);
+      if (option) {
+        setSelectedItem(option);
+      }
+    } else {
+      setSelectedItem(defaultSelectedItem);
     }
-  }, [value]);
+  }, [defaultValue]);
   /**
    * Determine the position the dropdown should be positioned
    * Upside or downside.
