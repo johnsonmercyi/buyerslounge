@@ -134,10 +134,10 @@ const AddNewProduct = () => {
   }
 
   const selectCategoryHandler = (category) => {
-    console.log(category);
     setProduct(currentState => ({
       ...currentState,
-      category: category
+      category: category,
+      product: ""
     }));
 
     setProductError(state => ({
@@ -224,6 +224,7 @@ const AddNewProduct = () => {
           <Form onSubmitHandler={onSubmitHandler}>
 
             <Select
+              defaultValue={product.category}
               className="grid-item"
               error={productError.category}
               placeholder='Select product categories'
@@ -232,6 +233,7 @@ const AddNewProduct = () => {
             />
 
             <Select
+              defaultValue={product.product}
               error={productError.product}
               placeholder='Select products'
               options={products}
