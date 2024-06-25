@@ -3,12 +3,13 @@ package com.soft.springbootdemo.service.sellerProducts;
 import java.util.Collection;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
-import com.soft.springbootdemo.model.SellerProducts;
 
 public interface SellerProductsService {
-  public SellerProductsResponseDTO save(SellerProducts sellerProducts);
+  public SellerProductsResponseDTO save(SellerProductsRequestDTO sellerProductsDto, MultipartFile images);
 
   public Collection<SellerProductsResponseDTO> findAllInventory();
 

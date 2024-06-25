@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
@@ -28,9 +29,11 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   private final ProductRepo productRepo;
 
   @Override
-  public SellerProductsResponseDTO save(SellerProducts sellerProducts) {
-    return Util.convertSellerProductsToResponseDTO(
-      sellerProductsRepo.save(sellerProducts), false);
+  public SellerProductsResponseDTO save(SellerProductsRequestDTO sellerProductsDto, MultipartFile images) {
+    // return Util.convertSellerProductsToResponseDTO(
+    //   sellerProductsRepo.save(sellerProducts), false);
+    
+    return null;
   }
 
   @Override
