@@ -49,10 +49,14 @@ const Login = ({ props }) => {
 
         const response = await makeRequest("/login", HTTPMethods.POST ,loginPayload);
 
+        console.warn("[RESPONSE]: ", response);
+
         if (!response.error) {
           //If the user is logged in successfully
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('userData', JSON.stringify({
+            id: response.id,
+            entityId: response.entityId,
             username: response.username,
             role: response.userRoles[0].name
           }));

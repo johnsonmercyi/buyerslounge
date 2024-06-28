@@ -14,16 +14,18 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity
+@Entity(name="images")
 @Data
 @AllArgsConstructor
 public class Images {
   @Id
   private UUID id;
 
+  @ManyToOne
   @JoinColumn(name = "seller_product_id", referencedColumnName = "id", nullable = false, unique = false)
   private SellerProducts sellerProduct;
 

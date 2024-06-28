@@ -8,20 +8,21 @@ export const HTTPMethods = {
 const apiUrl = "http://localhost:8080/api";
 // const apiUrl = "http://192.168.10.122:8080/api";
 
-export const makeRequest = async(url, method, payload, headersPayload={}) => {
+export const makeRequest = async (url, method, payload, headersPayload = {}, formData) => {
   // console.log("HEADERS: ", headersPayload);
   const options = {
     method: method,
     headers: {
-      'Content-Type': 'application/json',
       ...headersPayload
     }
   }
 
   if (payload) {
     options.body = JSON.stringify(payload);
+    options.headers['Content-Type'] = 'application/json';
+  } else if (formData) {
+    options.body = formData;
   }
-
   const response = await fetch(`${apiUrl}${url}`, options);
   return await response.json();
 }

@@ -5,7 +5,8 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.soft.springbootdemo.model.Images;
+import com.soft.springbootdemo.model.SellerProducts;
 
 public interface ImagesRepo extends JpaRepository<Images, UUID> {
-  public Images findBySellerProduct();
+  public Images findBySellerProduct(SellerProducts sellerProduct);
 }

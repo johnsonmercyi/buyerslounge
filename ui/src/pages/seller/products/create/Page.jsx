@@ -60,7 +60,7 @@ const AddNewProduct = () => {
     fetchCategories();
   }, []);
 
- 
+
 
   const fetchCategories = async () => {
     try {
@@ -161,13 +161,31 @@ const AddNewProduct = () => {
     }));
   }
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log(product);
+    console.log("[Print Product]: ", product);
     if (validateForm()) {
-      const payload = {
-        
-      }
+      const userData = JSON.parse(localStorage.getItem('userData'))
+      const data = new FormData();
+      const sellerProducts = {
+        sellerId: userData.entityId,
+        productId: product.product,
+        quantity: product.quantity,
+        cost: product.cost,
+        price: product.price,
+        description: product.description
+      };
+
+      console.warn("[SELLER PRODUCTS]: ", sellerProducts);
+      
+      data.append("sellerProducts", JSON.stringify(sellerProducts));
+
+      if (product.frontImage[0]) data.append("files", product.frontImage[0]);
+      if (product.sideImage[0]) data.append("files", product.sideImage[0]);
+      if (product.rearImage[0]) data.append("files", product.rearImage[0]);
+
+      const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
+      console.log("RESP: ", response);
     }
   }
 

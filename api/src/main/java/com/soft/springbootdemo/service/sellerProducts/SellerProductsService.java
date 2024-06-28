@@ -9,7 +9,7 @@ import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 
 public interface SellerProductsService {
-  public SellerProductsResponseDTO save(SellerProductsRequestDTO sellerProductsDto, MultipartFile images);
+  public SellerProductsResponseDTO save(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images);
 
   public Collection<SellerProductsResponseDTO> findAllInventory();
 

@@ -10,10 +10,17 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.soft.springbootdemo.dto.LoginDTO;
+import com.soft.springbootdemo.dto.responsedto.RoleDTO;
 import com.soft.springbootdemo.dto.responsedto.UserDTO;
+import com.soft.springbootdemo.model.Admin;
+import com.soft.springbootdemo.model.Customer;
+import com.soft.springbootdemo.model.Seller;
 import com.soft.springbootdemo.model.User;
 import com.soft.springbootdemo.model.UserRole;
+import com.soft.springbootdemo.repo.AdminRepo;
+import com.soft.springbootdemo.repo.CustomerRepo;
 import com.soft.springbootdemo.repo.RoleRepo;
+import com.soft.springbootdemo.repo.SellerRepo;
 import com.soft.springbootdemo.repo.UserRepo;
 import com.soft.springbootdemo.repo.UserRoleRepo;
 import com.soft.springbootdemo.util.Util;
@@ -31,6 +38,9 @@ public class UserServiceImpl implements UserService {
   private final UserRepo userRepo;
   private final UserRoleRepo userRoleRepo;
   private final RoleRepo roleRepo;
+  private final SellerRepo sellerRepo;
+  private final CustomerRepo customerRepo;
+  private final AdminRepo adminRepo;
 
   @Override
   public UserDTO login(LoginDTO loginDTO) {
@@ -43,11 +53,40 @@ public class UserServiceImpl implements UserService {
     if (userDTO == null) {
       userDTO = findByUsername(usernameOrEmail);
     }
-    
+
     if (userDTO != null) {
       if (userDTO.getPassword().equals(password)) {
         log.info("Logged in user {} and {}: ", userDTO.getUsername(), userDTO.getPassword());
-        
+
+        log.info("[INCOMPLETE USER]: {}", userDTO);
+
+        final UserDTO user = userDTO;
+
+        RoleDTO roleDTO = userDTO.getUserRoles().stream().findFirst().get();
+
+        if (roleDTO.getName().equalsIgnoreCase("seller")) {
+          Optional<Seller> sellerOptional = sellerRepo.findAll().stream()
+              .filter((seller) -> seller.getUser().getId().equals(user.getId())).findFirst();
+
+          if (sellerOptional.isPresent()) {
+            userDTO.setEntityId(sellerOptional.get().getId());
+          }
+        } else if (roleDTO.getName().equalsIgnoreCase("customer")) {
+          Optional<Customer> customerOptional = customerRepo.findAll().stream()
+              .filter((customer) -> customer.getUser().getId() == user.getId()).findFirst();
+
+          if (customerOptional.isPresent()) {
+            userDTO.setEntityId(customerOptional.get().getId());
+          }
+        } else if (roleDTO.getName().equalsIgnoreCase("admin")) {
+          Optional<Admin> adminOptional = adminRepo.findAll().stream()
+              .filter((admin) -> admin.getUser().getId() == user.getId()).findFirst();
+
+          if (adminOptional.isPresent()) {
+            userDTO.setEntityId(adminOptional.get().getId());
+          }
+        }
+
         return userDTO;
       }
     }
@@ -75,11 +114,11 @@ public class UserServiceImpl implements UserService {
         UserRole userRole = new UserRole();
         userRole.setRole(roleRepo.findByName(role));
         userRole.setUser(savedUser);
-  
+
         userRoleRepo.save(userRole); // user user_roles
       }
-      
-      return savedUser;//return saved user
+
+      return savedUser;// return saved user
     }
   }
 
@@ -140,5 +179,5 @@ public class UserServiceImpl implements UserService {
     }
     return Optional.empty();
   }
-  
+
 }

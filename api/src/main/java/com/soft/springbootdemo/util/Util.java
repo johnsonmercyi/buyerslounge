@@ -39,7 +39,7 @@ public class Util {
 
   public static UserDTO mapUserToDTO(User user, boolean fetchRoles) {
     // Map user to UserDTO object
-    UserDTO userDTO = new UserDTO(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(),
+    UserDTO userDTO = new UserDTO(user.getId(), null, user.getUsername(), user.getPassword(), user.getEmail(),
         user.getStatus(), user.getCreated(), user.getUpdated(), new ArrayList<>());
 
     // Fetch and add roles to user if allowed

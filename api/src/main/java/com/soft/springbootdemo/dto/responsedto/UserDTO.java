@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
-import com.soft.springbootdemo.model.User.Status;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
   private UUID id;
+  private UUID entityId;
   private String username;
   private String password;
   private String email;

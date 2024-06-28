@@ -1,12 +1,16 @@
 package com.soft.springbootdemo.controller;
 
+import javax.management.RuntimeErrorException;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
@@ -22,10 +26,24 @@ public class SellerProductsController {
 
   private final SellerProductsService service;
 
-  @GetMapping
+  // @PostMapping
+  @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   public ResponseEntity<SellerProductsResponseDTO> saveProduct(
-      @RequestParam("sellerProducts") SellerProductsRequestDTO sellerProductDto,
-      @RequestParam("files") MultipartFile images) {
-        return ResponseEntity.ok(service.save(sellerProductDto, images));
+      @RequestParam("sellerProducts") String sellerProductJson,
+      @RequestParam("files") MultipartFile[] images) {
+
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      SellerProductsRequestDTO sellerProductDto = 
+      objectMapper.readValue(sellerProductJson, SellerProductsRequestDTO.class);
+
+      return ResponseEntity.ok(service.save(sellerProductDto, images));
+      
+    } catch (Exception ex) {
+      log.error("Error parsing JSON: ", ex);
+      throw new RuntimeException("Unexpected error occured: " + ex.getMessage());
+    }
+
+
   }
 }

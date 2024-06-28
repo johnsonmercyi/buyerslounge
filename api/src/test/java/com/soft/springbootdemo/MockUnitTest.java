@@ -39,11 +39,12 @@ public class MockUnitTest {
   public void testRetrieveAllUsers() {
     UUID softId = UUID.randomUUID();
     UUID iykeId = UUID.randomUUID();
+    UUID entityId = UUID.randomUUID();
 
     List<UserDTO> users = List.of(
         new UserDTO(
-            softId, "soft", "letmein", "soft@mail.com", "1", null, null, null),
-        new UserDTO(iykeId, "iyke", "letmein", "iyke@mail.com", "1", null, null, null));
+            softId, entityId, "soft", "letmein", "soft@mail.com", "1", null, null, null),
+        new UserDTO(iykeId, entityId, "iyke", "letmein", "iyke@mail.com", "1", null, null, null));
 
     Mockito.when(userService.findAll()).thenReturn(users);
 
