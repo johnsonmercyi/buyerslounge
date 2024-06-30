@@ -1,6 +1,9 @@
 package com.soft.springbootdemo.service.images;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,17 +37,31 @@ public class ImagesServiceImpl implements ImagesService {
       List<String> imageUrls = new ArrayList<>();
   
       // Ensure the upload directory exists
-      File uploadDir = new File(IMAGE_DIR);
-      if (!uploadDir.exists()) {
-        uploadDir.mkdirs();
-        log.warn("{} does not exist. Creating a new directory...", IMAGE_DIR);
+      File uploadDir = new File(IMAGE_DIR);// uploads/images
+      String absolutePath = uploadDir.getAbsolutePath() + File.separator;
+
+      if (!Files.exists(Path.of(absolutePath))) {
+        Path dir = Files.createDirectory(Path.of(absolutePath));
+        if (dir.toAbsolutePath() != null) {
+          log.warn("{} did not exist. Created a new directory.", IMAGE_DIR);
+        } else {
+          throw new RuntimeException("Failed to create upload directory: " + IMAGE_DIR);
+        }
       }
   
       for (MultipartFile file : images) {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File dest = new File(IMAGE_DIR + fileName);
-        file.transferTo(dest);
-        imageUrls.add(dest.getAbsolutePath());
+        File dest = new File(uploadDir.getAbsoluteFile(), fileName.replaceAll(" ", "_"));
+        log.info("Attempting to save file to: {}", dest.getAbsolutePath());
+
+        try {
+          file.transferTo(dest);
+          imageUrls.add(dest.getAbsolutePath());
+          log.info("File saved to: {}", dest.getAbsolutePath());
+        } catch (IOException e) {
+          log.error("Failed to save file: {}", dest.getAbsolutePath(), e);
+          throw new RuntimeException("Error occurred while saving image: " + e.getMessage(), e);
+        }
       }
 
       Images image = new Images();

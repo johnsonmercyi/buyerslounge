@@ -9,6 +9,7 @@ import com.soft.springbootdemo.dto.responsedto.AdminDTO;
 import com.soft.springbootdemo.dto.responsedto.CategoryProductsDTO;
 import com.soft.springbootdemo.dto.responsedto.CategoryResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.CustomerDTO;
+import com.soft.springbootdemo.dto.responsedto.ImagesResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.ProductResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.ReturnSaleResponseDTO;
 import com.soft.springbootdemo.dto.responsedto.RoleDTO;
@@ -23,6 +24,7 @@ import com.soft.springbootdemo.dto.responsedto.UserDTO;
 import com.soft.springbootdemo.model.Admin;
 import com.soft.springbootdemo.model.Category;
 import com.soft.springbootdemo.model.Customer;
+import com.soft.springbootdemo.model.Images;
 import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.model.ReturnSale;
 import com.soft.springbootdemo.model.Sale;
@@ -181,6 +183,7 @@ public class Util {
   }
 
   public static SellerProductsResponseDTO convertSellerProductsToResponseDTO(SellerProducts sellerProducts,
+      Images images,
       boolean fetchRoles) {
 
     Seller mainSeller = sellerProducts.getSeller();
@@ -197,13 +200,18 @@ public class Util {
 
     return new SellerProductsResponseDTO(
         sellerProducts.getId(),
-        cstSeller,
+        cstSeller.getId(),
         cstProduct,
         sellerProducts.getQuantity(),
         sellerProducts.getCost(),
         sellerProducts.getPrice(),
         sellerProducts.getDescription(),
         sellerProducts.getRefNo(),
+        new ImagesResponseDTO(
+            images.getId(),
+            images.getImages(),
+            images.getCreated(),
+            images.getUpdated()),
         sellerProducts.getCreated(),
         sellerProducts.getUpdated());
   }

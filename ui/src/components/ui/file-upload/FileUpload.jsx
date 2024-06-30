@@ -3,16 +3,18 @@ import styles from './styles.module.css';
 import Icon from 'util/icons';
 import { Link } from '../../../../node_modules/react-router-dom/dist/index';
 
-const FileUpload = ({ 
-  title, 
-  name, 
-  appendText, 
-  description, 
-  maxFileCount, 
-  className, 
-  error, 
+const FileUpload = ({
+  title,
+  name,
+  appendText,
+  description,
+  maxFileCount,
+  className,
+  error,
   errorMessage,
-  setFilesHandler }) => {
+  setFilesHandler,
+  reset,
+}) => {
   const [files, setFiles] = useState([]);
   const [filesMaxCountReached, setFilesMaxCountReached] = useState(false);
   const [internalError, setInternalError] = useState(false);
@@ -33,6 +35,14 @@ const FileUpload = ({
       }
     }
   }, [maxFileCount, files]);
+
+  useEffect(()=> {
+    if (reset) {
+      setFiles([]);
+      // setFilesHandler(name, []);
+      console.warn("FILES WERE RESET!");
+    }
+  }, [reset]);
 
   // useEffect(() => {
   //   if (maxImageCount) {
@@ -94,7 +104,6 @@ const FileUpload = ({
       <div className={styles.fileImage}>
         {files.length > 0 && (
           <div className={styles.imageWrapper}>
-            {console.log("FILES: ", files)}
             {files.map((file, index) => (
 
               <div key={index} className={styles.image}>

@@ -15,6 +15,7 @@ import com.soft.springbootdemo.model.Images;
 import com.soft.springbootdemo.model.Product;
 import com.soft.springbootdemo.model.Seller;
 import com.soft.springbootdemo.model.SellerProducts;
+import com.soft.springbootdemo.repo.ImagesRepo;
 import com.soft.springbootdemo.repo.ProductRepo;
 import com.soft.springbootdemo.repo.SellerProductsRepo;
 import com.soft.springbootdemo.repo.SellerRepo;
@@ -34,6 +35,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   private final SellerProductsRepo sellerProductsRepo;
   private final ProductRepo productRepo;
   private final SellerRepo sellerRepo;
+  private final ImagesRepo imagesRepo;
   private final ImagesService imagesService;
 
   @Override
@@ -65,7 +67,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
 
     // conversion here...
     return Util.convertSellerProductsToResponseDTO(
-        sellerProductsRepo.save(savedSellerProducts), false);
+        sellerProductsRepo.save(savedSellerProducts), im, false);
 
   }
 
@@ -73,8 +75,13 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   public Collection<SellerProductsResponseDTO> findAllInventory() {
     List<SellerProductsResponseDTO> sellerProducts = new ArrayList<>();
     List<SellerProducts> allSellerProducts = sellerProductsRepo.findAll();
+    List<Images> allImages = imagesRepo.findAll();
     for (SellerProducts sellerProduct : allSellerProducts) {
-      sellerProducts.add(Util.convertSellerProductsToResponseDTO(sellerProduct, false));
+
+      Optional<Images> imagesOptional = allImages.stream()
+          .filter(image -> image.getSellerProduct().getId().equals(sellerProduct.getId())).findFirst();
+      
+      sellerProducts.add(Util.convertSellerProductsToResponseDTO(sellerProduct,imagesOptional.get(), false));
     }
     return sellerProducts;
   }
@@ -85,7 +92,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
     List<SellerProductsResponseDTO> sellerProductsResponseList = new ArrayList<>();
 
     for (SellerProducts sellerProduct : sellerProducts) {
-      sellerProductsResponseList.add(Util.convertSellerProductsToResponseDTO(sellerProduct, false));
+      sellerProductsResponseList.add(Util.convertSellerProductsToResponseDTO(sellerProduct, null, false));
     }
     return sellerProductsResponseList;
   }
@@ -96,7 +103,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
     List<SellerProductsResponseDTO> sellerProductsResponseList = new ArrayList<>();
 
     for (SellerProducts sellerProduct : sellerProducts) {
-      sellerProductsResponseList.add(Util.convertSellerProductsToResponseDTO(sellerProduct, false));
+      sellerProductsResponseList.add(Util.convertSellerProductsToResponseDTO(sellerProduct, null, false));
     }
     return sellerProductsResponseList;
   }
@@ -111,7 +118,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
         oldSellerProduct.setProduct(optProduct.get());
         oldSellerProduct.setQuantity(sellerProductsRequestDTO.getQuantity());
         // save
-        return Util.convertSellerProductsToResponseDTO(sellerProductsRepo.save(oldSellerProduct), false);
+        return Util.convertSellerProductsToResponseDTO(sellerProductsRepo.save(oldSellerProduct), null, false);
       }
     }
     return null;

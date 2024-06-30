@@ -13,9 +13,16 @@ const AddNewProduct = () => {
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [isFormError, setIsFormError] = useState(false);
+  const [isFormSuccess, setIsFormSuccess] = useState(false);
   const [message, setMessage] = useState("");
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
+  const [resetFile, setResetFile] = useState({
+    frontImage: false,
+    sideImage: false,
+    rearImage: false,
+  });
+  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
 
   const MAX_FILE_COUNT = 1;
 
@@ -163,34 +170,51 @@ const AddNewProduct = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("[Print Product]: ", product);
-    if (validateForm()) {
-      const userData = JSON.parse(localStorage.getItem('userData'))
-      const data = new FormData();
-      const sellerProducts = {
-        sellerId: userData.entityId,
-        productId: product.product,
-        quantity: product.quantity,
-        cost: product.cost,
-        price: product.price,
-        description: product.description
-      };
+    try {
+      console.log("[Print Product]: ", product);
+      if (validateForm()) {
+        const userData = JSON.parse(localStorage.getItem('userData'))
+        const data = new FormData();
+        const sellerProducts = {
+          sellerId: userData.entityId,
+          productId: product.product,
+          quantity: product.quantity,
+          cost: product.cost,
+          price: product.price,
+          description: product.description
+        };
 
-      console.warn("[SELLER PRODUCTS]: ", sellerProducts);
-      
-      data.append("sellerProducts", JSON.stringify(sellerProducts));
+        data.append("sellerProducts", JSON.stringify(sellerProducts));
 
-      if (product.frontImage[0]) data.append("files", product.frontImage[0]);
-      if (product.sideImage[0]) data.append("files", product.sideImage[0]);
-      if (product.rearImage[0]) data.append("files", product.rearImage[0]);
+        if (product.frontImage[0]) data.append("files", product.frontImage[0]);
+        if (product.sideImage[0]) data.append("files", product.sideImage[0]);
+        if (product.rearImage[0]) data.append("files", product.rearImage[0]);
 
-      const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
-      console.log("RESP: ", response);
+        const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
+        console.log("RESP: ", response);
+
+        if (response.error) {
+          setIsFormError(true);
+          setMessage(response.message);
+          console.error(response.message);
+
+          if (response.message.includes('Error occurred while saving image')) {
+            setMessage("Product was not saved! Error occurred while uploading the image(s).");
+          }
+        } else {
+          setIsFormSuccess(true);
+          setMessage("Product was successfully saved!");
+          resetForm();
+        }
+      }
+    } catch (error) {
+      setIsFormError(true);
+      setMessage(error.message);
     }
   }
 
   const setFilesHandler = (name, selectedFiles) => {
-    console.log({ name: name, files: selectedFiles });
+    // console.log({ name: name, files: selectedFiles });
     setProduct(currentState => ({
       ...currentState,
       [name]: selectedFiles
@@ -232,6 +256,19 @@ const AddNewProduct = () => {
       product.price &&
       product.cost &&
       product.frontImage.length;
+  }
+
+  const resetForm = () => {
+    Object.keys(product).forEach(key => {
+      setProduct({ [key]: "" });
+      setResetFile({ frontImage: true, sideImage: true, rearImage: true });
+    });
+
+    setTimeout(() => {
+      setShowSuccessAlert(false);
+      setResetFile({ frontImage: false, sideImage: false, rearImage: false });
+    }, 5000);
+    setShowSuccessAlert(true);// set it back to true for the next submission
   }
 
   return (
@@ -295,7 +332,10 @@ const AddNewProduct = () => {
               name={"description"}
               onChangeHandler={inputChangeHandler} />
 
+              { console.log("[RESET FILES]: ", resetFile) }
+
             <FileUpload
+              reset={resetFile.frontImage}
               error={productError.frontImage}
               name={"frontImage"}
               setFilesHandler={setFilesHandler}
@@ -304,6 +344,7 @@ const AddNewProduct = () => {
               appendText={"front-view image"} />
 
             <FileUpload
+              reset={resetFile.sideImage}
               error={productError.sideImage}
               name={"sideImage"}
               setFilesHandler={setFilesHandler}
@@ -312,6 +353,7 @@ const AddNewProduct = () => {
               appendText={"side-view image"} />
 
             <FileUpload
+              reset={resetFile.rearImage}
               error={productError.rearImage}
               name={"rearImage"}
               setFilesHandler={setFilesHandler}
@@ -323,6 +365,13 @@ const AddNewProduct = () => {
             {
               isFormError ? (
                 <Alert type={"error"} message={message} />
+              ) : null
+            }
+
+            {
+
+              isFormSuccess && showSuccessAlert ? (
+                <Alert type={"success"} message={message} />
               ) : null
             }
 
