@@ -1,6 +1,7 @@
 package com.soft.springbootdemo.service.sellerProducts;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,8 @@ public interface SellerProductsService {
   public Collection<SellerProductsResponseDTO> findByProductId(UUID productId);
 
   public Collection<SellerProductsResponseDTO> findBySellerId(UUID sellerId);
+
+  public Optional<SellerProductsResponseDTO> findBySellerProductId(UUID sellerProductId);
 
   public SellerProductsResponseDTO update(UUID sellerProductId, SellerProductsRequestDTO sellerProductsRequestDTO);
 

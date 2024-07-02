@@ -98,6 +98,22 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   }
 
   @Override
+  public Optional<SellerProductsResponseDTO> findBySellerProductId(UUID sellerProductId) {
+    Optional<SellerProducts> sellerProducts = sellerProductsRepo.findById(sellerProductId);
+    List<SellerProductsResponseDTO> sellerProductsResponseList = new ArrayList<>();
+
+    if (sellerProducts.isPresent()) {
+      Images images = imagesRepo.findBySellerProduct(sellerProducts.get());
+      sellerProductsResponseList.add(Util.convertSellerProductsToResponseDTO(sellerProducts.get(), images, false));
+
+      return sellerProductsResponseList.stream().findFirst();
+    }
+
+    return Optional.empty();
+    
+  }
+
+  @Override
   public Collection<SellerProductsResponseDTO> findBySellerId(UUID sellerId) {
     List<SellerProducts> sellerProducts = sellerProductsRepo.findBySellerId(sellerId);
     List<SellerProductsResponseDTO> sellerProductsResponseList = new ArrayList<>();

@@ -10,4 +10,5 @@ import com.soft.springbootdemo.model.SellerProducts;
 public interface ImagesService {
   public Images saveImages(SellerProducts sellerProduct, MultipartFile[] images);
   public Images updateImages(UUID id, MultipartFile[] images);
+  public Images findBySellerProduct(SellerProducts sellerProduct);
 }

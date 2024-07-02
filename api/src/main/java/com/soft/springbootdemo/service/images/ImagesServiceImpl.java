@@ -78,6 +78,33 @@ public class ImagesServiceImpl implements ImagesService {
   }
 
   @Override
+  public Images findBySellerProduct(SellerProducts sellerProduct){
+
+    Images image = repo.findBySellerProduct(sellerProduct);
+    return image;
+
+    // String images = repo.findBySellerProduct(sellerProduct).getImages().toString();
+
+    // if (images != null) {
+    //   //take the image url and pull the image from the storage
+
+    //   List<String> imageUrls = new ArrayList<>();
+    //   String[] split = images.split(",");
+
+    //   for (int i = 0; i < split.length; i++) {
+    //     String absolutePath = split[i].replaceAll("\\\\", "/");
+    //     imageUrls.add(absolutePath);
+    //   }
+
+    //   Images image = new Images();
+    //   image.setImages(imageUrls);
+    //   return image;
+      
+
+    // }
+  }
+
+  @Override
   public Images updateImages(UUID id, MultipartFile[] images) {
     return null;
   }
