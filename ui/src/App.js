@@ -17,7 +17,7 @@ import NewProduct from './pages/admin/product/new/Page';
 import SellerDashboard from './pages/seller/dashboard';
 import ProtectedRoute from './util/ProtectedRoute';
 import AddNewProduct from 'pages/seller/products/create/Page';
-import viewSellerProduct from 'pages/seller/products/view/Page';
+import ViewSellerProduct from 'pages/seller/products/view/Page';
 
 function App() {
   return (
@@ -44,7 +44,7 @@ function App() {
               <Route index element={<div>Welcome to seller Dashboard!</div>} />
               <Route path='/seller/dashboard/products' element={<MyProduct />} />
               <Route path='/seller/dashboard/products/create' element={<AddNewProduct />} />
-              <Route path='/seller/dashboard/products/:product/' element={<viewSellerProduct />} />
+              <Route path='/seller/dashboard/products/:product' element={<ViewSellerProduct />} />
             </Route>
             <Route path='*' element={<NoPage />} />
           </Route>

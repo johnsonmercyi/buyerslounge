@@ -3,9 +3,6 @@ package com.soft.springbootdemo.dto.responsedto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.soft.springbootdemo.dto.ProductDTO;
-import com.soft.springbootdemo.model.Images;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
