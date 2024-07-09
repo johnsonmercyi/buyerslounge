@@ -1,0 +1,109 @@
+/*Mobile First Style*/
+.main {}
+
+.buttonMain {
+  /* margin-left: 0.5rem; */
+}
+
+.pageTitleContainer {
+  width : 100%;
+  height: fit-content;
+
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+}
+
+.actionButtonsWrapper {
+  width  : fit-content;
+  height : auto;
+  padding: 0 1rem;
+
+  /* background-color:bisque ; */
+
+  display        : flex;
+  justify-content: space-around;
+  gap            : 10px;
+}
+
+.actionButtonsWrapper .button>button {
+  width     : 7rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.actionButtonsWrapper .button.deleteButton>button {
+  background-color: var(--danger);
+  border-color    : var(--danger-border);
+}
+
+.actionButtonsWrapper .button.deleteButton>button:hover {
+  background-color: var(--danger-deep);
+}
+
+.actionButtonsWrapper .button.deleteButton>button:active {
+  background-color: var(--danger);
+}
+
+.content {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 5rem;
+
+  margin-top: 3rem;
+}
+
+.imagesContainer {
+  width: auto;
+  height: 8rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.imagesContainer img {
+  width : auto;
+  height: 100%;
+  border: 0.5rem solid white;
+  border-radius: 0.3rem;
+
+  cursor: pointer;
+}
+
+.productDetailsContainer {
+  width: 100%;
+  gap: 0;
+}
+
+.productDetailsContainer .title,
+.productDetailsContainer span.subTitle {
+  width: 100%;
+  padding: 0.5rem 0;
+
+  display: flex;
+
+  margin: 0;
+}
+
+.productDetailsContainer span.subTitle {
+  color: var(--mute);
+  font-weight: 600;
+}
+
+.productDetailsContainer p.description {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
+}
+
+/*Devices larger than mobile phone*/
+@media (min-width: 576px) {
+  .buttonMain button {
+    width: 15rem !important;
+  }
+}

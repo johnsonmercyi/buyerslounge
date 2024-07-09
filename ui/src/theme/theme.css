@@ -19,6 +19,8 @@
   --white        : #fff;
   --mute         : #94a3b8;
   --danger       : #dc0933;
+  --danger-deep : hsla(348, 92%, 45%, 0.836);
+  --danger-border : #ff476c;
   --link-color   : #3074da;
 
   --default-border-color        : #1e293b;

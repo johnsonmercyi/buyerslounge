@@ -203,6 +203,38 @@ const Icon = ({
       </svg>
     ),
 
+    "arrow-left": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-chevron-left"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M15 6l-6 6l6 6" />
+      </svg>
+    ),
+
+    "arrow-right": (
+      <svg xmlns="http://www.w3.org/2000/svg"
+        className="icon icon-tabler icon-tabler-chevron-right"
+        width={width || "24"}
+        height={height || "24"}
+        viewBox="0 0 24 24"
+        strokeWidth={strokeWidth || "1.5"}
+        stroke={strokeColor || "#2c3e50"}
+        fill="none"
+        strokeLinecap={strokeLinecap || "square"}
+        strokeLinejoin={strokeLinejoin || "square"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9 6l6 6l-6 6" />
+      </svg>
+    ),
+
     "information-alert": (
       <svg xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-info-circle-filled"

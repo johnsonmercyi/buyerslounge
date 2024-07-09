@@ -51,12 +51,15 @@ public class ImagesServiceImpl implements ImagesService {
   
       for (MultipartFile file : images) {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        File dest = new File(uploadDir.getAbsoluteFile(), fileName.replaceAll(" ", "_"));
+        fileName = fileName.replaceAll(" ", "_");
+        
+        File dest = new File(uploadDir.getAbsoluteFile(), fileName);
         log.info("Attempting to save file to: {}", dest.getAbsolutePath());
 
         try {
           file.transferTo(dest);
-          imageUrls.add(dest.getAbsolutePath());
+          // log.info("IMAGE FILE: {}", "/" + IMAGE_DIR + fileName);
+          imageUrls.add("/" + IMAGE_DIR + fileName);
           log.info("File saved to: {}", dest.getAbsolutePath());
         } catch (IOException e) {
           log.error("Failed to save file: {}", dest.getAbsolutePath(), e);
