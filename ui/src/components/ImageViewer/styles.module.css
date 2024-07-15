@@ -16,8 +16,8 @@
 }
 
 .imageViewWrapper {
-  width : 60%;
-  height: 80%;
+  width : 90%;
+  height: 100%;
 
   display        : flex;
   justify-content: center;
@@ -26,6 +26,7 @@
   transform: scale(0);
 
   transition: all 0.3s ease-in-out;
+  padding   : 2rem;
 }
 
 .imageViewer {
@@ -53,8 +54,9 @@
 }
 
 .imageViewer img {
-  width           : 100%;
-  height          : auto;
+  width : auto;
+  height: calc(100% * 0.5625);
+  /* aspect-ratio: 0.5625; */
 
   cursor: pointer;
 }
