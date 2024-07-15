@@ -24,5 +24,5 @@ public interface SellerProductsService {
 
   public void updateProductQty(UUID sellerProductsId, int quantity, boolean productAdded);
 
-  public void delete(UUID sellerProductId);
+  public boolean delete(UUID sellerProductId);
 }

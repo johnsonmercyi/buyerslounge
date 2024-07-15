@@ -77,6 +77,13 @@ const ViewSellerProduct = ({ ...props }) => {
     }
   }
 
+  // if (yes) {
+  //   return <div>
+  //     vcbcbsoopxq
+
+  //     {!yes show okay button else hide it }: ok button
+  //   </div>
+  // }
 
   return (
     console.log("PRODUCT: ", sellerProduct),

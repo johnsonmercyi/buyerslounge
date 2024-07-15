@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class ImagesServiceImpl implements ImagesService {
   public Images saveImages(SellerProducts sellerProduct, MultipartFile[] images) {
     try {
       List<String> imageUrls = new ArrayList<>();
-  
+
       // Ensure the upload directory exists
       File uploadDir = new File(IMAGE_DIR);// uploads/images
       String absolutePath = uploadDir.getAbsolutePath() + File.separator;
@@ -48,11 +49,11 @@ public class ImagesServiceImpl implements ImagesService {
           throw new RuntimeException("Failed to create upload directory: " + IMAGE_DIR);
         }
       }
-  
+
       for (MultipartFile file : images) {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         fileName = fileName.replaceAll(" ", "_");
-        
+
         File dest = new File(uploadDir.getAbsoluteFile(), fileName);
         log.info("Attempting to save file to: {}", dest.getAbsolutePath());
 
@@ -72,7 +73,7 @@ public class ImagesServiceImpl implements ImagesService {
       image.setImages(imageUrls);
 
       return repo.save(image);
-      
+
     } catch (Exception e) {
       // TODO: handle exception
       log.error("ERROR: {}", e.getMessage());
@@ -81,30 +82,10 @@ public class ImagesServiceImpl implements ImagesService {
   }
 
   @Override
-  public Images findBySellerProduct(SellerProducts sellerProduct){
+  public Images findBySellerProduct(SellerProducts sellerProduct) {
 
     Images image = repo.findBySellerProduct(sellerProduct);
     return image;
-
-    // String images = repo.findBySellerProduct(sellerProduct).getImages().toString();
-
-    // if (images != null) {
-    //   //take the image url and pull the image from the storage
-
-    //   List<String> imageUrls = new ArrayList<>();
-    //   String[] split = images.split(",");
-
-    //   for (int i = 0; i < split.length; i++) {
-    //     String absolutePath = split[i].replaceAll("\\\\", "/");
-    //     imageUrls.add(absolutePath);
-    //   }
-
-    //   Images image = new Images();
-    //   image.setImages(imageUrls);
-    //   return image;
-      
-
-    // }
   }
 
   @Override
@@ -113,8 +94,37 @@ public class ImagesServiceImpl implements ImagesService {
   }
 
   @Override
-  public void delete(UUID id) {
-    SellerProducts sellerProduct = repo.findById(id).get().getSellerProduct();
-    repo.deleteBySellerProduct(sellerProduct);
+  public boolean delete(SellerProducts sp) {
+    try {
+
+      // Ensure the upload directory exists
+      File uploadDir = new File(IMAGE_DIR);// uploads/images
+      String uploadAbsolutePath = uploadDir.getAbsolutePath() + File.separator;
+
+      Images image = findBySellerProduct(sp);
+
+      List<String> images = image.getImages();
+
+      for (String imageString : images) {
+        String [] splittedString = imageString.split("/");
+        String filename = splittedString[splittedString.length - 1];
+
+        File imageFile = new File(uploadAbsolutePath + filename);
+        boolean isDeleted = Files.deleteIfExists(Path.of(imageFile.getAbsolutePath()));
+
+        if (!isDeleted) {
+          log.error("CANNOT DELETE IMAGE: {}", imageFile.getAbsolutePath());
+          throw new RuntimeException("Error occurred while deleting image: " + imageFile.getAbsolutePath());
+        }
+      }
+
+      repo.deleteBySellerProduct(sp);
+      return true;
+    } catch (Exception e) {
+      // TODO: handle exception
+      log.error("IMAGES DELETE ERROR: {}", e.getMessage());
+      throw new RuntimeException("Error occurred while deleting images: " + e.getMessage());
+    }
+
   }
 }

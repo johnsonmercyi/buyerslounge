@@ -50,9 +50,12 @@
   display        : flex;
   justify-content: center;
   align-items    : center;
+
+  /* padding: 0;
+  margin: 0; */
 }
 .imageHolder img.fade-in {
-  opacity: 1;
+  transform: translateX(100%);
 }
 .imageViewer img {
   width           : 100%;

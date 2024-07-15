@@ -22,6 +22,7 @@ import com.soft.springbootdemo.repo.SellerRepo;
 import com.soft.springbootdemo.service.images.ImagesService;
 import com.soft.springbootdemo.util.Util;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -157,9 +158,17 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   }
 
   @Override
-  public void delete(UUID sellerProductId) {
-    sellerProductsRepo.deleteById(sellerProductId);
-    imagesRepo.deleteBySellerProduct(sellerProductsRepo.findById(sellerProductId).get());
+  public boolean delete(UUID sellerProductId) {
+    Optional<SellerProducts> spOptional = sellerProductsRepo.findById(sellerProductId);
+
+    if (spOptional.isPresent()) {
+      SellerProducts sp = spOptional.get();
+      imagesService.delete(sp);
+      sellerProductsRepo.deleteById(sp.getId());
+      return true;
+    }
+
+    throw new EntityNotFoundException("Seller product not found");
   }
 
 }

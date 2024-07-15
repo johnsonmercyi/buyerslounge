@@ -64,8 +64,8 @@ public class SellerProductsController {
   }
 
   @DeleteMapping("/{id}")
-  public void deleteProduct(@PathVariable UUID id) {
-    service.delete(id);
+  public ResponseEntity<Boolean> deleteProduct(@PathVariable UUID id) {
+    return ResponseEntity.ok(service.delete(id));
   }
   
 }
