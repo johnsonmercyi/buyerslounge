@@ -156,4 +156,10 @@ public class SellerProductsServiceImpl implements SellerProductsService {
     }
   }
 
+  @Override
+  public void delete(UUID sellerProductId) {
+    sellerProductsRepo.deleteById(sellerProductId);
+    imagesRepo.deleteBySellerProduct(sellerProductsRepo.findById(sellerProductId).get());
+  }
+
 }

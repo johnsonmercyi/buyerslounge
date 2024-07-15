@@ -7,9 +7,11 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
+  const [animateImage, setAnimateImage] = useState(false);
 
   const backdropRef = useRef(null);
   const imageViewWrapperRef = useRef(null);
+  const imageRef = useRef(null);
 
   useEffect(() => {
     setSelectedImage(selected || images[0]);
@@ -63,6 +65,19 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
     }
   }, [show]);
 
+
+
+  useEffect(() => {
+    if (imageRef.current) {
+      imageRef.current.classList.remove(styles.fadeIn);
+      setTimeout(() => {
+        if (imageRef.current) {
+          imageRef.current.classList.add(styles.fadeIn);
+        }
+      }, 50);
+    }
+  }, [selectedImage]);
+
   const slideDirHandler = (newDir) => {
 
     console.log("PREV INDEX: ", imageIndex);
@@ -110,7 +125,8 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
 
         <div className={styles.imageViewer}>
           <div className={styles.imageHolder}>
-            {<img src={`http://localhost:8080${selectedImage}`} alt="Product image" />}
+            {/* {<img src={`http://localhost:8080${selectedImage}`} alt="Product image" />} */}
+            {<img ref={imageRef} src={`http://localhost:8080${selectedImage}`} alt="Product image" className={animateImage ? styles.fadeIn : ""} />}
           </div>
           <div className={styles.overlay}>
             {images.map((image, index) => (

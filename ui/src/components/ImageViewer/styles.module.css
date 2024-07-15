@@ -51,7 +51,9 @@
   justify-content: center;
   align-items    : center;
 }
-
+.imageHolder img.fade-in {
+  opacity: 1;
+}
 .imageViewer img {
   width           : 100%;
   height          : auto;

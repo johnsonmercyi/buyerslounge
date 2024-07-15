@@ -111,4 +111,10 @@ public class ImagesServiceImpl implements ImagesService {
   public Images updateImages(UUID id, MultipartFile[] images) {
     return null;
   }
+
+  @Override
+  public void delete(UUID id) {
+    SellerProducts sellerProduct = repo.findById(id).get().getSellerProduct();
+    repo.deleteBySellerProduct(sellerProduct);
+  }
 }

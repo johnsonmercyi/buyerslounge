@@ -14,4 +14,6 @@ public interface SellerProductsRepo extends JpaRepository<SellerProducts, UUID> 
   public List<SellerProducts> findByProductId(UUID product_id);
 
   public Optional<SellerProducts> findById(UUID id); //findBy(UUID seller_product_id);
+
+  public void deleteById(UUID id);
 }

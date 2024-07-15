@@ -26,6 +26,7 @@ const ViewSellerProduct = ({ ...props }) => {
   });
   const [showImage, setShowImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [del, setDel] = useState(false);
 
   useEffect(() => {
     if (param) {
@@ -60,6 +61,22 @@ const ViewSellerProduct = ({ ...props }) => {
     setSelectedImage(image);
   }
 
+  const deleteHandler = async (id) => {
+    try {
+      const response = await makeRequest(`/seller_products/${id}`, HTTPMethods.DELETE, null, null);
+      if (response.error) {
+        console.log(response.error);
+        setIsError(true);
+        setMessage(response.message);
+      } else {
+        console.log(response);
+        setDel(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     console.log("PRODUCT: ", sellerProduct),
@@ -70,7 +87,7 @@ const ViewSellerProduct = ({ ...props }) => {
             <h3>{String(sellerProduct.product).toUpperCase()}</h3>
             <div className={styles.actionButtonsWrapper}>
               <Button text={"Edit"} className={[styles.editButton, styles.button].join(" ")} />
-              <Button text={"Delete"} className={[styles.deleteButton, styles.button].join(" ")} />
+              <Button text={"Delete"} onClickHandler={() => setDel(true)} className={[styles.deleteButton, styles.button].join(" ")} />
             </div>
           </div>
 
@@ -105,6 +122,8 @@ const ViewSellerProduct = ({ ...props }) => {
             showHandler={setShowImage}
             selected={selectedImage}
             images={sellerProduct.images} />
+
+            {del ? <DialogBox title={"Confirm Delete"} yesHandler={() => deleteHandler(sellerProduct.id)} noHandler={() => setDel(false)} /> : null}
         </div>
   )
 }
@@ -124,4 +143,22 @@ const PriceComponent = ({ name, value, prefix }) => {
       {prefix || ``}{new Intl.NumberFormat().format(value)}
     </span>
   </div>
+}
+
+const DialogBox = ({ title, yesHandler, noHandler, ...props }) => {
+  return (
+    <div className={styles.dialogBox}>
+      <h3>{title}</h3>
+      <div className={styles.buttons}>
+        <Button
+          text={"Yes"}
+          className={[styles.button, styles.yesButton].join(" ")}
+          onClick={yesHandler} />
+        <Button
+          text={"No"}
+          className={[styles.button, styles.noButton].join(" ")}
+          onClick={noHandler} />
+      </div>
+    </div>
+  )
 }
