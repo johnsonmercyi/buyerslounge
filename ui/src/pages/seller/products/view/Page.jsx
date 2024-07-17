@@ -8,6 +8,7 @@ import Button from "components/ui/UIButton/Button";
 import ImageViewer from "components/ImageViewer/ImageViewer";
 
 
+
 const ViewSellerProduct = ({ ...props }) => {
   const param = useParams();
 
@@ -70,7 +71,12 @@ const ViewSellerProduct = ({ ...props }) => {
         setMessage(response.message);
       } else {
         console.log(response);
-        setDel(false);
+        setDel(
+          () => setDel(false)
+        );
+        setInProgress(true);
+        setIsError(false);
+        setMessage("Product deleted successfully!");
       }
     } catch (error) {
       console.log(error);
@@ -85,6 +91,7 @@ const ViewSellerProduct = ({ ...props }) => {
   //   </div>
   // }
 
+  const [inProgress, setInProgress] = useState(false);
   return (
     console.log("PRODUCT: ", sellerProduct),
     loading ? <Loading /> :
@@ -131,6 +138,8 @@ const ViewSellerProduct = ({ ...props }) => {
             images={sellerProduct.images} />
 
             {del ? <DialogBox title={"Confirm Delete"} yesHandler={() => deleteHandler(sellerProduct.id)} noHandler={() => setDel(false)} /> : null}
+
+            {inProgress ? <DialogBoxLoader isProcessing={inProgress} error={isError} message={message} link="/seller/dashboard/products" /> : null}
         </div>
   )
 }
@@ -166,6 +175,57 @@ const DialogBox = ({ title, yesHandler, noHandler, ...props }) => {
           className={[styles.button, styles.noButton].join(" ")}
           onClick={noHandler} />
       </div>
+    </div>
+  )
+}
+
+const DialogBoxLoader = ({isProcessing, error, message, link, ...props}) => {
+  const navigate = useNavigate();
+
+  const [inProgress, setInProgress] = useState(isProcessing);
+  const [showLoading, setShowLoading] = useState(false);
+  const onClickHandler = () => {
+    navigate(link);
+    setInProgress(false); 
+  }
+
+  useEffect(() => {
+    let timer;
+    if (inProgress) {
+      setShowLoading(true);
+      timer = setTimeout(() => {
+        setShowLoading(false);
+      }, 1000);
+      
+    }else{
+      setShowLoading(false);
+    }
+
+    return () => clearTimeout(timer);
+  }, [inProgress]);
+
+ 
+  
+  return (
+    <div className={styles.dialogBox}>
+
+      {showLoading ? <Loading className="dialogBoxloader"/> : null}
+
+      {error ? <h3>{message}</h3> : null}
+
+      {!error && !showLoading && inProgress ? 
+        <div>
+          <h3>{message}</h3>
+          <div className={styles.buttons}>
+            <Button
+              text={"Okay"}
+              className={[styles.button, styles.yesButton].join(" ")}
+              onClick={() => onClickHandler()} />
+          </div>
+        </div>
+        : null
+      }
+      
     </div>
   )
 }
