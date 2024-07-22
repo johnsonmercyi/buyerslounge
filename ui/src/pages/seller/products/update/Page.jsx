@@ -7,8 +7,9 @@ import React, { useEffect, useState } from "react";
 import { HTTPMethods, makeRequest } from "util/utils";
 import styles from './styles.module.css';
 import FileUpload from "components/ui/file-upload/FileUpload";
+import { useParams } from "../../../../../node_modules/react-router-dom/dist/index";
 
-const AddNewProduct = () => {
+const ModifyProduct = () => {
 
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -23,6 +24,7 @@ const AddNewProduct = () => {
     rearImage: false,
   });
   const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const param = useParams();
 
   const MAX_FILE_COUNT = 1;
 
@@ -51,8 +53,19 @@ const AddNewProduct = () => {
     rearImage: false,
   });
 
+  useEffect(() => {
+    if (param) {
+      const fetchProducts = async () =>{
+        await fetchSellerProduct(param.product);
+      }
+
+      fetchProducts();
+    }
+  }, [param]);
+
   const inputChangeHandler = (event) => {
     const { name, value } = event.target;
+
     setProduct(state => ({
       ...state,
       [name]: value
@@ -64,11 +77,49 @@ const AddNewProduct = () => {
     }));
   }
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const fetchSellerProduct = async (id) => {
+    try {
+      const response = await makeRequest(`/seller_products/${id}`, HTTPMethods.GET, null, {
+        'paginate': false,
+      });
 
+      if (response.error) {
+        console.log(response.error);
+        setIsError(true);
+        setMessage(response.message);
+        setLoading(false);
+      } else {
+        const { id, product, quantity, cost, price, description, images } = response;
 
+        setProduct({
+          category: product.category.id, 
+          product: product.id,
+          quantity, cost, price, description
+        });
+
+        // TODO: initialize products select
+        await fetchCategories();
+        await fetchCategoryProducts(product.category.id);
+        console.log("FECTHED CAT PRODUCT: ", product.category.id);
+
+        setLoading(false);
+
+      }
+
+      console.log("RESPONSE: ", response);
+
+    } catch (error) {
+      setLoading(false);
+      setIsError(true);
+      setMessage(error.message);
+
+      if (String(error.message).toLowerCase().includes("failed to fetch")) {
+        setMessage("Sorry! Our server might be down at the moment. Please check back later!");
+      }
+
+      console.error(error.message);
+    }
+  }
 
   const fetchCategories = async () => {
     try {
@@ -87,10 +138,9 @@ const AddNewProduct = () => {
           value: category.id
         }));
         setCategories(categories);
-        setLoading(false);
       }
 
-      console.log("RESPONSE: ", response);
+      console.log("FETCH CAT: ", response);
 
     } catch (error) {
       setLoading(false);
@@ -106,6 +156,7 @@ const AddNewProduct = () => {
   }
 
   const fetchCategoryProducts = async (category) => {
+    // console.log("CAT: ", category);
     try {
       const response = await makeRequest(`/categories/products/${category}`, HTTPMethods.GET, undefined, {
         'paginate': false,
@@ -123,11 +174,8 @@ const AddNewProduct = () => {
           value: product.id
         }));
         setProducts(productsData);
-        setLoading(false);
+        console.log("FETCH CAT PRODUCTS: ", productsData);
       }
-
-      console.log("RESPONSE: ", response);
-
     } catch (error) {
       setLoading(false);
       setIsError(true);
@@ -183,6 +231,7 @@ const AddNewProduct = () => {
           cost: product.cost,
           price: product.price,
           description: product.description
+          // ["side", "rear"] = Images table = [angles = "["side", "rear"]"]
         };
 
         data.append("sellerProducts", JSON.stringify(sellerProducts));
@@ -214,12 +263,12 @@ const AddNewProduct = () => {
     }
   }
 
-  const setFilesHandler = (name, selectedFiles, action = "add") => {
+  const setFilesHandler = (name, selectedFiles) => {
     // console.log({ name: name, files: selectedFiles });
     setProduct(currentState => ({
       ...currentState,
       [name]: selectedFiles,
-      imagesAngles: action === "add" ? [...currentState.imagesAngles, name] : currentState.imagesAngles.filter(imageAngle => imageAngle !== name)
+      imagesAngles: [ ...currentState.imagesAngles, name]
     }));
 
     setProductError(state => ({
@@ -288,12 +337,12 @@ const AddNewProduct = () => {
               options={categories}
               selectHandler={selectCategoryHandler}
             />
-
+            
             <Select
               defaultValue={product.product}
               error={productError.product}
               placeholder='Select products'
-              options={products}
+              options={products && products}
               selectHandler={selectProductHandler}
             />
 
@@ -334,8 +383,6 @@ const AddNewProduct = () => {
               name={"description"}
               onChangeHandler={inputChangeHandler} />
 
-            {console.log("[RESET FILES]: ", resetFile)}
-
             <FileUpload
               reset={resetFile.frontImage}
               error={productError.frontImage}
@@ -363,7 +410,7 @@ const AddNewProduct = () => {
               title={"Rear view image"}
               appendText={"rear-view image"} />
 
-            {console.clear(), console.log("IMAGE ANGLES: ", product.imagesAngles)}
+              { console.clear(), console.log("IMAGE ANGLES: ", product.imagesAngles) }
 
 
             {
@@ -389,4 +436,4 @@ const AddNewProduct = () => {
   );
 }
 
-export default AddNewProduct;
+export default ModifyProduct;

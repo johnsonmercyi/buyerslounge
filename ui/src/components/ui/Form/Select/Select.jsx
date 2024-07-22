@@ -17,7 +17,7 @@ const Select = ({
   selectHandler,
   ...props }) => {
 
-    const defaultSelectedItem = { value: "", label: "" }
+  const defaultSelectedItem = { value: "", label: "" }
 
   /**
    * Component states
@@ -34,7 +34,7 @@ const Select = ({
     if (defaultValue) {
       const option = options.find(option => option.value === defaultValue);
       if (option) {
-        setSelectedItem(option);
+        setSelectedItem(option); 
       }
     } else {
       setSelectedItem(defaultSelectedItem);
@@ -117,13 +117,13 @@ const Select = ({
   }
 
   const handleKeydown = (event) => {
-    
+
     if (selectRef.current) {
       selectRef.current.style.outline = 'none';
     }
 
     if (event.key === "ArrowDown") {
-      
+
       // Get the selected option
       const selectedOption = itemsWrapperRef.current.querySelector(`div[data-value="${selectedItem.value}"]`);
       let nextIndex = 0;

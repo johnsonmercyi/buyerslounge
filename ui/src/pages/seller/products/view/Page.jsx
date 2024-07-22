@@ -11,6 +11,7 @@ import ImageViewer from "components/ImageViewer/ImageViewer";
 
 const ViewSellerProduct = ({ ...props }) => {
   const param = useParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -83,13 +84,9 @@ const ViewSellerProduct = ({ ...props }) => {
     }
   }
 
-  // if (yes) {
-  //   return <div>
-  //     vcbcbsoopxq
-
-  //     {!yes show okay button else hide it }: ok button
-  //   </div>
-  // }
+  const editSellerProduct = async () => {
+    navigate(`/seller/dashboard/products/update/${param.product}`);
+  }
 
   const [inProgress, setInProgress] = useState(false);
   return (
@@ -100,8 +97,15 @@ const ViewSellerProduct = ({ ...props }) => {
           <div className={styles.pageTitleContainer}>
             <h3>{String(sellerProduct.product).toUpperCase()}</h3>
             <div className={styles.actionButtonsWrapper}>
-              <Button text={"Edit"} className={[styles.editButton, styles.button].join(" ")} />
-              <Button text={"Delete"} onClickHandler={() => setDel(true)} className={[styles.deleteButton, styles.button].join(" ")} />
+              <Button
+                text={"Edit"}
+                className={[styles.editButton, styles.button].join(" ")}
+                onClickHandler={editSellerProduct}
+              />
+              <Button
+                text={"Delete"}
+                onClickHandler={() => setDel(true)}
+                className={[styles.deleteButton, styles.button].join(" ")} />
             </div>
           </div>
 
@@ -137,9 +141,9 @@ const ViewSellerProduct = ({ ...props }) => {
             selected={selectedImage}
             images={sellerProduct.images} />
 
-            {del ? <DialogBox title={"Confirm Delete"} yesHandler={() => deleteHandler(sellerProduct.id)} noHandler={() => setDel(false)} /> : null}
+          {del ? <DialogBox title={"Confirm Delete"} yesHandler={() => deleteHandler(sellerProduct.id)} noHandler={() => setDel(false)} /> : null}
 
-            {inProgress ? <DialogBoxLoader isProcessing={inProgress} error={isError} message={message} link="/seller/dashboard/products" /> : null}
+          {inProgress ? <DialogBoxLoader isProcessing={inProgress} error={isError} message={message} link="/seller/dashboard/products" /> : null}
         </div>
   )
 }
@@ -179,14 +183,14 @@ const DialogBox = ({ title, yesHandler, noHandler, ...props }) => {
   )
 }
 
-const DialogBoxLoader = ({isProcessing, error, message, link, ...props}) => {
+const DialogBoxLoader = ({ isProcessing, error, message, link, ...props }) => {
   const navigate = useNavigate();
 
   const [inProgress, setInProgress] = useState(isProcessing);
   const [showLoading, setShowLoading] = useState(false);
   const onClickHandler = () => {
     navigate(link);
-    setInProgress(false); 
+    setInProgress(false);
   }
 
   useEffect(() => {
@@ -196,24 +200,24 @@ const DialogBoxLoader = ({isProcessing, error, message, link, ...props}) => {
       timer = setTimeout(() => {
         setShowLoading(false);
       }, 1000);
-      
-    }else{
+
+    } else {
       setShowLoading(false);
     }
 
     return () => clearTimeout(timer);
   }, [inProgress]);
 
- 
-  
+
+
   return (
     <div className={styles.dialogBox}>
 
-      {showLoading ? <Loading className="dialogBoxloader"/> : null}
+      {showLoading ? <Loading className="dialogBoxloader" /> : null}
 
       {error ? <h3>{message}</h3> : null}
 
-      {!error && !showLoading && inProgress ? 
+      {!error && !showLoading && inProgress ?
         <div>
           <h3>{message}</h3>
           <div className={styles.buttons}>
@@ -225,7 +229,7 @@ const DialogBoxLoader = ({isProcessing, error, message, link, ...props}) => {
         </div>
         : null
       }
-      
+
     </div>
   )
 }
