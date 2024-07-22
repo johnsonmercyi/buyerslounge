@@ -210,6 +210,7 @@ public class Util {
         new ImagesResponseDTO(
             images.getId(),
             images.getImages(),
+            images.getImagesAngles(),
             images.getCreated(),
             images.getUpdated()),
         sellerProducts.getCreated(),

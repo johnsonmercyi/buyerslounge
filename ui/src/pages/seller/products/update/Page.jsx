@@ -35,9 +35,9 @@ const ModifyProduct = () => {
     cost: '',
     price: '',
     description: '',
-    frontImage: [],
-    sideImage: [],
-    rearImage: [],
+    frontImage: null,
+    sideImage: null,
+    rearImage: null,
     imagesAngles: [],
   });
 
@@ -55,7 +55,7 @@ const ModifyProduct = () => {
 
   useEffect(() => {
     if (param) {
-      const fetchProducts = async () =>{
+      const fetchProducts = async () => {
         await fetchSellerProduct(param.product);
       }
 
@@ -89,24 +89,43 @@ const ModifyProduct = () => {
         setMessage(response.message);
         setLoading(false);
       } else {
-        const { id, product, quantity, cost, price, description, images } = response;
+        const { id, product, quantity, cost, price, description, images: { images, imagesAngles } } = response;
+
+        console.clear();
+        console.log("RESPONSE: ", response);
+        console.log("IMAGES ANGLES: ", imagesAngles);
+
+        let frontImage = null, sideImage = null, rearImage = null;
+
+        for (let i = 0; i < imagesAngles.length; i++) {
+          if (imagesAngles[i] === "frontImage") {
+            frontImage = images[i];
+          }
+
+          if (imagesAngles[i] === "sideImage") {
+            sideImage = images[i];
+          }
+
+          if (imagesAngles[i] === "rearImage") {
+            rearImage = images[i];
+          }
+        }
 
         setProduct({
-          category: product.category.id, 
+          category: product.category.id,
           product: product.id,
-          quantity, cost, price, description
+          quantity, cost, price, description,
+          imagesAngles, frontImage, rearImage, sideImage
         });
 
         // TODO: initialize products select
         await fetchCategories();
         await fetchCategoryProducts(product.category.id);
-        console.log("FECTHED CAT PRODUCT: ", product.category.id);
 
         setLoading(false);
 
       }
 
-      console.log("RESPONSE: ", response);
 
     } catch (error) {
       setLoading(false);
@@ -140,8 +159,6 @@ const ModifyProduct = () => {
         setCategories(categories);
       }
 
-      console.log("FETCH CAT: ", response);
-
     } catch (error) {
       setLoading(false);
       setIsError(true);
@@ -174,7 +191,6 @@ const ModifyProduct = () => {
           value: product.id
         }));
         setProducts(productsData);
-        console.log("FETCH CAT PRODUCTS: ", productsData);
       }
     } catch (error) {
       setLoading(false);
@@ -220,7 +236,6 @@ const ModifyProduct = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      console.log("[Print Product]: ", product);
       if (validateForm()) {
         const userData = JSON.parse(localStorage.getItem('userData'))
         const data = new FormData();
@@ -230,8 +245,8 @@ const ModifyProduct = () => {
           quantity: product.quantity,
           cost: product.cost,
           price: product.price,
-          description: product.description
-          // ["side", "rear"] = Images table = [angles = "["side", "rear"]"]
+          description: product.description,
+          imagesAngles: product.imagesAngles
         };
 
         data.append("sellerProducts", JSON.stringify(sellerProducts));
@@ -241,7 +256,7 @@ const ModifyProduct = () => {
         if (product.rearImage[0]) data.append("files", product.rearImage[0]);
 
         const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
-        console.log("RESP: ", response);
+        // console.log("RESP: ", response);
 
         if (response.error) {
           setIsFormError(true);
@@ -263,12 +278,12 @@ const ModifyProduct = () => {
     }
   }
 
-  const setFilesHandler = (name, selectedFiles) => {
+  const setFilesHandler = (name, selectedFiles, action = "add") => {
     // console.log({ name: name, files: selectedFiles });
     setProduct(currentState => ({
       ...currentState,
-      [name]: selectedFiles,
-      imagesAngles: [ ...currentState.imagesAngles, name]
+      [name]: selectedFiles[0],
+      imagesAngles: action === "add" ? [...currentState.imagesAngles, name] : currentState.imagesAngles.filter(imageAngle => imageAngle !== name)
     }));
 
     setProductError(state => ({
@@ -292,13 +307,13 @@ const ModifyProduct = () => {
         setProductError(productErrors => ({ ...productErrors, [name]: false }));
       }
 
-      if (name === "frontImage") {
-        if (!product[name].length) {
-          setProductError(productErrors => ({ ...productErrors, [name]: true }));
-        } else {
-          setProductError(productErrors => ({ ...productErrors, [name]: false }));
-        }
-      }
+      // if (name === "frontImage") {
+      //   if (!product[name].length) {
+      //     setProductError(productErrors => ({ ...productErrors, [name]: true }));
+      //   } else {
+      //     setProductError(productErrors => ({ ...productErrors, [name]: false }));
+      //   }
+      // }
     });
 
     return product.category &&
@@ -306,7 +321,7 @@ const ModifyProduct = () => {
       product.quantity &&
       product.price &&
       product.cost &&
-      product.frontImage.length;
+      product.frontImage;
   }
 
   const resetForm = () => {
@@ -337,7 +352,7 @@ const ModifyProduct = () => {
               options={categories}
               selectHandler={selectCategoryHandler}
             />
-            
+
             <Select
               defaultValue={product.product}
               error={productError.product}
@@ -384,6 +399,7 @@ const ModifyProduct = () => {
               onChangeHandler={inputChangeHandler} />
 
             <FileUpload
+              initialFileUrl={product.frontImage ? `http://localhost:8080${product.frontImage}` : null}
               reset={resetFile.frontImage}
               error={productError.frontImage}
               name={"frontImage"}
@@ -393,6 +409,7 @@ const ModifyProduct = () => {
               appendText={"front-view image"} />
 
             <FileUpload
+              initialFileUrl={product.sideImage ? `http://localhost:8080${product.sideImage}` : null}
               reset={resetFile.sideImage}
               error={productError.sideImage}
               name={"sideImage"}
@@ -402,6 +419,7 @@ const ModifyProduct = () => {
               appendText={"side-view image"} />
 
             <FileUpload
+              initialFileUrl={product.rearImage ? `http://localhost:8080${product.rearImage}` : null}
               reset={resetFile.rearImage}
               error={productError.rearImage}
               name={"rearImage"}
@@ -410,7 +428,7 @@ const ModifyProduct = () => {
               title={"Rear view image"}
               appendText={"rear-view image"} />
 
-              { console.clear(), console.log("IMAGE ANGLES: ", product.imagesAngles) }
+            { console.clear(), console.log("PRODUCT: ", product) }
 
 
             {

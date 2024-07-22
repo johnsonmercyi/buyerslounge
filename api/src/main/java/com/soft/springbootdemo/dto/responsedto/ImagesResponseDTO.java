@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class ImagesResponseDTO {
   private UUID id;
   private List<String> images;
+  private List<String> imagesAngles;
   private LocalDateTime created;
   private LocalDateTime updated;
 }

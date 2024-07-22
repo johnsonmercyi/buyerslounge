@@ -33,7 +33,7 @@ public class ImagesServiceImpl implements ImagesService {
   private final ImagesRepo repo;
 
   @Override
-  public Images saveImages(SellerProducts sellerProduct, MultipartFile[] images) {
+  public Images saveImages(SellerProducts sellerProduct, MultipartFile[] images, List<String> imagesAngles) {
     try {
       List<String> imageUrls = new ArrayList<>();
 
@@ -71,6 +71,7 @@ public class ImagesServiceImpl implements ImagesService {
       Images image = new Images();
       image.setSellerProduct(sellerProduct);
       image.setImages(imageUrls);
+      image.setImagesAngles(imagesAngles);
 
       return repo.save(image);
 
@@ -106,7 +107,7 @@ public class ImagesServiceImpl implements ImagesService {
       List<String> images = image.getImages();
 
       for (String imageString : images) {
-        String [] splittedString = imageString.split("/");
+        String[] splittedString = imageString.split("/");
         String filename = splittedString[splittedString.length - 1];
 
         File imageFile = new File(uploadAbsolutePath + filename);

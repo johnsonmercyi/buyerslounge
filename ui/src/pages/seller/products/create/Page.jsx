@@ -182,7 +182,8 @@ const AddNewProduct = () => {
           quantity: product.quantity,
           cost: product.cost,
           price: product.price,
-          description: product.description
+          description: product.description,
+          imagesAngles: product.imagesAngles
         };
 
         data.append("sellerProducts", JSON.stringify(sellerProducts));
@@ -192,7 +193,7 @@ const AddNewProduct = () => {
         if (product.rearImage[0]) data.append("files", product.rearImage[0]);
 
         const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
-        console.log("RESP: ", response);
+        // console.log("RESP: ", response);
 
         if (response.error) {
           setIsFormError(true);

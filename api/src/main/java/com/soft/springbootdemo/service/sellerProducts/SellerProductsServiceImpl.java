@@ -60,7 +60,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
     sp.setDescription(sellerProductsDto.getDescription());
 
     SellerProducts savedSellerProducts = sellerProductsRepo.save(sp);
-    Images im = imagesService.saveImages(savedSellerProducts, images);
+    Images im = imagesService.saveImages(savedSellerProducts, images, sellerProductsDto.getImagesAngles());
 
     if (im == null) {
       throw new NullPointerException("Image couldn't be saved in storage directory.");
@@ -76,7 +76,13 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   public Collection<SellerProductsResponseDTO> findAllInventory() {
     List<SellerProductsResponseDTO> sellerProducts = new ArrayList<>();
     List<SellerProducts> allSellerProducts = sellerProductsRepo.findAll();
+
+    log.info("[GETTING ALL IMAGES...]");
     List<Images> allImages = imagesRepo.findAll();
+
+    log.info("[ALL IMAGES FETCHED]: ", allImages.get(0).getImagesAngles());
+
+
     for (SellerProducts sellerProduct : allSellerProducts) {
 
       Optional<Images> imagesOptional = allImages.stream()

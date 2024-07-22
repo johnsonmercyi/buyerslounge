@@ -2,6 +2,7 @@ package com.soft.springbootdemo.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity(name="images")
+@Entity(name = "images")
 @Data
 @AllArgsConstructor
 public class Images {
@@ -33,13 +34,17 @@ public class Images {
   @Convert(converter = JSONConverter.class)
   private List<String> images;
 
+  @Column(name = "images_angles", columnDefinition = "json")
+  @Convert(converter = JSONConverter.class)
+  private List<String> imagesAngles;
+
   @CreationTimestamp
   @Column(nullable = false)
   private LocalDateTime created;
 
   private LocalDateTime updated;
 
-  public Images () {
-    this(UUID.randomUUID(), null, new ArrayList<>(), null, null);
+  public Images() {
+    this(UUID.randomUUID(), null, new ArrayList<>(), new ArrayList<>(), null, null);
   }
 }

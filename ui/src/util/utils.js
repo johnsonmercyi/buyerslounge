@@ -67,3 +67,8 @@ export const devices = {
   TABLET: "tablet",
   DESKTOP: "desktop"
 }
+
+export function getServerFileName (fileUrl) {
+  let fileName = String(fileUrl).split('/');
+  return fileName[fileName.length - 1];
+}

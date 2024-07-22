@@ -1,5 +1,6 @@
 package com.soft.springbootdemo.dto.requestdto;
 
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -18,4 +19,5 @@ public class SellerProductsRequestDTO {
   private double price;
   private String description;
   private UUID refNo;
+  private List<String> imagesAngles;
 }

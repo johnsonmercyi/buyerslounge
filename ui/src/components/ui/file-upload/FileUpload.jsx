@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles.module.css';
 import Icon from 'util/icons';
 import { Link } from '../../../../node_modules/react-router-dom/dist/index';
+import { getServerFileName } from 'util/utils';
 
 const FileUpload = ({
+  initialFileUrl,
   title,
   name,
   appendText,
@@ -15,7 +17,9 @@ const FileUpload = ({
   setFilesHandler,
   reset,
 }) => {
+
   const [files, setFiles] = useState([]);
+  const [initialFile, setInitialFile] = useState(null);
   const [filesMaxCountReached, setFilesMaxCountReached] = useState(false);
   const [internalError, setInternalError] = useState(false);
   const [internalErrorMessage, setInternalErrorMessage] = useState("");
@@ -36,7 +40,14 @@ const FileUpload = ({
     }
   }, [maxFileCount, files]);
 
-  useEffect(()=> {
+  useEffect(() => {
+    if (initialFileUrl) {
+      setInitialFile(initialFileUrl);
+      setFilesMaxCountReached(true);
+    }
+  }, [initialFileUrl]);
+
+  useEffect(() => {
     if (reset) {
       setFiles([]);
       // setFilesHandler(name, []);
@@ -99,34 +110,58 @@ const FileUpload = ({
     setFilesHandler(name, selectedFiles, "delete");
   }
 
+  const deleteServerImageHandler = () => {
+    setInitialFile(null);
+    setFilesMaxCountReached(false);
+  }
+
   return (
     <div className={styles.main}>
       <div className={styles.fileImage}>
-        {files.length > 0 && (
+        {(files.length > 0 || initialFile) && (
           <div className={styles.imageWrapper}>
-            {files.map((file, index) => (
+            {initialFile ? (<div className={styles.image}>
+              <img
+                alt={`Selected file`}
+                src={initialFile} />
 
-              <div key={index} className={styles.image}>
-                <img
-                  alt={`Selected file ${index + 1}`}
-                  src={URL.createObjectURL(file)} />
+              <span>
+                <a
+                  target='_blank'
+                  rel="noopener noreferrer"
+                  href={initialFile && initialFile}>
+                  {initialFile && getServerFileName(initialFile)}
+                </a>
+              </span>
 
-                <span>
-                  <a
-                    target='_blank'
-                    rel="noopener noreferrer"
-                    href={URL.createObjectURL(file)}>
-                    {file.name}
-                  </a>
-                </span>
+              <Icon
+                onClickHandler={() => deleteServerImageHandler()}
+                className={styles.imageIcon}
+                name="trash"
+                strokeColor={"var(--mute)"} />
 
-                <Icon
-                  onClickHandler={() => deleteSelectedImageHandler(file.name)}
-                  className={styles.imageIcon}
-                  name="trash"
-                  strokeColor={"var(--mute)"} />
+            </div>) : files.map((file, index) => (
+            <div key={index} className={styles.image}>
+              <img
+                alt={`Selected file ${index + 1}`}
+                src={URL.createObjectURL(file)} />
 
-              </div>
+              <span>
+                <a
+                  target='_blank'
+                  rel="noopener noreferrer"
+                  href={URL.createObjectURL(file)}>
+                  {file.name}
+                </a>
+              </span>
+
+              <Icon
+                onClickHandler={() => deleteSelectedImageHandler(file.name)}
+                className={styles.imageIcon}
+                name="trash"
+                strokeColor={"var(--mute)"} />
+
+            </div>
             ))}
           </div>
         )}
