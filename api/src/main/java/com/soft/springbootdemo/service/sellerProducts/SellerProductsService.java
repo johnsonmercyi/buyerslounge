@@ -23,4 +23,6 @@ public interface SellerProductsService {
   public SellerProductsResponseDTO update(UUID sellerProductId, SellerProductsRequestDTO sellerProductsRequestDTO);
 
   public void updateProductQty(UUID sellerProductsId, int quantity, boolean productAdded);
+
+  public boolean delete(UUID sellerProductId);
 }

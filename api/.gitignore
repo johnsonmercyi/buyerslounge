@@ -32,3 +32,4 @@ build/
 ### VS Code ###
 .vscode/
 src/main/java/resources/static/db/migrations/V8__return_sale_correction_trigger.sql
+api/uploads/images/

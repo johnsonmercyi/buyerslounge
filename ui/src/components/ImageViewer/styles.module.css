@@ -51,8 +51,13 @@
   display        : flex;
   justify-content: center;
   align-items    : center;
-}
 
+  /* padding: 0;
+  margin: 0; */
+}
+.imageHolder img.fade-in {
+  transform: translateX(100%);
+}
 .imageViewer img {
   width : auto;
   height: calc(100% * 0.5625);

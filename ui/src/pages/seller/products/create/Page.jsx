@@ -36,6 +36,7 @@ const AddNewProduct = () => {
     frontImage: [],
     sideImage: [],
     rearImage: [],
+    imagesAngles: [],
   });
 
   const [productError, setProductError] = useState({
@@ -213,11 +214,12 @@ const AddNewProduct = () => {
     }
   }
 
-  const setFilesHandler = (name, selectedFiles) => {
+  const setFilesHandler = (name, selectedFiles, action = "add") => {
     // console.log({ name: name, files: selectedFiles });
     setProduct(currentState => ({
       ...currentState,
-      [name]: selectedFiles
+      [name]: selectedFiles,
+      imagesAngles: action === "add" ? [...currentState.imagesAngles, name] : currentState.imagesAngles.filter(imageAngle => imageAngle !== name)
     }));
 
     setProductError(state => ({
@@ -332,7 +334,7 @@ const AddNewProduct = () => {
               name={"description"}
               onChangeHandler={inputChangeHandler} />
 
-              { console.log("[RESET FILES]: ", resetFile) }
+            {console.log("[RESET FILES]: ", resetFile)}
 
             <FileUpload
               reset={resetFile.frontImage}
@@ -360,6 +362,8 @@ const AddNewProduct = () => {
               maxFileCount={MAX_FILE_COUNT}
               title={"Rear view image"}
               appendText={"rear-view image"} />
+
+            {console.clear(), console.log("IMAGE ANGLES: ", product.imagesAngles)}
 
 
             {

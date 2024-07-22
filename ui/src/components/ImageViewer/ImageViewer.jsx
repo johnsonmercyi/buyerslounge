@@ -7,9 +7,11 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
+  const [animateImage, setAnimateImage] = useState(false);
 
   const backdropRef = useRef(null);
   const imageViewWrapperRef = useRef(null);
+  const imageHolderRef = useRef(null);
 
   useEffect(() => {
     setSelectedImage(selected || images[0]);
@@ -18,6 +20,7 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
 
   useEffect(() => {
     setSelectedImage(images[imageIndex]);
+
   }, [imageIndex]);
 
   useEffect(() => {
@@ -56,16 +59,16 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
           1,
           "ease-in-out", [
           { transform: "scale(0)" }
-        ], ()=> {
-            backdropRef.current.style.display = "none";
+        ], () => {
+          backdropRef.current.style.display = "none";
         });
       }, 0);
     }
   }, [show]);
 
+
   const slideDirHandler = (newDir) => {
 
-    console.log("PREV INDEX: ", imageIndex);
     if (newDir === "right") {
       setImageIndex(prevIndex => {
         if (prevIndex === images.length - 1) {
@@ -88,8 +91,6 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
   };
 
 
-
-
   return (
     <div
       onClick={() => showHandler(false)}
@@ -109,7 +110,7 @@ const ImageViewer = ({ show, showHandler, selected = null, images = [], ...props
           onClickHandler={() => slideDirHandler("left")} />
 
         <div className={styles.imageViewer}>
-          <div className={styles.imageHolder}>
+          <div ref={imageHolderRef} className={styles.imageHolder}>
             {<img src={`http://localhost:8080${selectedImage}`} alt="Product image" />}
           </div>
           <div className={styles.overlay}>

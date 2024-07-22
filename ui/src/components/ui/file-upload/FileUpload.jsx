@@ -96,7 +96,7 @@ const FileUpload = ({
     let fileIndex = selectedFiles.findIndex(file => file.name === fileName);
     selectedFiles.splice(fileIndex, 1);
     setFiles(selectedFiles);
-    setFilesHandler(name, selectedFiles);
+    setFilesHandler(name, selectedFiles, "delete");
   }
 
   return (

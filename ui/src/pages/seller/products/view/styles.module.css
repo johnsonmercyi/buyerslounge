@@ -101,6 +101,27 @@
   text-align: left;
 }
 
+.dialogBox{
+  width: 25%;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  text-align: -webkit-center;
+}
+
+.dialogBox h3{
+  color: black;
+  text-align: center;
+}
+
+.dialogBox .buttons{
+  display: flex;
+  justify-content: space-between;
+}
+.dialogBoxloader{
+  height: 5rem !important;
+}
+
 /*Devices larger than mobile phone*/
 @media (min-width: 576px) {
   .buttonMain button {

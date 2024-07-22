@@ -79,7 +79,7 @@ const MyProduct = () => {
       <td key={index + "_cost"}>{row.cost}</td>,
       <td key={index + "_price"}>{row.price}</td>,
       <td key={index + "_action"}>
-        <button onClick={() => viewSellerProduct(row.id)}>Edit</button>
+        <button onClick={() => viewSellerProduct(row.id)}>View</button>
       </td>
     ]
   }
