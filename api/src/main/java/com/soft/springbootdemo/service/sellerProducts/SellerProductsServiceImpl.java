@@ -77,10 +77,10 @@ public class SellerProductsServiceImpl implements SellerProductsService {
     List<SellerProductsResponseDTO> sellerProducts = new ArrayList<>();
     List<SellerProducts> allSellerProducts = sellerProductsRepo.findAll();
 
-    log.info("[GETTING ALL IMAGES...]");
+    // log.info("[GETTING ALL IMAGES...]");
     List<Images> allImages = imagesRepo.findAll();
 
-    log.info("[ALL IMAGES FETCHED]: ", allImages.get(0).getImagesAngles());
+    // log.info("[ALL IMAGES FETCHED]: ", allImages.get(0).getImagesAngles());
 
 
     for (SellerProducts sellerProduct : allSellerProducts) {
@@ -132,19 +132,49 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   }
 
   @Override
-  public SellerProductsResponseDTO update(UUID sellerProductId, SellerProductsRequestDTO sellerProductsRequestDTO) {
-    Optional<Product> optProduct = productRepo.findById(sellerProductsRequestDTO.getProductId());
-    if (optProduct.isPresent()) {
-      Optional<SellerProducts> optSellerProducts = sellerProductsRepo.findById(sellerProductId);
-      if (optSellerProducts.isPresent()) {
-        SellerProducts oldSellerProduct = optSellerProducts.get();
-        oldSellerProduct.setProduct(optProduct.get());
-        oldSellerProduct.setQuantity(sellerProductsRequestDTO.getQuantity());
-        // save
-        return Util.convertSellerProductsToResponseDTO(sellerProductsRepo.save(oldSellerProduct), null, false);
+  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images) {
+    // Fetch the old seller product
+    // Update with the new seller product values from the DTO
+    // Update the images
+    // Save all
+
+    // log.info("UPDATE PAYLOAD: {}\n{}", sellerProductsDto, images);
+
+    Optional<SellerProducts> currentSpOptional = sellerProductsRepo.findById(sellerProductsDto.getId());
+
+    if (currentSpOptional.isPresent()) {
+      SellerProducts currentSp = currentSpOptional.get();
+      
+      Optional<Seller> sellerOptional = sellerRepo.findById(sellerProductsDto.getSellerId());
+      Optional<Product> productOptional = productRepo.findById(sellerProductsDto.getProductId());
+
+      if (!sellerOptional.isPresent() || !productOptional.isPresent())
+        throw new NullPointerException("Invalid seller or product!");
+
+      // Seller seller = sellerOptional.get();
+      Product product = productOptional.get();
+
+      currentSp.setProduct(product);
+      currentSp.setCost(sellerProductsDto.getCost());
+      currentSp.setPrice(sellerProductsDto.getPrice());
+      currentSp.setQuantity(sellerProductsDto.getQuantity());
+      currentSp.setDescription(sellerProductsDto.getDescription());
+
+      SellerProducts savedSellerProducts = sellerProductsRepo.save(currentSp);
+
+      Images im = imagesService.updateImages(savedSellerProducts, images, sellerProductsDto.getImagesAngles());
+
+      if (im == null) {
+        throw new NullPointerException("Image couldn't be saved in storage directory.");
       }
+
+      // conversion here...
+      return Util.convertSellerProductsToResponseDTO(
+          sellerProductsRepo.save(savedSellerProducts), im, false);
     }
-    return null;
+
+    // handle seller product not found error here...
+    throw new RuntimeException("Invalid seller product");
   }
 
   @Override
@@ -176,5 +206,6 @@ public class SellerProductsServiceImpl implements SellerProductsService {
 
     throw new EntityNotFoundException("Seller product not found");
   }
+
 
 }

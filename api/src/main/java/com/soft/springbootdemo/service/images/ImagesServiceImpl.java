@@ -90,8 +90,72 @@ public class ImagesServiceImpl implements ImagesService {
   }
 
   @Override
-  public Images updateImages(UUID id, MultipartFile[] images) {
-    return null;
+  public Images updateImages(SellerProducts sellerProduct, MultipartFile[] images, List<String> imagesAngles) {
+    // Fetch the existing images for the seller product
+    // 
+
+    try {
+      List<String> imageUrls = new ArrayList<>();
+      Images currentImages = repo.findBySellerProduct(sellerProduct);
+
+      currentImages.getImagesAngles();
+      currentImages.getImages();
+
+
+      // Ensure the upload directory exists
+      File uploadDir = new File(IMAGE_DIR);// uploads/images
+      String absolutePath = uploadDir.getAbsolutePath() + File.separator;
+
+      // Checks if the upload directory exists
+      if (!Files.exists(Path.of(absolutePath))) {
+        Path dir = Files.createDirectory(Path.of(absolutePath));
+        if (dir.toAbsolutePath() != null) {
+          log.warn("{} did not exist. Created a new directory.", IMAGE_DIR);
+        } else {
+          throw new RuntimeException("Failed to create upload directory: " + IMAGE_DIR);
+        }
+      }
+      
+      log.info("IMAGE LENGTH FOR TEST: {}", images.length);
+
+      // for (MultipartFile file : images) {
+
+
+      //   // Check if the file exists
+      //   if (Files.exists(file))
+      //     throw new RuntimeException("Just an error");
+
+      //   String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+      //   fileName = fileName.replaceAll(" ", "_");
+
+      //   File dest = new File(uploadDir.getAbsoluteFile(), fileName);
+      //   log.info("Attempting to save file to: {}", dest.getAbsolutePath());
+
+      //   try {
+      //     file.transferTo(dest);
+      //     // log.info("IMAGE FILE: {}", "/" + IMAGE_DIR + fileName);
+      //     imageUrls.add("/" + IMAGE_DIR + fileName);
+      //     log.info("File saved to: {}", dest.getAbsolutePath());
+      //   } catch (IOException e) {
+      //     log.error("Failed to save file: {}", dest.getAbsolutePath(), e);
+      //     throw new RuntimeException("Error occurred while saving image: " + e.getMessage(), e);
+      //   }
+      // }
+
+      // Images image = new Images();
+      // image.setSellerProduct(sellerProduct);
+      // image.setImages(imageUrls);
+      // image.setImagesAngles(imagesAngles);
+
+      // return repo.save(image);
+
+      return null;
+
+    } catch (Exception e) {
+      // TODO: handle exception
+      log.error("ERROR: {}", e.getMessage());
+      throw new RuntimeException("Error occurred while saving image: " + e.getMessage());
+    }
   }
 
   @Override

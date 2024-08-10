@@ -20,7 +20,7 @@ public interface SellerProductsService {
 
   public Optional<SellerProductsResponseDTO> findBySellerProductId(UUID sellerProductId);
 
-  public SellerProductsResponseDTO update(UUID sellerProductId, SellerProductsRequestDTO sellerProductsRequestDTO);
+  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images);
 
   public void updateProductQty(UUID sellerProductsId, int quantity, boolean productAdded);
 

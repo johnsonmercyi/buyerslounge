@@ -10,7 +10,7 @@ import com.soft.springbootdemo.model.SellerProducts;
 
 public interface ImagesService {
   public Images saveImages(SellerProducts sellerProduct, MultipartFile[] images, List<String> imagesAngles);
-  public Images updateImages(UUID id, MultipartFile[] images);
+  public Images updateImages(SellerProducts sellerProduct, MultipartFile[] images, List<String> imagesAngles);
   public Images findBySellerProduct(SellerProducts sellerProduct);
   public boolean delete(SellerProducts sp);
 }

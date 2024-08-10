@@ -24,11 +24,13 @@ const ModifyProduct = () => {
     rearImage: false,
   });
   const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const [isServerFetch, setIsServerFetch] = useState(false);
   const param = useParams();
 
   const MAX_FILE_COUNT = 1;
 
   const [product, setProduct] = useState({
+    id: '',
     category: '',
     product: '',
     quantity: '',
@@ -88,6 +90,7 @@ const ModifyProduct = () => {
         setIsError(true);
         setMessage(response.message);
         setLoading(false);
+        setIsServerFetch(false);
       } else {
         const { id, product, quantity, cost, price, description, images: { images, imagesAngles } } = response;
 
@@ -99,19 +102,20 @@ const ModifyProduct = () => {
 
         for (let i = 0; i < imagesAngles.length; i++) {
           if (imagesAngles[i] === "frontImage") {
-            frontImage = images[i];
+            frontImage = `http://localhost:8080${images[i]}`;
           }
 
           if (imagesAngles[i] === "sideImage") {
-            sideImage = images[i];
+            sideImage = `http://localhost:8080${images[i]}`;
           }
 
           if (imagesAngles[i] === "rearImage") {
-            rearImage = images[i];
+            rearImage = `http://localhost:8080${images[i]}`;
           }
         }
 
         setProduct({
+          id,
           category: product.category.id,
           product: product.id,
           quantity, cost, price, description,
@@ -123,6 +127,7 @@ const ModifyProduct = () => {
         await fetchCategoryProducts(product.category.id);
 
         setLoading(false);
+        setIsServerFetch(true);
 
       }
 
@@ -131,6 +136,7 @@ const ModifyProduct = () => {
       setLoading(false);
       setIsError(true);
       setMessage(error.message);
+      setIsServerFetch(false);
 
       if (String(error.message).toLowerCase().includes("failed to fetch")) {
         setMessage("Sorry! Our server might be down at the moment. Please check back later!");
@@ -240,6 +246,7 @@ const ModifyProduct = () => {
         const userData = JSON.parse(localStorage.getItem('userData'))
         const data = new FormData();
         const sellerProducts = {
+          id: product.id,
           sellerId: userData.entityId,
           productId: product.product,
           quantity: product.quantity,
@@ -251,11 +258,13 @@ const ModifyProduct = () => {
 
         data.append("sellerProducts", JSON.stringify(sellerProducts));
 
-        if (product.frontImage[0]) data.append("files", product.frontImage[0]);
-        if (product.sideImage[0]) data.append("files", product.sideImage[0]);
-        if (product.rearImage[0]) data.append("files", product.rearImage[0]);
+        if (product.frontImage) data.append("files", product.frontImage);
+        if (product.sideImage) data.append("files", product.sideImage);
+        if (product.rearImage) data.append("files", product.rearImage);
 
-        const response = await makeRequest('/seller_products', HTTPMethods.POST, null, null, data);
+        // console.log("DATA: ", data);
+
+        const response = await makeRequest(`/seller_products/${product.id}`, HTTPMethods.POST, null, null, data);
         // console.log("RESP: ", response);
 
         if (response.error) {
@@ -269,7 +278,7 @@ const ModifyProduct = () => {
         } else {
           setIsFormSuccess(true);
           setMessage("Product was successfully saved!");
-          resetForm();
+          // resetForm();
         }
       }
     } catch (error) {
@@ -279,12 +288,25 @@ const ModifyProduct = () => {
   }
 
   const setFilesHandler = (name, selectedFiles, action = "add") => {
-    // console.log({ name: name, files: selectedFiles });
-    setProduct(currentState => ({
-      ...currentState,
-      [name]: selectedFiles[0],
-      imagesAngles: action === "add" ? [...currentState.imagesAngles, name] : currentState.imagesAngles.filter(imageAngle => imageAngle !== name)
-    }));
+    setIsServerFetch(false);
+    setProduct(currentState => {
+      console.clear();
+
+      let angles = [...currentState.imagesAngles];
+      if (action === "add") {
+        if (!currentState.imagesAngles.includes(name)) {
+          angles = [...currentState.imagesAngles, name];
+        }
+      } else {
+        angles = currentState.imagesAngles.filter(imageAngle => imageAngle !== name);
+      }
+
+      return {
+        ...currentState,
+        [name]: selectedFiles[0],
+        imagesAngles: angles 
+      }
+    });
 
     setProductError(state => ({
       ...state,
@@ -398,8 +420,12 @@ const ModifyProduct = () => {
               name={"description"}
               onChangeHandler={inputChangeHandler} />
 
+            {/* {console.log("FRONT IMAGE: ", product.frontImage)} */}
+
+            {/* {console.log("IS SERVER FETCH: ", isServerFetch)} */}
+
             <FileUpload
-              initialFileUrl={product.frontImage ? `http://localhost:8080${product.frontImage}` : null}
+              initialFileUrl={isServerFetch && product.frontImage}
               reset={resetFile.frontImage}
               error={productError.frontImage}
               name={"frontImage"}
@@ -409,7 +435,7 @@ const ModifyProduct = () => {
               appendText={"front-view image"} />
 
             <FileUpload
-              initialFileUrl={product.sideImage ? `http://localhost:8080${product.sideImage}` : null}
+              initialFileUrl={isServerFetch && product.sideImage}
               reset={resetFile.sideImage}
               error={productError.sideImage}
               name={"sideImage"}
@@ -419,7 +445,7 @@ const ModifyProduct = () => {
               appendText={"side-view image"} />
 
             <FileUpload
-              initialFileUrl={product.rearImage ? `http://localhost:8080${product.rearImage}` : null}
+              initialFileUrl={isServerFetch && product.rearImage}
               reset={resetFile.rearImage}
               error={productError.rearImage}
               name={"rearImage"}
@@ -428,7 +454,7 @@ const ModifyProduct = () => {
               title={"Rear view image"}
               appendText={"rear-view image"} />
 
-            { console.clear(), console.log("PRODUCT: ", product) }
+            {/* {console.clear(), console.log("PRODUCT: ", product)} */}
 
 
             {
