@@ -113,6 +113,7 @@ const FileUpload = ({
   const deleteServerImageHandler = () => {
     setInitialFile(null);
     setFilesMaxCountReached(false);
+    setFilesHandler(name, [], "delete");
   }
 
   return (

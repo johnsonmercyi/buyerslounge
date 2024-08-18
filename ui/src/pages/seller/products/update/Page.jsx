@@ -23,6 +23,10 @@ const ModifyProduct = () => {
     sideImage: false,
     rearImage: false,
   });
+  const [newImages, setNewImages] = useState([]);
+  const [updatedImages, setUpdatedImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
+  const [allAddedImages, setAllAddedImages] = useState([]);
   const [showSuccessAlert, setShowSuccessAlert] = useState(true);
   const [isServerFetch, setIsServerFetch] = useState(false);
   const param = useParams();
@@ -257,12 +261,16 @@ const ModifyProduct = () => {
         };
 
         data.append("sellerProducts", JSON.stringify(sellerProducts));
+        data.append("updatedImagesInfo", JSON.stringify({
+          newImages, updatedImages, deletedImages, allAddedImages
+        }));
 
         if (product.frontImage) data.append("files", product.frontImage);
         if (product.sideImage) data.append("files", product.sideImage);
         if (product.rearImage) data.append("files", product.rearImage);
 
         // console.log("DATA: ", data);
+        // console.log("ALL IMAGES: ", allAddedImages);
 
         const response = await makeRequest(`/seller_products/${product.id}`, HTTPMethods.POST, null, null, data);
         // console.log("RESP: ", response);
@@ -292,19 +300,42 @@ const ModifyProduct = () => {
     setProduct(currentState => {
       console.clear();
 
-      let angles = [...currentState.imagesAngles];
+      let newImgs = [...newImages];
+      let updatedImgs = [...updatedImages];
+      let deletedImgs = [...deletedImages];
+      let allAddedImgs = [...allAddedImages];
+
       if (action === "add") {
         if (!currentState.imagesAngles.includes(name)) {
-          angles = [...currentState.imagesAngles, name];
+          newImgs.push(name);
+        } else {
+          updatedImgs.push(name);
+          if (deletedImgs.includes(name)) deletedImgs = deletedImgs.filter(img => img !== name);
         }
+
+        allAddedImgs.push(name);
+
       } else {
-        angles = currentState.imagesAngles.filter(imageAngle => imageAngle !== name);
+        if (currentState.imagesAngles.includes(name)) deletedImgs.push(name);
+        if (allAddedImgs.includes(name)) allAddedImgs = allAddedImgs.filter(deletedImage => deletedImage !== name);
+        newImgs = newImgs.filter(img => img !== name);
+        if (updatedImgs.includes(name)) updatedImgs = updatedImgs.filter(updatedImage => updatedImage !== name);
       }
+
+      console.log("NEW IMAGES: ", newImgs);
+      console.log("UPDATED IMAGES: ", updatedImgs);
+      console.log("DELETED IMAGES: ", deletedImgs);
+      console.log("ALL ADDED IMAGES: ", allAddedImgs);
+      console.log("FILE OBJECT: ", selectedFiles.map(fileObject => fileObject.name));
+
+      setUpdatedImages(updatedImgs);
+      setNewImages(newImgs);
+      setDeletedImages(deletedImgs);
+      setAllAddedImages(allAddedImgs);
 
       return {
         ...currentState,
         [name]: selectedFiles[0],
-        imagesAngles: angles 
       }
     });
 
