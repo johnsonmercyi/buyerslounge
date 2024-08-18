@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
+import com.soft.springbootdemo.dto.requestdto.UpdatedImageDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
 
@@ -51,12 +52,18 @@ public class SellerProductsController {
   }
 
   @PostMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-  public ResponseEntity<SellerProductsResponseDTO> updateSellerProduct(@RequestParam("sellerProducts") String sellerProductJson, @RequestParam("files") MultipartFile[] images) {
+  public ResponseEntity<SellerProductsResponseDTO> updateSellerProduct(
+    @RequestParam("sellerProducts") String sellerProductJson, 
+    @RequestParam("updatedImagesInfo") String updatedImagesInfoJson,
+    @RequestParam("files") MultipartFile[] images) {
     try {
-      log.info("UPDATE PAYLOAD: {}\n{}", sellerProductJson, images);
+      log.info("UPDATE PAYLOAD: {}\n{}\n{}", sellerProductJson, updatedImagesInfoJson, images);
+
       ObjectMapper objectMapper = new ObjectMapper();
       SellerProductsRequestDTO sellerProductDto = objectMapper.readValue(sellerProductJson,
           SellerProductsRequestDTO.class);
+
+      UpdatedImageDTO updatedImageDto = objectMapper.readValue(updatedImagesInfoJson, UpdatedImageDTO.class);
 
       // return ResponseEntity.ok(null);
       return ResponseEntity.ok(service.update(sellerProductDto, images));
@@ -83,3 +90,5 @@ public class SellerProductsController {
   }
 
 }
+
+
