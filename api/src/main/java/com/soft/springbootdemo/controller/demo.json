@@ -1,0 +1,22 @@
+{
+  "sellerProducts": {
+    "id": "34d76b74-2ddc-4024-816f-db7080f394c4",
+    "sellerId": "a95ab5f8-ab44-4dc7-ba8c-bab5ed5050cc",
+    "productId": "5cfab6c0-19b3-4e1c-a4ba-02dd3f5736f2",
+    "quantity": 500,
+    "cost": 1000,
+    "price": 1200,
+    "description": "We can say this is this product description.",
+    "imagesAngles": ["frontImage", "sideImage"]
+  },
+  "updatedImagesInfo": {
+    "newImages": [],
+    "updatedImages": [],
+    "deletedImages": ["sideImage"],
+    "allAddedImages": []
+  }
+}
+
+sellerProductsRequestDTO: [id=34d76b74-2ddc-4024-816f-db7080f394c4, sellerId=a95ab5f8-ab44-4dc7-ba8c-bab5ed5050cc, productId=5cfab6c0-19b3-4e1c-a4ba-02dd3f5736f2, quantity=500, cost=1000.0, price=1200.0, description=We can say this is this product description., refNo=null, imagesAngles=[frontImage, sideImage]], 
+
+updatedImageInfoDTO: {newImages: [], updatedImages: [], deletedImages: [sideImage], allAddedImages: []}

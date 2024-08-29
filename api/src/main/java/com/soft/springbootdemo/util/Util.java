@@ -228,4 +228,8 @@ public class Util {
                   product.getName());
             }).toList());
   }
+
+  public static boolean isListNotEmpty(List<String> list) {
+    return !list.isEmpty();
+  }
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
-import com.soft.springbootdemo.dto.requestdto.UpdatedImageDTO;
+import com.soft.springbootdemo.dto.requestdto.UpdatedImageInfoDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 import com.soft.springbootdemo.service.sellerProducts.SellerProductsService;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -51,11 +56,26 @@ public class SellerProductsController {
     }
   }
 
+  @PostMapping(value = "/without_files/{id}")
+  public ResponseEntity<SellerProductsResponseDTO> updateSellerProductWithoutFiles(@RequestBody UpdatedDataJson updatedDataJson) {
+    try {
+      // log.info("UPDATE PAYLOAD: {}", updatedDataJson);
+
+      return ResponseEntity.ok(service.update(
+          updatedDataJson.sellerProducts, null,
+          updatedDataJson.updatedImagesInfo));
+
+    } catch (Exception ex) {
+      log.error("Error parsing JSON: ", ex);
+      throw new RuntimeException("Unexpected error occured: " + ex.getMessage());
+    }
+  }
+
   @PostMapping(value = "/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   public ResponseEntity<SellerProductsResponseDTO> updateSellerProduct(
-    @RequestParam("sellerProducts") String sellerProductJson, 
-    @RequestParam("updatedImagesInfo") String updatedImagesInfoJson,
-    @RequestParam("files") MultipartFile[] images) {
+      @RequestParam("sellerProducts") String sellerProductJson,
+      @RequestParam("updatedImagesInfo") String updatedImagesInfoJson,
+      @RequestParam("files") MultipartFile[] images) {
     try {
       log.info("UPDATE PAYLOAD: {}\n{}\n{}", sellerProductJson, updatedImagesInfoJson, images);
 
@@ -63,10 +83,11 @@ public class SellerProductsController {
       SellerProductsRequestDTO sellerProductDto = objectMapper.readValue(sellerProductJson,
           SellerProductsRequestDTO.class);
 
-      UpdatedImageDTO updatedImageDto = objectMapper.readValue(updatedImagesInfoJson, UpdatedImageDTO.class);
+      UpdatedImageInfoDTO updatedImageInfoDto = objectMapper.readValue(updatedImagesInfoJson,
+          UpdatedImageInfoDTO.class);
 
       // return ResponseEntity.ok(null);
-      return ResponseEntity.ok(service.update(sellerProductDto, images));
+      return ResponseEntity.ok(service.update(sellerProductDto, images, updatedImageInfoDto));
 
     } catch (Exception ex) {
       log.error("Error parsing JSON: ", ex);
@@ -89,6 +110,19 @@ public class SellerProductsController {
     return ResponseEntity.ok(service.delete(id));
   }
 
+  /**
+   * InnerSellerProductsController
+   */
+  @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
+  static class UpdatedDataJson {
+    private SellerProductsRequestDTO sellerProducts;
+    private UpdatedImageInfoDTO updatedImagesInfo;
+
+    public String toString() {
+      return String.format("sellerProductsRequestDTO: %s, updatedImageInfoDTO: %s",
+          sellerProducts, updatedImagesInfo);
+    }
+  }
 }
-
-

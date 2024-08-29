@@ -269,25 +269,59 @@ const ModifyProduct = () => {
         if (product.sideImage) data.append("files", product.sideImage);
         if (product.rearImage) data.append("files", product.rearImage);
 
-        // console.log("DATA: ", data);
-        // console.log("ALL IMAGES: ", allAddedImages);
+        console.log("ALL ADDED IMAGES: ", allAddedImages);
 
-        const response = await makeRequest(`/seller_products/${product.id}`, HTTPMethods.POST, null, null, data);
-        // console.log("RESP: ", response);
-
-        if (response.error) {
-          setIsFormError(true);
-          setMessage(response.message);
-          console.error(response.message);
-
-          if (response.message.includes('Error occurred while saving image')) {
-            setMessage("Product was not saved! Error occurred while uploading the image(s).");
+        if (allAddedImages.length) {
+          const response = await makeRequest(`/seller_products/${product.id}`, HTTPMethods.POST, null, null, data);
+          // console.log("RESP: ", response);
+  
+          if (response.error) {
+            setIsFormError(true);
+            setMessage(response.message);
+            console.error(response.message);
+  
+            if (response.message.includes('Error occurred while saving image')) {
+              setMessage("Product was not saved! Error occurred while uploading the image(s).");
+            }
+          } else {
+            setIsFormSuccess(true);
+            setMessage("Product was successfully saved!");
+            // resetForm();
           }
+
         } else {
-          setIsFormSuccess(true);
-          setMessage("Product was successfully saved!");
-          // resetForm();
+
+          const response = await makeRequest(`/seller_products/without_files/${product.id}`, HTTPMethods.POST, {
+            sellerProducts: {
+              id: product.id,
+              sellerId: userData.entityId,
+              productId: product.product,
+              quantity: product.quantity,
+              cost: product.cost,
+              price: product.price,
+              description: product.description,
+              imagesAngles: product.imagesAngles
+            },
+            updatedImagesInfo: {
+              newImages, updatedImages, deletedImages, allAddedImages
+            }
+          }, null, null);
+
+          if (response.error) {
+            setIsFormError(true);
+            setMessage(response.message);
+            console.error(response.message);
+
+            if (response.message.includes('Error occurred while saving image')) {
+              setMessage("Product was not saved! Error occurred while uploading the image(s).");
+            }
+          } else {
+            setIsFormSuccess(true);
+            setMessage("Product was successfully saved!");
+            // resetForm();
+          }
         }
+
       }
     } catch (error) {
       setIsFormError(true);

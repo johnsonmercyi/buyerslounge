@@ -20,4 +20,13 @@ public class SellerProductsRequestDTO {
   private String description;
   private UUID refNo;
   private List<String> imagesAngles;
+
+  @Override
+  public String toString() {
+    return "[id=" + id + ", sellerId=" + sellerId + ", productId=" + productId + ", quantity="
+        + quantity + ", cost=" + cost + ", price=" + price + ", description=" + description + ", refNo=" + refNo
+        + ", imagesAngles=" + imagesAngles + "]";
+  }
+
+  
 }

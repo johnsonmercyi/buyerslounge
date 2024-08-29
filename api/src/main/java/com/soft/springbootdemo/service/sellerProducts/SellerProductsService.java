@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
+import com.soft.springbootdemo.dto.requestdto.UpdatedImageInfoDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 
 public interface SellerProductsService {
@@ -20,7 +21,7 @@ public interface SellerProductsService {
 
   public Optional<SellerProductsResponseDTO> findBySellerProductId(UUID sellerProductId);
 
-  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images);
+  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images, UpdatedImageInfoDTO updatedImageInfoDTO);
 
   public void updateProductQty(UUID sellerProductsId, int quantity, boolean productAdded);
 

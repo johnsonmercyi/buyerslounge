@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.soft.springbootdemo.dto.requestdto.SellerProductsRequestDTO;
+import com.soft.springbootdemo.dto.requestdto.UpdatedImageInfoDTO;
 import com.soft.springbootdemo.dto.responsedto.SellerProductsResponseDTO;
 import com.soft.springbootdemo.model.Images;
 import com.soft.springbootdemo.model.Product;
@@ -132,13 +133,13 @@ public class SellerProductsServiceImpl implements SellerProductsService {
   }
 
   @Override
-  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images) {
+  public SellerProductsResponseDTO update(SellerProductsRequestDTO sellerProductsDto, MultipartFile[] images, UpdatedImageInfoDTO updatedImageInfoDto) {
     // Fetch the old seller product
     // Update with the new seller product values from the DTO
     // Update the images
     // Save all
 
-    // log.info("UPDATE PAYLOAD: {}\n{}", sellerProductsDto, images);
+    log.info("UPDATE PAYLOAD: {}\n{}", sellerProductsDto, updatedImageInfoDto);
 
     Optional<SellerProducts> currentSpOptional = sellerProductsRepo.findById(sellerProductsDto.getId());
 
@@ -162,7 +163,7 @@ public class SellerProductsServiceImpl implements SellerProductsService {
 
       SellerProducts savedSellerProducts = sellerProductsRepo.save(currentSp);
 
-      Images im = imagesService.updateImages(savedSellerProducts, images, sellerProductsDto.getImagesAngles());
+      Images im = imagesService.updateImages(savedSellerProducts, images, updatedImageInfoDto);
 
       if (im == null) {
         throw new NullPointerException("Image couldn't be saved in storage directory.");

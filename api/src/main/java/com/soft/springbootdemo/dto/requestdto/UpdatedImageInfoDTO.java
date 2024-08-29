@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdatedImageDTO {
+public class UpdatedImageInfoDTO {
   private List<String> newImages;
   private List<String> updatedImages;
   private List<String> deletedImages;
   private List<String> allAddedImages;
+
+  public String toString() {
+    return String.format("{newImages: %s, updatedImages: %s, deletedImages: %s, allAddedImages: %s}", newImages, updatedImages, deletedImages, allAddedImages);
+  }
 }
